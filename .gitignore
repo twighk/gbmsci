@@ -1,2 +1,3 @@
 #.gitignore, Files not to commit
 .DS_Store
+Log.html
