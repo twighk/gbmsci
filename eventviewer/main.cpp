@@ -4,7 +4,7 @@
 
 #include "eventviewer.h"
 
-
+using namespace std;
 
 int main(void) {
 	TFile f("../root/AH115.root");
@@ -17,7 +17,12 @@ int main(void) {
 	
 	eventviewer j();	
 	eventviewer vir(t);
-	vir.test();
+	
+	//cout << vir.electronCharge << endl;
+	
+	for(ULong64_t i = 0; i < 1000; i++){
+		vir.GetEntry(i);
+	}
 	
 	return 0;
 	
