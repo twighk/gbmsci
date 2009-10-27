@@ -112,8 +112,6 @@ private:
 					*b_lv_tau,   
 					*b_lv_tcmet;   
 	
-	
-	
     eventviewer();
     TTree *tree;
 	
