@@ -27,7 +27,7 @@ clean: cleanish
 cleanish:
 	rm -f *.o
 	
-run: all
+run: clean all
 	./${BIN}
 	
 time: all

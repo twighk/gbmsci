@@ -2,8 +2,13 @@
 #define __eventviewer__
 
 #include <vector>
+#include <iostream>
 
 #include <TTree.h>
+#include <TBranch.h>
+#include <TClonesArray.h> // Nessary for SetBranchAddress
+#include <TLorentzVector.h>
+#include <Rtypes.h> // for Long_64 though not necessary if long_64 spelt with `L'
 
 class eventviewer{
 private:
@@ -58,24 +63,68 @@ private:
 //Temparary storage of leafs : End
 	
 	
+	// List of branches
+	TBranch			*b_numElectrons,
+					*b_numJets,
+					*b_numMuons,   
+					*b_numTaus,   
+					*b_triggerHLTIsoEle15,   
+					*b_triggerHLTIsoMu11,   
+					*b_triggerHLTMu15,   
+					*b_electronCharge,  
+					*b_electronCombinedIso,  
+					*b_electronESuperOverP,   
+					*b_electronEcalIso,   
+					*b_electronFBrem,   
+					*b_electronHOverE,   
+					*b_electronHcalIso,   
+					*b_electronSigmaIEtaIEta,   
+					*b_electronSuperEta,   
+					*b_electronTrackIso,   
+					*b_jetBTagCombinedSecondary,   
+					*b_jetBTagSimpleSecondary,   
+					*b_jetBTagTrackCountHighEff,   
+					*b_jetBTagTrackCountHighPurity,   
+					*b_muonCaloCompatibility,   
+					*b_muonCharge,   
+					*b_muonEcalIso,   
+					*b_muonHcalIso,   
+					*b_muonSegCompatibility,   
+					*b_muonTrackIso,   
+					*b_tauCharge,   
+					*b_tauECALIso,   
+					*b_tauElectron,   
+					*b_tauLeadTrk,   
+					*b_tauMuon,   
+					*b_tauTrackIso,   
+					*b_tauTracks,   
+					*b_lv_electron,   
+					*b_lv_genbjet,   
+					*b_lv_genelectron,   
+					*b_lv_genmet,  
+					*b_lv_genmuon,   
+					*b_lv_gentau,  
+					*b_lv_gentaujet,   
+					*b_lv_jet,   
+					*b_lv_met,   
+					*b_lv_muon,   
+					*b_lv_pfmet,   
+					*b_lv_tau,   
+					*b_lv_tcmet;   
+	
+	
+	
     eventviewer();
     TTree *tree;
 	
 protected:
-	void bind() {
-		
-	}
+	void BindBranches();
 
 
 public:
-    eventviewer(TTree *treein){
-		tree = treein;
-	}
-
-#warning "Testfunction"
-	void test(){
-		tree->Show(0);
-	}
+    eventviewer(TTree *treein);
+	
+	void GetEntry(ULong64_t entry){tree->GetTree()->GetEntry(entry, 0);}
 	
 
 };
