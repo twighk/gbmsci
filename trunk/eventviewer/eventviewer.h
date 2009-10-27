@@ -10,8 +10,14 @@ private:
 
 
 public:
-    eventviewer(TTree *treein){tree = treein;}
-    
+    eventviewer(TTree *treein){
+		tree = treein;
+	}
+	
+	void test(){
+		tree->Show(0);
+	}
+	
 
 };
 
