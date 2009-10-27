@@ -7,7 +7,7 @@
 
 
 int main(void) {
-	TFile f("/Users/twig/gbmsci/root/AH115.root");
+	TFile f("../root/AH115.root");
 	
 	f.pwd();
 	
@@ -15,6 +15,7 @@ int main(void) {
 
 	//t->Show();
 	
+	eventviewer j();	
 	eventviewer vir(t);
 	vir.test();
 	
