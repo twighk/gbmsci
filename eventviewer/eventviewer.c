@@ -1,5 +1,7 @@
 #include "eventviewer.h"
 
+using namespace std;
+
 eventviewer::eventviewer(TTree *_tree){
 	tree = _tree;
 	
@@ -98,4 +100,124 @@ void eventviewer::BindBranches(){
 	tree->SetBranchAddress("lv_pfmet", &lv_pfmet, &b_lv_pfmet);
 	tree->SetBranchAddress("lv_tau", &lv_tau, &b_lv_tau);
 	tree->SetBranchAddress("lv_tcmet", &lv_tcmet, &b_lv_tcmet);
+}
+
+void eventviewer::Show(){
+	cout << "Electrons: " << Getlv_electron()->GetEntriesFast() << endl;
+	for (Int_t i=0; i<Getlv_electron()->GetEntriesFast(); i++){
+		cout << i << " (" << dynamic_cast<TLorentzVector*>(Getlv_electron()->At(i))->E()
+				  << ","  << dynamic_cast<TLorentzVector*>(Getlv_electron()->At(i))->Px()
+				  << ","  << dynamic_cast<TLorentzVector*>(Getlv_electron()->At(i))->Py()
+		          << ","  << dynamic_cast<TLorentzVector*>(Getlv_electron()->At(i))->Pz()
+		<< ") Et = " << dynamic_cast<TLorentzVector*>(Getlv_electron()->At(i))->Et() << endl;
+	}
+		
+	cout << "Muons: " << Getlv_muon()->GetEntriesFast() << endl;
+	for (Int_t i=0; i<Getlv_muon()->GetEntriesFast(); i++){
+		cout << i << " (" << dynamic_cast<TLorentzVector*>(Getlv_muon()->At(i))->E()
+		<< ","  << dynamic_cast<TLorentzVector*>(Getlv_muon()->At(i))->Px()
+		<< ","  << dynamic_cast<TLorentzVector*>(Getlv_muon()->At(i))->Py()
+		<< ","  << dynamic_cast<TLorentzVector*>(Getlv_muon()->At(i))->Pz()
+		<< ") Et = " << dynamic_cast<TLorentzVector*>(Getlv_muon()->At(i))->Et() << endl;
+	}
+	
+	cout << "Jets: " << Getlv_jet()->GetEntriesFast() << endl;
+	for (Int_t i=0; i<Getlv_jet()->GetEntriesFast(); i++){
+		cout << i << " (" << dynamic_cast<TLorentzVector*>(Getlv_jet()->At(i))->E()
+		<< ","  << dynamic_cast<TLorentzVector*>(Getlv_jet()->At(i))->Px()
+		<< ","  << dynamic_cast<TLorentzVector*>(Getlv_jet()->At(i))->Py()
+		<< ","  << dynamic_cast<TLorentzVector*>(Getlv_jet()->At(i))->Pz()
+		<< ") Et = " << dynamic_cast<TLorentzVector*>(Getlv_jet()->At(i))->Et() << endl;
+	}
+		
+	cout << "Taus: " << Getlv_tau()->GetEntriesFast() << endl;
+	for (Int_t i=0; i<Getlv_tau()->GetEntriesFast(); i++){
+		cout << i << " (" << dynamic_cast<TLorentzVector*>(Getlv_tau()->At(i))->E()
+		<< ","  << dynamic_cast<TLorentzVector*>(Getlv_tau()->At(i))->Px()
+		<< ","  << dynamic_cast<TLorentzVector*>(Getlv_tau()->At(i))->Py()
+		<< ","  << dynamic_cast<TLorentzVector*>(Getlv_tau()->At(i))->Pz()
+		<< ") Et = " << dynamic_cast<TLorentzVector*>(Getlv_tau()->At(i))->Et() << endl;
+	}
+	
+	cout << "MET: " << Getlv_met()->GetEntriesFast() << endl;
+	for (Int_t i=0; i<Getlv_met()->GetEntriesFast(); i++){
+		cout << i << " (" << dynamic_cast<TLorentzVector*>(Getlv_met()->At(i))->E()
+		<< ","  << dynamic_cast<TLorentzVector*>(Getlv_met()->At(i))->Px()
+		<< ","  << dynamic_cast<TLorentzVector*>(Getlv_met()->At(i))->Py()
+		<< ","  << dynamic_cast<TLorentzVector*>(Getlv_met()->At(i))->Pz()
+		<< ") Et = " << dynamic_cast<TLorentzVector*>(Getlv_met()->At(i))->Et() << endl;
+	}
+	
+	cout << "pfMET: " << Getlv_pfmet()->GetEntriesFast() << endl;
+	for (Int_t i=0; i<Getlv_pfmet()->GetEntriesFast(); i++){
+		cout << i << " (" << dynamic_cast<TLorentzVector*>(Getlv_pfmet()->At(i))->E()
+		<< ","  << dynamic_cast<TLorentzVector*>(Getlv_pfmet()->At(i))->Px()
+		<< ","  << dynamic_cast<TLorentzVector*>(Getlv_pfmet()->At(i))->Py()
+		<< ","  << dynamic_cast<TLorentzVector*>(Getlv_pfmet()->At(i))->Pz()
+		<< ") Et = " << dynamic_cast<TLorentzVector*>(Getlv_pfmet()->At(i))->Et() << endl;
+	}
+	
+	cout << "tcMET: " << Getlv_tcmet()->GetEntriesFast() << endl;
+	for (Int_t i=0; i<Getlv_tcmet()->GetEntriesFast(); i++){
+		cout << i << " (" << dynamic_cast<TLorentzVector*>(Getlv_tcmet()->At(i))->E()
+		<< ","  << dynamic_cast<TLorentzVector*>(Getlv_tcmet()->At(i))->Px()
+		<< ","  << dynamic_cast<TLorentzVector*>(Getlv_tcmet()->At(i))->Py()
+		<< ","  << dynamic_cast<TLorentzVector*>(Getlv_tcmet()->At(i))->Pz()
+		<< ") Et = " << dynamic_cast<TLorentzVector*>(Getlv_tcmet()->At(i))->Et() << endl;
+	}
+	
+	cout << "GenElectron: " << Getlv_genelectron()->GetEntriesFast() << endl;
+	for (Int_t i=0; i<Getlv_genelectron()->GetEntriesFast(); i++){
+		cout << i << " (" << dynamic_cast<TLorentzVector*>(Getlv_genelectron()->At(i))->E()
+		<< ","  << dynamic_cast<TLorentzVector*>(Getlv_genelectron()->At(i))->Px()
+		<< ","  << dynamic_cast<TLorentzVector*>(Getlv_genelectron()->At(i))->Py()
+		<< ","  << dynamic_cast<TLorentzVector*>(Getlv_genelectron()->At(i))->Pz()
+		<< ") Et = " << dynamic_cast<TLorentzVector*>(Getlv_genelectron()->At(i))->Et() << endl;
+	}
+	
+	cout << "GenMuon: " << Getlv_genmuon()->GetEntriesFast() << endl;
+	for (Int_t i=0; i<Getlv_genmuon()->GetEntriesFast(); i++){
+		cout << i << " (" << dynamic_cast<TLorentzVector*>(Getlv_genmuon()->At(i))->E()
+		<< ","  << dynamic_cast<TLorentzVector*>(Getlv_genmuon()->At(i))->Px()
+		<< ","  << dynamic_cast<TLorentzVector*>(Getlv_genmuon()->At(i))->Py()
+		<< ","  << dynamic_cast<TLorentzVector*>(Getlv_genmuon()->At(i))->Pz()
+		<< ") Et = " << dynamic_cast<TLorentzVector*>(Getlv_genmuon()->At(i))->Et() << endl;
+	}
+	
+	cout << "GenTauJet: " << Getlv_gentaujet()->GetEntriesFast() << endl;
+	for (Int_t i=0; i<Getlv_gentaujet()->GetEntriesFast(); i++){
+		cout << i << " (" << dynamic_cast<TLorentzVector*>(Getlv_gentaujet()->At(i))->E()
+		<< ","  << dynamic_cast<TLorentzVector*>(Getlv_gentaujet()->At(i))->Px()
+		<< ","  << dynamic_cast<TLorentzVector*>(Getlv_gentaujet()->At(i))->Py()
+		<< ","  << dynamic_cast<TLorentzVector*>(Getlv_gentaujet()->At(i))->Pz()
+		<< ") Et = " << dynamic_cast<TLorentzVector*>(Getlv_gentaujet()->At(i))->Et() << endl;
+	}
+	
+	cout << "GenTau: " << Getlv_gentau()->GetEntriesFast() << endl;
+	for (Int_t i=0; i<Getlv_gentau()->GetEntriesFast(); i++){
+		cout << i << " (" << dynamic_cast<TLorentzVector*>(Getlv_gentau()->At(i))->E()
+		<< ","  << dynamic_cast<TLorentzVector*>(Getlv_gentau()->At(i))->Px()
+		<< ","  << dynamic_cast<TLorentzVector*>(Getlv_gentau()->At(i))->Py()
+		<< ","  << dynamic_cast<TLorentzVector*>(Getlv_gentau()->At(i))->Pz()
+		<< ") Et = " << dynamic_cast<TLorentzVector*>(Getlv_gentau()->At(i))->Et() << endl;
+	}
+	
+	cout << "GenMET: " << Getlv_genmet()->GetEntriesFast() << endl;
+	for (Int_t i=0; i<Getlv_genmet()->GetEntriesFast(); i++){
+		cout << i << " (" << dynamic_cast<TLorentzVector*>(Getlv_genmet()->At(i))->E()
+		<< ","  << dynamic_cast<TLorentzVector*>(Getlv_genmet()->At(i))->Px()
+		<< ","  << dynamic_cast<TLorentzVector*>(Getlv_genmet()->At(i))->Py()
+		<< ","  << dynamic_cast<TLorentzVector*>(Getlv_genmet()->At(i))->Pz()
+		<< ") Et = " << dynamic_cast<TLorentzVector*>(Getlv_genmet()->At(i))->Et() << endl;
+	}
+	
+	cout << "Genbjet: " << Getlv_genbjet()->GetEntriesFast() << endl;
+	for (Int_t i=0; i<Getlv_genbjet()->GetEntriesFast(); i++){
+		cout << i << " (" << dynamic_cast<TLorentzVector*>(Getlv_genbjet()->At(i))->E()
+		<< ","  << dynamic_cast<TLorentzVector*>(Getlv_genbjet()->At(i))->Px()
+		<< ","  << dynamic_cast<TLorentzVector*>(Getlv_genbjet()->At(i))->Py()
+		<< ","  << dynamic_cast<TLorentzVector*>(Getlv_genbjet()->At(i))->Pz()
+		<< ") Et = " << dynamic_cast<TLorentzVector*>(Getlv_genbjet()->At(i))->Et() << endl;
+	}
+
 }
