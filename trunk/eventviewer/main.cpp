@@ -22,6 +22,8 @@ int main(void) {
 	
 	for(ULong64_t i = 0; i < 1000; i++){
 		vir.GetEntry(i);
+		vir.Show();
+		cout << endl;
 	}
 	
 	return 0;
