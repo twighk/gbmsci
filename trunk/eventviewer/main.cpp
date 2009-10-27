@@ -2,11 +2,16 @@
 
 #include <TFile.h>
 
+#include <TApplication.h>
+#include <TBrowser.h>
+
 #include "eventviewer.h"
 
 using namespace std;
 
-int main(void) {
+int main(int argc, char** argv) {
+	TApplication theApp("App", &argc, argv); // this must be instantiated only once 
+	
 	TFile f("../root/AH115.root");
 	
 	f.pwd();
@@ -26,6 +31,12 @@ int main(void) {
 		cout << endl;
 	}
 	
+	
+	
+	TBrowser b; // make a browser
+	
+	
+	theApp.Run(); // probably pauses it 
 	return 0;
 	
 }
