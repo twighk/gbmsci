@@ -8,3 +8,9 @@ Log.html
 
 #Root files
 *.root
+
+
+#Tempary Files
+*.o
+*.d
+*.so

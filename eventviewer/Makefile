@@ -9,8 +9,8 @@ LIBS = ${ROOTLIB}
 FLAGS = 
 
 #it's important to do the linking seperately from the compiling, other wise it doesn't work
-all: ising 
-ising: main.o eventviewer.o
+all: evttest 
+evttest: main.o eventviewer.o
 	${GPP} $^ -o ${BIN} ${FLAGS} ${LIBS} ${OPTI}
 	
 main.o: main.cpp 
