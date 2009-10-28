@@ -176,6 +176,7 @@ public:
 	void GetEntry(ULong64_t entry){tree->GetTree()->GetEntry(entry, 0);}
 	void Show();
 	void ShowTClonesArray(std::string, TClonesArray *);
+	void ShowVectorDouble(std::string, std::vector<double> *);
 	
 
 };

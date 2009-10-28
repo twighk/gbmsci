@@ -16,7 +16,7 @@ int main(int argc, char** argv) {
 	
 	eventviewer tester(t);
 	
-	for(ULong64_t i = 0; i < 10; i++){
+	for(ULong64_t i = 0; i < 100; i++){
 		tester.GetEntry(i);
 		tester.Show();
 		cout << endl;
