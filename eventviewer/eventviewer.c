@@ -103,19 +103,55 @@ void eventviewer::BindBranches(){
 
 void eventviewer::Show(){
 	
-	ShowTClonesArray("Electron: ", Getlv_electron());
-	ShowTClonesArray("Muon: ", Getlv_muon());
-	ShowTClonesArray("Jet: ", Getlv_jet());
-	ShowTClonesArray("Tau: ", Getlv_tau());
-	ShowTClonesArray("MET: ", Getlv_met());
-	ShowTClonesArray("pfMET: ", Getlv_pfmet());
-	ShowTClonesArray("tcMET: ", Getlv_tcmet());
-	ShowTClonesArray("Gen. Electron: ", Getlv_genelectron());
-	ShowTClonesArray("Gen. Muon: ", Getlv_genmuon());
-	ShowTClonesArray("Gen. Tau: ", Getlv_gentau());
-	ShowTClonesArray("Gen. Tau Jet: ", Getlv_gentaujet());
-	ShowTClonesArray("Gen. MET: ", Getlv_genmet());
-	ShowTClonesArray("Gen. B Jet: ", Getlv_genbjet());
+	ShowTClonesArray("Electron", Getlv_electron());
+	ShowTClonesArray("Muon", Getlv_muon());
+	ShowTClonesArray("Jet", Getlv_jet());
+	ShowTClonesArray("Tau", Getlv_tau());
+	ShowTClonesArray("MET", Getlv_met());
+	ShowTClonesArray("pfMET", Getlv_pfmet());
+	ShowTClonesArray("tcMET", Getlv_tcmet());
+	ShowTClonesArray("Gen. Electron", Getlv_genelectron());
+	ShowTClonesArray("Gen. Muon", Getlv_genmuon());
+	ShowTClonesArray("Gen. Tau", Getlv_gentau());
+	ShowTClonesArray("Gen. Tau Jet", Getlv_gentaujet());
+	ShowTClonesArray("Gen. MET", Getlv_genmet());
+	ShowTClonesArray("Gen. B Jet", Getlv_genbjet());
+	ShowVectorDouble("electronCharge", GetelectronCharge());
+	ShowVectorDouble("electronCombinedIso", GetelectronCombinedIso());
+	ShowVectorDouble("electronESuperOverP", GetelectronESuperOverP());
+	ShowVectorDouble("electronEcalIso", GetelectronEcalIso());
+	ShowVectorDouble("electronFBrem", GetelectronFBrem());
+	ShowVectorDouble("electronHOverE", GetelectronHOverE());
+	ShowVectorDouble("electronHcalIso", GetelectronHcalIso());
+	ShowVectorDouble("electronSigmaIEtaIEta", GetelectronSigmaIEtaIEta());
+	ShowVectorDouble("electronSuperEta", GetelectronSuperEta());
+	ShowVectorDouble("electronTrackIso", GetelectronTrackIso());
+	ShowVectorDouble("jetBTagCombinedSecondary", GetjetBTagCombinedSecondary());
+	ShowVectorDouble("jetBTagSimpleSecondary", GetjetBTagSimpleSecondary());
+	ShowVectorDouble("jetBTagTrackCountHighEff", GetjetBTagTrackCountHighEff());
+	ShowVectorDouble("jetBTagTrackCountHighPurity", GetjetBTagTrackCountHighPurity());
+	ShowVectorDouble("muonCaloCompatibility", GetmuonCaloCompatibility());
+	ShowVectorDouble("muonCharge", GetmuonCharge());
+	ShowVectorDouble("muonEcalIso", GetmuonEcalIso());
+	ShowVectorDouble("muonHcalIso", GetmuonHcalIso());
+	ShowVectorDouble("muonSegCompatibility", GetmuonSegCompatibility());
+	ShowVectorDouble("muonTrackIso", GetmuonTrackIso());
+	ShowVectorDouble("tauCharge", GettauCharge());
+	ShowVectorDouble("tauECALIso", GettauECALIso());
+	ShowVectorDouble("tauElectron", GettauElectron());
+	ShowVectorDouble("tauLeadTrk", GettauLeadTrk());
+	ShowVectorDouble("tauMuon", GettauMuon());
+	ShowVectorDouble("tauTrackIso", GettauTrackIso());
+	ShowVectorDouble("tauTracks", GettauTracks());
+	cout << "numElectrons \t" << * GetnumElectrons() << endl;
+	cout << "numMuons \t" << * GetnumMuons() << endl;
+	cout << "numJets \t" << * GetnumJets() << endl;
+	cout << "triggerHLTIsoEle15 \t" << * GettriggerHLTIsoEle15() << endl;
+	cout << "triggerHLTIsoMu11 \t" << * GettriggerHLTIsoMu11() << endl;
+	cout << "triggerHLTMu15 \t" << * GettriggerHLTMu15() << endl;
+
+
+
 
 }
 
@@ -129,3 +165,17 @@ void eventviewer::ShowTClonesArray(string name, TClonesArray * array){
 		<< ") Et = " << dynamic_cast<TLorentzVector*>(array->At(i))->Et() << endl;
 	}
 }
+
+void eventviewer::ShowVectorDouble(string name, vector<double> * vec){
+	cout << name << "\t";
+	for (Int_t i=0; i < vec->size(); i++){
+		cout << i << " (" << vec->at(i) << ")" << "\t";
+	}
+	cout << endl;
+}
+		
+		
+		
+		
+		
+		
