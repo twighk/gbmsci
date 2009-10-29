@@ -23,9 +23,15 @@ int main(int argc, char** argv) {
 	int sum = 0;
 	Float_t floatsum = 0.;
 	
-	vector <Int_t (cuts::*)(eventviewer&)> cutlist; // make a vector of methods
+	cutvec cutlist; // make a vector of methods
 	cutlist.push_back(&cuts::IsoEle15Trigger); // add cuts::IsoEle15Trigger to the list
 
+	
+#warning "testcuts"
+	cutlist.push_back(&cuts::testcutpass);
+	cutlist.push_back(&cuts::testcutfail);
+	cutlist.push_back(&cuts::testcutother);
+	
 	
 	
 	std::vector <Int_t> output = cutter.runcut(cutlist, evtv);
