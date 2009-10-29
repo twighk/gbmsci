@@ -23,12 +23,16 @@ int main(int argc, char** argv) {
 	int sum = 0;
 	Float_t floatsum = 0.;
 	
-//	vector <Int_t (cuts::*)(eventviewer&)> cutlist; // make a vector of methods
-//	cutlist.push_back(&cuts::IsoEle15Trigger); // add cuts::IsoEle15Trigger to the list
+	vector <Int_t (cuts::*)(eventviewer&)> cutlist; // make a vector of methods
+	cutlist.push_back(&cuts::IsoEle15Trigger); // add cuts::IsoEle15Trigger to the list
+
 	
 	
-//	cutter.runcut(cutlist, tester);
+	std::vector <Int_t> output = cutter.runcut(cutlist, evtv);
 	
+	for (int i = 0; i < output.size(); i++) {
+		cout << output[i] << endl;
+	}
 	
 	for(ULong64_t i = 0; i < evtv.totaleventnumber(); i++){
 		evtv.GetEntry(i);
@@ -37,6 +41,10 @@ int main(int argc, char** argv) {
 		}
 		//floatsum+= *(tester.GetnumElectrons());
 	}
+	
+	
+	
+	
 	
 	cout << "Sum: " << sum << endl;
 	
