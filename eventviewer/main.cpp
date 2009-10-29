@@ -16,14 +16,16 @@ int main(int argc, char** argv) {
 	
 	eventviewer tester(t);
 	
+	
+	
 	for(ULong64_t i = 0; i < 100; i++){
 		tester.GetEntry(i);
 		tester.Show();
 		cout << endl;
 	}
 	
-//	TBrowser b; // make a browser
-//	theApp.Run(); // probably pauses it 
+	TBrowser b; // make a browser
+	theApp.Run(); // probably pauses it 
 	
 	return 0;
 }
