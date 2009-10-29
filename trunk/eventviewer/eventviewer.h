@@ -178,6 +178,8 @@ public:
 	void ShowTClonesArray(std::string, TClonesArray *);
 	void ShowVectorDouble(std::string, std::vector<double> *);
 	
+	Long64_t totaleventnumber() {return static_cast<Long64_t> (tree->GetEntries());}
+	
 
 };
 
