@@ -13,9 +13,9 @@ int main(int argc, char** argv) {
 	TFile f("../root/AH115elec.root");
 	TTree *t = dynamic_cast<TTree*>(f.Get("bbAHCutTree"));
 	
-	eventviewer tester(t);
+	eventviewer evtv(t);
 	
-	cout << tester.totaleventnumber() << endl;
+	cout << evtv.totaleventnumber() << endl;
 	
 	
 	cuts cutter;
@@ -23,22 +23,26 @@ int main(int argc, char** argv) {
 	int sum = 0;
 	Float_t floatsum = 0.;
 	
-	vector <Int_t (cuts::*)(eventviewer&)> cutlist; // make a vector of methods
-	cutlist.push_back(&cuts::IsoEle15Trigger); // add cuts::IsoEle15Trigger to the list
+//	vector <Int_t (cuts::*)(eventviewer&)> cutlist; // make a vector of methods
+//	cutlist.push_back(&cuts::IsoEle15Trigger); // add cuts::IsoEle15Trigger to the list
 	
 	
+//	cutter.runcut(cutlist, tester);
 	
-	for(ULong64_t i = 0; i < tester.totaleventnumber(); i++){
-		tester.GetEntry(i);
-//		if (cutter.IsoEle15Trigger(tester) == 1) {
-//			sum++;
-//		}
-		floatsum+= *(tester.GetnumElectrons());
+	
+	for(ULong64_t i = 0; i < evtv.totaleventnumber(); i++){
+		evtv.GetEntry(i);
+		if (cutter.IsoEle15Trigger(evtv) == 1) {
+			sum++;
+		}
+		//floatsum+= *(tester.GetnumElectrons());
 	}
 	
-	cout << "Sum: " << floatsum << endl;
-	TBrowser b; // make a browser
-	theApp.Run(); // probably pauses it 
+	cout << "Sum: " << sum << endl;
+	
+	
+//	TBrowser b; // make a browser
+//	theApp.Run(); // probably pauses it 
 	
 	return 0;
 }

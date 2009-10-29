@@ -33,7 +33,7 @@ public:
 	
 	
 	
-	//std::vector<Int_t> 
+	std::vector<Int_t> runcut (std::vector <Int_t (cuts::*)(eventviewer&)> &cutlist, eventviewer &evt);
 	
 };
 

@@ -19,3 +19,16 @@ Int_t cuts::IsoEle15Trigger(eventviewer &evt){
 	}
 	   return 0;
 }
+
+
+
+std::vector<Int_t> cuts::runcut (std::vector <Int_t (cuts::*)(eventviewer&)> &cutlist, eventviewer &evt){
+	std::vector <Int_t> output(/*new vector size*/ cutlist.size(),/*default value*/ -1 ); // make output vector, the same size as the number of cuts, and setall = -1
+	
+	for (int i = 0; i < cutlist.size(); i++) { // for each cut in the list
+		std::cout << output[i] << std::endl;
+	}
+	
+	
+	return output;
+}
