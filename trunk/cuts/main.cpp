@@ -17,8 +17,16 @@ int main(int argc, char** argv) {
 	
 	
 	
+	cutvec cutlist;
+	cuttauLeadTrack tauLeadTrack1(cutlist, true);
+	cuttauLeadTrack tauLeadTrack2(cutlist, false);
+	cuttauLeadTrack tauLeadTrack3(cutlist, true);
 
 	
+	cout << tauLeadTrack1.cut(evtv) << tauLeadTrack1.pos() << endl;
+	cout << tauLeadTrack2.cut(evtv) << tauLeadTrack2.pos() << endl;
+	cout << tauLeadTrack3.cut(evtv) << tauLeadTrack3.pos() << endl;
+
 	
 
 	for(ULong64_t i = 0; i < evtv.totaleventnumber(); i++){
