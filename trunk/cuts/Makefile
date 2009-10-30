@@ -10,7 +10,7 @@ FLAGS =
 
 #it's important to do the linking seperately from the compiling, other wise it doesn't work
 all: evttest 
-evttest: main.o eventviewer.o cuts.o
+evttest: main.o eventviewer.o
 	${GPP} $^ -o ${BIN} ${FLAGS} ${LIBS} ${OPTI}
 	
 main.o: main.cpp 
@@ -18,10 +18,6 @@ main.o: main.cpp
 
 eventviewer.o: ../eventviewer/eventviewer.c ../eventviewer/eventviewer.h 
 	${GPP} -c $< -o $@ ${COMPFLAGS} ${CFLAGS} ${OPTI}
-
-cuts.o: cuts.c cuts.h eventviewer.o ../eventviewer/eventviewer.h
-	${GPP} -c $< -o $@ ${COMPFLAGS} ${CFLAGS} ${OPTI}
-
 
 clean: cleanish 
 	rm -f ${BIN}
