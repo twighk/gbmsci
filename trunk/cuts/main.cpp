@@ -22,9 +22,11 @@ int main(int argc, char** argv) {
 	
 	cutelectronTrackIso electronTrackIso(cutlist, 2.2, 1.1);
 	
-	cutelectronHcalIso electronHcalIso(cutlist, 2.2, 1.1);
+	cutelectronHcalIso electronHcalIso(cutlist, 2.0, 1.3);
 	
-	//cuttauLeadTrack tauLeadTrack(cutlist, 1);
+	cuttauTracks tauTracks(cutlist);
+	
+	cuttauLeadTrk tauLeadTrk(cutlist);
 
 	
 //	cout << tauLeadTrack.cut(evtv) << tauLeadTrack.pos() << endl;
@@ -38,10 +40,13 @@ int main(int argc, char** argv) {
 		evtv.GetEntry(i);
 		if(electronEcalIso.cut(evtv)){
 			if(electronTrackIso.cut(evtv)){
-				sum +=electronHcalIso.cut(evtv);
+				if(electronHcalIso.cut(evtv)){
+					if(tauTracks.cut(evtv)){
+						sum += tauLeadTrk.cut(evtv);
+					}
+				}
 			}
 		}
-		
 	}
 	
 	cout <<"Total Events: "<< evtv.totaleventnumber() << endl;
@@ -57,5 +62,4 @@ int main(int argc, char** argv) {
 	
 	return 0;
 }
-
 
