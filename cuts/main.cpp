@@ -29,9 +29,14 @@ int main(int argc, char** argv) {
 
 	
 
-	for(ULong64_t i = 0; i < evtv.totaleventnumber(); i++){
-		
+//	for(ULong64_t i = 0; i < evtv.totaleventnumber(); i++){
+//		
+//	}
+	
+	for(ULong64_t i = 0; i < 11; i++){
+		evtv.Show(i);
 	}
+	
 	
 	
 
