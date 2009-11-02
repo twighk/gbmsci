@@ -156,22 +156,31 @@ void eventviewer::Show(){
 }
 
 void eventviewer::ShowTClonesArray(string name, TClonesArray * array){
-	cout << name << endl;
-	for (Int_t i=0; i < array->GetEntriesFast(); i++){
-		cout << "\t" << i << " (" << dynamic_cast<TLorentzVector*>(array->At(i))->E()
-		<< ","  << dynamic_cast<TLorentzVector*>(array->At(i))->Px()
-		<< ","  << dynamic_cast<TLorentzVector*>(array->At(i))->Py()
-		<< ","  << dynamic_cast<TLorentzVector*>(array->At(i))->Pz()
-		<< ") Et = " << dynamic_cast<TLorentzVector*>(array->At(i))->Et() << endl;
+	if (array != NULL) {
+		cout << name << endl;
+		for (Int_t i=0; i < array->GetEntriesFast(); i++){
+			cout << "\t" << i << " (" << dynamic_cast<TLorentzVector*>(array->At(i))->E()
+			<< ","  << dynamic_cast<TLorentzVector*>(array->At(i))->Px()
+			<< ","  << dynamic_cast<TLorentzVector*>(array->At(i))->Py()
+			<< ","  << dynamic_cast<TLorentzVector*>(array->At(i))->Pz()
+			<< ") Et = " << dynamic_cast<TLorentzVector*>(array->At(i))->Et() << endl;
+		}
+	} else {
+		cout << name << "\t" <<"NULL" << endl;
 	}
 }
 
 void eventviewer::ShowVectorDouble(string name, vector<double> * vec){
-	cout << name << "\t";
-	for (Int_t i=0; i < vec->size(); i++){
-		cout << i << " (" << vec->at(i) << ")" << "\t";
+	if (vec != NULL) {
+		cout << name << "\t";
+		for (Int_t i=0; i < vec->size(); i++){
+			cout << i << " (" << vec->at(i) << ")" << "\t";
+		}
+		cout << endl;
+	} else {
+		cout << name << "\t" << "NULL" << endl;
 	}
-	cout << endl;
+	
 }
 		
 		

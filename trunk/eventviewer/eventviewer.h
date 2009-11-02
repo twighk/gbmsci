@@ -175,6 +175,7 @@ public:
 	eventviewer(TTree *treein);
 	void GetEntry(ULong64_t entry){tree->GetTree()->GetEntry(entry, 0);}
 	void Show();
+	void Show(ULong64_t i){GetEntry(i); Show();}
 	void ShowTClonesArray(std::string, TClonesArray *);
 	void ShowVectorDouble(std::string, std::vector<double> *);
 	
