@@ -18,24 +18,36 @@ int main(int argc, char** argv) {
 	
 	
 	cutvec cutlist;
-	cuttauLeadTrack tauLeadTrack1(cutlist, true);
-	cuttauLeadTrack tauLeadTrack2(cutlist, false);
-	cuttauLeadTrack tauLeadTrack3(cutlist, true);
+	cutelectronEcalIso electronEcalIso(cutlist, 4.2, 3.4);
+	
+	cutelectronTrackIso electronTrackIso(cutlist, 2.2, 1.1);
+	
+	cutelectronHcalIso electronHcalIso(cutlist, 2.2, 1.1);
+	
+	//cuttauLeadTrack tauLeadTrack(cutlist, 1);
 
 	
-	cout << tauLeadTrack1.cut(evtv) << tauLeadTrack1.pos() << endl;
-	cout << tauLeadTrack2.cut(evtv) << tauLeadTrack2.pos() << endl;
-	cout << tauLeadTrack3.cut(evtv) << tauLeadTrack3.pos() << endl;
+//	cout << tauLeadTrack.cut(evtv) << tauLeadTrack.pos() << endl;
 
-	
-
-//	for(ULong64_t i = 0; i < evtv.totaleventnumber(); i++){
-//		
-//	}
-	
-	for(ULong64_t i = 0; i < 11; i++){
+	for(ULong64_t i = 0; i < 10; i++){
 		evtv.Show(i);
 	}
+
+	int sum = 0;
+	for(ULong64_t i = 0; i < evtv.totaleventnumber(); i++){
+		evtv.GetEntry(i);
+		if(electronEcalIso.cut(evtv)){
+			if(electronTrackIso.cut(evtv)){
+				sum +=electronHcalIso.cut(evtv);
+			}
+		}
+		
+	}
+	
+	cout <<"Total Events: "<< evtv.totaleventnumber() << endl;
+	cout << sum << endl;
+	
+
 	
 	
 	
