@@ -31,27 +31,6 @@ public:
 	
 };
 
-class cuttauLeadTrack : public cuts {
-private:
-	Int_t cutvalue;
-	
-public:
-	virtual std::string name(){return "tauLeadTrack";}
-	cuttauLeadTrack(cutvec & cutlist, Int_t _cutvalue):cuts(cutlist){
-		cutvalue = _cutvalue;
-	}
-	
-	virtual Int_t cut(eventviewer& evt){
-		for (Int_t i = 0; i < (*evt.GettauLeadTrk()).size(); i++) {	
-			if ( float2int((*evt.GettauLeadTrk())[i]) == cutvalue ) {
-				return 1;
-			}
-			
-		}
-		return 0;
-	}
-};
-
 class cutelectronEcalIso : public cuts {
 private:
 	Float_t cutbarrel, 
@@ -67,8 +46,8 @@ public:
 	
 	virtual Int_t cut(eventviewer& evt){
 		for (Int_t i = 0; i < (*evt.GetelectronEcalIso()).size(); i++) {	
-			Float_t eta = dynamic_cast<TLorentzVector*> ((*evt.Getlv_electron()).At(i))->Eta()/*eta*/ ;
-			if ( fabs(eta)/*eta*/ < BARREL_ETA/*barrel range*/){
+			Float_t eta = (*evt.GetelectronSuperEta())[i] ;
+			if ( fabs(eta) < 1.560){ 
 				if ( ( *evt.GetelectronEcalIso() )[i] < cutbarrel ) {
 					return 1;
 				}
@@ -97,8 +76,8 @@ public:
 	
 	virtual Int_t cut(eventviewer& evt){
 		for (Int_t i = 0; i < (*evt.GetelectronEcalIso()).size(); i++) {	
-			Float_t eta = dynamic_cast<TLorentzVector*> ((*evt.Getlv_electron()).At(i))->Eta()/*eta*/ ;
-			if ( fabs(eta)/*eta*/ < BARREL_ETA/*barrel range*/){
+			Float_t eta = (*evt.GetelectronSuperEta())[i] ;
+			if ( fabs(eta) < 1.560){ 
 				if ( ( *evt.GetelectronTrackIso() )[i] < cutbarrel ) {
 					return 1;
 				}
@@ -111,10 +90,6 @@ public:
 		return 0;
 	}
 };
-
-
-
-
 
 class cutelectronHcalIso : public cuts {
 private:
@@ -131,8 +106,8 @@ public:
 	
 	virtual Int_t cut(eventviewer& evt){
 		for (Int_t i = 0; i < (*evt.GetelectronHcalIso()).size(); i++) {	
-			Float_t eta = dynamic_cast<TLorentzVector*> ((*evt.Getlv_electron()).At(i))->Eta()/*eta*/ ;
-			if ( fabs(eta)/*eta*/ < BARREL_ETA/*barrel range*/){
+			Float_t eta = (*evt.GetelectronSuperEta())[i] ;
+			if ( fabs(eta) < 1.560){ 
 				if ( ( *evt.GetelectronHcalIso() )[i] < cutbarrel ) {
 					return 1;
 				}
@@ -145,4 +120,52 @@ public:
 		return 0;
 	}
 };
+
+class cuttauTracks : public cuts {
+private:
+	
+public:
+	virtual std::string name(){return "electronEcalIso";}
+	
+	cuttauTracks(cutvec & cutlist):cuts(cutlist){}
+	
+	virtual Int_t cut(eventviewer& evt){
+		for (Int_t i = 0; i < (*evt.GettauTracks()).size(); i++) {	
+			Int_t numoftrack = float2int((*evt.GettauTracks())[i]);
+			//std::cout << numoftrack << std::endl;
+			if ((numoftrack == 1) || (numoftrack == 3)) {
+				return 1;
+			}
+		}
+		return 0;
+	}
+};
+
+class cuttauLeadTrk : public cuts {
+private:
+	
+public:
+	virtual std::string name(){return "electronEcalIso";}
+	
+	cuttauLeadTrk(cutvec & cutlist):cuts(cutlist){}
+	
+	virtual Int_t cut(eventviewer& evt){
+		for (Int_t i = 0; i < (*evt.GettauLeadTrk()).size(); i++) {	
+			Int_t leadtrack = float2int((*evt.GettauLeadTrk())[i]);
+			//std::cout << numoftrack << std::endl;
+			if (leadtrack == 1) {
+				return 1;
+			}
+		}
+		return 0;
+	}
+};
+
+
+/*
+ Float_t eta = (*evt.GetelectronSuperEta())[i] ;
+if ( fabs(eta) < 1.560){ 
+*/
+
+
 #endif
