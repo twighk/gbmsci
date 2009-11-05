@@ -1,3 +1,6 @@
+#ifndef __float2int__
+#define __float2int__
+
 #include <cmath>
 
 #include <Rtypes.h>
@@ -11,3 +14,5 @@ Int_t float2int(Float_t f ){
 	
 	return i;
 }
+
+#endif
