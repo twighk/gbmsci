@@ -6,6 +6,11 @@
 #include <vector>
 #include <ostream>
 
+//SUGGESTED IMPROVEMENTS (WRITTEN HERE SO I DON"T FORGET)
+// 1. We're not going to need anything other than Int_t - could remove any code allowing other types
+// 2. Default constructor that makes 1 x 1 matrix with value -1 (good practice?)
+//
+
 template <class T>
 class matrix { // Matrix Storage template
 	
@@ -36,9 +41,11 @@ public:
 	Int_t Getx(){return x;}
 	Int_t Gety(){return y;}
 	
-	matrix operator&& (matrix &matin){
+
+	//Function to perform AND operation on two (same-sized matrices)
+	matrix operator&& (matrix matin){	//We can't pass by reference here
 		if ((matin.Getx()) != x || (matin.Gety() != y)) {
-			std::cerr << "matrixes not of equal dimentions" << std::endl;
+			std::cerr << "matrices not of equal dimension" << std::endl;
 		}
 		
 		matrix matout(x,y);
@@ -50,12 +57,13 @@ public:
 				} else {
 					matout(i,j) = 0;
 				}
-
+				
 			}
 		}
 		return matout;
 	}
 	
+	//Function determines if any matrix element contains a 1
 	bool onecheck(){
 		for (int i = 0; i != x; i++) {
 			for (int j = 0; j != y; j++) {
@@ -73,7 +81,7 @@ public:
 	T& operator()(Int_t _x, Int_t _y){return mat[_x][_y];} // matrix
 	
 	//for easy outputting 
-	friend std::ostream& operator<< (std::ostream& out, matrix& mat){
+	friend std::ostream& operator<< (std::ostream& out, matrix mat){ //We can't pass by reference here
 		for (Int_t i = 0; i != mat.x; i++) {
 			for (Int_t j = 0; j != mat.y; j++) {
 				out << mat.mat[i][j] << ' ';
@@ -81,6 +89,17 @@ public:
 			out << std::endl;
 		}
 	}
+	
+	
 };
 
+
+//std::ostream& operator<< (std::ostream& out, matrix& mat){
+//	for (Int_t i = 0; i != mat.Getx(); i++) {
+//		for (Int_t j = 0; j != mat.Gety(); j++) {
+//			out << mat(i,j) << ' ';
+//		}
+//		out << std::endl;
+//	}
+//}
 #endif
