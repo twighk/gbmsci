@@ -59,6 +59,8 @@ int main(int argc, char** argv) {
 	//matrix
 	matrix <Int_t> mat(3,3);
 	mat(1,2) = 92;
+	mat(2,1) = 1;
+
 	cout << mat;
 	
 	//vector
@@ -74,11 +76,18 @@ int main(int argc, char** argv) {
 	cout << mat3;
 	
 	//matrix float
-	matrix <Float_t> mat4(3,3);
+	matrix <Int_t> mat4(3,3);
+	mat4(2,1) = 1;
 	mat4(1,2) = sqrt(2);
 	cout << mat4;
 	
+	
+	matrix <Int_t> mat5(4,4);
+	mat5 = mat4 && mat;
+	cout << mat5;
 
+	cout << mat5.onecheck() << endl;; 
+	
 //	TBrowser b; // make a browser
 //	theApp.Run(); // probably pauses it 
 	
