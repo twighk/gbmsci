@@ -4,6 +4,7 @@
 #include <TBrowser.h>
 #include "../eventviewer/eventviewer.h"
 #include "cuts.h"
+#include "matrix.h"
 
 using namespace std;
 
@@ -14,7 +15,6 @@ int main(int argc, char** argv) {
 	TTree *t = dynamic_cast<TTree*>(f.Get("bbAHCutTree"));
 	
 	eventviewer evtv(t);
-	
 	
 	
 	cutvec cutlist;
@@ -55,6 +55,28 @@ int main(int argc, char** argv) {
 
 	
 	
+	
+	//matrix
+	matrix <Int_t> mat(3,3);
+	mat(1,2) = 92;
+	cout << mat;
+	
+	//vector
+	matrix <Int_t> mat2(3);
+	mat2(0) = 3;
+	mat2(1) = 2;
+	mat2(2) = 1;
+	cout << mat2;
+	
+	//scalar
+	matrix <Int_t> mat3(0);
+	mat3() = 3;
+	cout << mat3;
+	
+	//matrix float
+	matrix <Float_t> mat4(3,3);
+	mat4(1,2) = sqrt(2);
+	cout << mat4;
 	
 
 //	TBrowser b; // make a browser
