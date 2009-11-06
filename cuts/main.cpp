@@ -12,7 +12,9 @@ using namespace std;
 int main(int argc, char** argv) {
 	TApplication theApp("App", &argc, argv); // this must be instantiated only once 
 	
-	TFile f("../root/AH115elec.root");
+	//TFile f("../root/AH115elec.root");
+	TFile f("../root/WplusJetselec.root");
+
 	TTree *t = dynamic_cast<TTree*>(f.Get("bbAHCutTree"));
 	
 	eventviewer evtv(t);
@@ -34,6 +36,8 @@ int main(int argc, char** argv) {
 	cuttauTrackIso tauTrackIso(cutlist);
 	
 	cuttauElectron tauElectron(cutlist);
+	
+	cutoppositecharge oppositecharge(cutlist);
 
 	
 //	cout << tauLeadTrack.cut(evtv) << tauLeadTrack.pos() << endl;
@@ -47,6 +51,9 @@ int main(int argc, char** argv) {
 	int sum = 0;
 	matrix <Int_t> intermediate(1);
 	matrix <Int_t> intermediate2(1);
+	matrix <Int_t> intermediate3(1);
+	
+
 
 	for(ULong64_t i = 0; i < evtv.totaleventnumber(); i++){
 		evtv.GetEntry(i);
@@ -62,11 +69,14 @@ int main(int argc, char** argv) {
 		output[3] += cutlist[3]->cut(evtv).onecheck();
 		intermediate2 = cutlist[3]->cut(evtv);
 		
-		for (int i = 4; i != cutlist.size(); i++) {
+		for (int i = 4; i != 8; i++) {
 			intermediate2 = intermediate2 && cutlist[i]->cut(evtv);
 			output[i] += (intermediate2).onecheck();
 		}
 
+		
+		intermediate3 = cutlist[8]->cut(evtv);
+		output[8] += ((intermediate * intermediate2) && intermediate3).onecheck();
 		
 	}
 	
@@ -77,8 +87,8 @@ int main(int argc, char** argv) {
 	
 	
 
-	
-	
+	cout << float2int(-0.9) << endl;
+	cout << float2int(-1.1) << endl;
 	//matrix
 //	matrix <Int_t> mat(3,3);
 //	mat(1,2) = 92;
@@ -110,6 +120,28 @@ int main(int argc, char** argv) {
 //	cout << mat5;
 //
 //	cout << mat5.onecheck() << endl;; 
+	
+	
+	matrix <Int_t> mat6(6);
+	mat6(0) = 1;
+	mat6(1) = 1;
+	mat6(2) = 1;
+	mat6(3) = 0;
+	mat6(4) = 0;
+	mat6(5) = 0;
+//	cout << mat6;
+	
+	matrix <Int_t> mat7(3);
+	mat7(0) = 0;
+	mat7(1) = 1;
+	mat7(2) = 0;
+//	cout << mat7;
+	
+	
+	cout << mat7 * mat6;
+	
+	
+	
 	
 //	TBrowser b; // make a browser
 //	theApp.Run(); // probably pauses it 

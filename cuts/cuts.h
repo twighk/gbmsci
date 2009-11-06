@@ -258,6 +258,34 @@ public:
 };
 
 
+class cutoppositecharge : public cuts {
+private:
+	
+public:
+	virtual std::string name(){return "oppositecharge";}
+	
+	cutoppositecharge(cutvec & cutlist):cuts(cutlist){}
+	
+	virtual matrix <Int_t> cut(eventviewer& evt){
+		matrix <Int_t> result((*evt.GetelectronCharge()).size(), (*evt.GettauCharge()).size()); //NEW
+		
+		for (int i = 0; i != (*evt.GetelectronCharge()).size(); i++) {
+			Int_t elec = float2int((*evt.GetelectronCharge())[i]);
+			for (int j = 0; j != (*evt.GettauCharge()).size(); j++) {
+				Int_t tau = float2int((*evt.GettauCharge())[j]);
+				if(elec * tau == -1) {
+					result(i,j) = 1;
+				} else {
+					result(i,j) = 0; 
+				};
+			}
+		}
+		return result;
+	}
+	
+
+};
+
 /*
  Float_t eta = (*evt.GetelectronSuperEta())[i] ;
 if ( fabs(eta) < 1.560){ 
