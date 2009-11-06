@@ -71,7 +71,7 @@ private:
 			cutendcap;
 	
 public:
-	virtual std::string name(){return "electronEcalIso";}
+	virtual std::string name(){return "electronTrackIso";}
 	
 	cutelectronTrackIso(cutvec & cutlist, Float_t _cutbarrel, Float_t _cutendcap):cuts(cutlist){
 		cutbarrel = _cutbarrel;
@@ -101,15 +101,13 @@ public:
 	}
 };
 
-
-
 class cutelectronHcalIso : public cuts {
 private:
 	Float_t cutbarrel, 
 	cutendcap;
 	
 public:
-	virtual std::string name(){return "electronEcalIso";}
+	virtual std::string name(){return "electronHcalIso";}
 	
 	cutelectronHcalIso(cutvec & cutlist, Float_t _cutbarrel, Float_t _cutendcap):cuts(cutlist){
 		cutbarrel = _cutbarrel;
@@ -143,7 +141,7 @@ class cuttauTracks : public cuts {
 private:
 	
 public:
-	virtual std::string name(){return "electronEcalIso";}
+	virtual std::string name(){return "tauTracks";}
 	
 	cuttauTracks(cutvec & cutlist):cuts(cutlist){}
 	
@@ -167,7 +165,7 @@ class cuttauLeadTrk : public cuts {
 private:
 	
 public:
-	virtual std::string name(){return "electronEcalIso";}
+	virtual std::string name(){return "tauLeadTrk";}
 	
 	cuttauLeadTrk(cutvec & cutlist):cuts(cutlist){}
 	
@@ -178,6 +176,78 @@ public:
 			Int_t leadtrack = float2int((*evt.GettauLeadTrk())[i]);
 			//std::cout << numoftrack << std::endl;
 			if (leadtrack == 1) {
+				result(i) = 1;;
+			} else {
+				result(i) = 0;
+			}
+		}
+		return result;
+	}
+};
+
+class cuttauECALIso : public cuts {
+private:
+	
+public:
+	virtual std::string name(){return "tauECALIso";}
+	
+	cuttauECALIso(cutvec & cutlist):cuts(cutlist){}
+	
+	virtual matrix <Int_t> cut(eventviewer& evt){
+		matrix <Int_t> result((*evt.GettauECALIso()).size()); //NEW
+		
+		for (Int_t i = 0; i < (*evt.GettauECALIso()).size(); i++) {	
+			Int_t ecaliso = float2int((*evt.GettauECALIso())[i]);
+			//std::cout << numoftrack << std::endl;
+			if (ecaliso == 1) {
+				result(i) = 1;;
+			} else {
+				result(i) = 0;
+			}
+		}
+		return result;
+	}
+};
+
+class cuttauTrackIso : public cuts {
+private:
+	
+public:
+	virtual std::string name(){return "tauTrackIso";}
+	
+	cuttauTrackIso(cutvec & cutlist):cuts(cutlist){}
+	
+	virtual matrix <Int_t> cut(eventviewer& evt){
+		matrix <Int_t> result((*evt.GettauTrackIso()).size()); //NEW
+		
+		for (Int_t i = 0; i < (*evt.GettauTrackIso()).size(); i++) {	
+			Int_t ecaliso = float2int((*evt.GettauTrackIso())[i]);
+			//std::cout << numoftrack << std::endl;
+			if (ecaliso == 1) {
+				result(i) = 1;;
+			} else {
+				result(i) = 0;
+			}
+		}
+		return result;
+	}
+};
+
+class cuttauElectron : public cuts {
+private:
+	
+public:
+	virtual std::string name(){return "tauElectron";}
+	
+	cuttauElectron(cutvec & cutlist):cuts(cutlist){}
+	
+	virtual matrix <Int_t> cut(eventviewer& evt){
+		matrix <Int_t> result((*evt.GettauElectron()).size()); //NEW
+		
+		for (Int_t i = 0; i < (*evt.GettauElectron()).size(); i++) {	
+			Int_t ecaliso = float2int((*evt.GettauElectron())[i]);
+			//std::cout << numoftrack << std::endl;
+			if (ecaliso == 1) {
 				result(i) = 1;;
 			} else {
 				result(i) = 0;
