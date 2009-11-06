@@ -63,6 +63,25 @@ public:
 		return matout;
 	}
 	
+	matrix operator* (matrix matin){
+		if (y > 1){std::cerr << "error operator * must be vectors" << std::endl; return matrix(1);}
+		if (matin.Gety() > 1){std::cerr << "error operator * must be vectors" << std::endl; return matrix(1);}
+		
+		matrix matout (x, matin.Getx());
+		
+		for (int i = 0; i != x; i++) {
+			for (int j = 0; j != matin.Getx(); j++) {
+				if(operator()(i) == matin(j)) {
+					matout(i,j) = operator()(i);
+				} else {
+					matout(i,j) = 0; 
+				};
+			}
+		}
+	
+		return matout;
+	}
+	
 	//Function determines if any matrix element contains a 1
 	bool onecheck(){
 		for (int i = 0; i != x; i++) {
