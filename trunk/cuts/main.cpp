@@ -22,34 +22,59 @@ int main(int argc, char** argv) {
 	cutelectronEcalIso electronEcalIso(cutlist, 4.2, 3.4);
 	
 	cutelectronTrackIso electronTrackIso(cutlist, 2.2, 1.1);
-//	
-//	cutelectronHcalIso electronHcalIso(cutlist, 2.0, 1.3);
-//	
-//	cuttauTracks tauTracks(cutlist);
-//	
-//	cuttauLeadTrk tauLeadTrk(cutlist);
+	
+	cutelectronHcalIso electronHcalIso(cutlist, 2.0, 1.3);
+	
+	cuttauTracks tauTracks(cutlist);
+	
+	cuttauLeadTrk tauLeadTrk(cutlist);
+	
+	cuttauECALIso tauECALIso(cutlist);
+	
+	cuttauTrackIso tauTrackIso(cutlist);
+	
+	cuttauElectron tauElectron(cutlist);
 
 	
 //	cout << tauLeadTrack.cut(evtv) << tauLeadTrack.pos() << endl;
 
+	vector <Int_t> output(cutlist.size(), 0);
+	
 	for(ULong64_t i = 0; i < 2; i++){
 		evtv.Show(i);
 	}
 
 	int sum = 0;
 	matrix <Int_t> intermediate(1);
+	matrix <Int_t> intermediate2(1);
 
 	for(ULong64_t i = 0; i < evtv.totaleventnumber(); i++){
 		evtv.GetEntry(i);
-		intermediate = electronEcalIso.cut(evtv) && electronTrackIso.cut(evtv);
-		if (intermediate.onecheck()) {
-			sum++;
+		output[0] += cutlist[0]->cut(evtv).onecheck();		
+		intermediate = cutlist[0]->cut(evtv);
+		for (int i = 1; i != 3; i++) {
+			intermediate = intermediate && cutlist[i]->cut(evtv);
+			output[i] += (intermediate).onecheck();
 		}
+		
+		if(intermediate.onecheck() == false){continue;}
+		
+		output[3] += cutlist[3]->cut(evtv).onecheck();
+		intermediate2 = cutlist[3]->cut(evtv);
+		
+		for (int i = 4; i != cutlist.size(); i++) {
+			intermediate2 = intermediate2 && cutlist[i]->cut(evtv);
+			output[i] += (intermediate2).onecheck();
+		}
+
 		
 	}
 	
 	cout <<"Total Events: "<< evtv.totaleventnumber() << endl;
-	cout <<"Sum: " << sum << endl;
+	for (int i = 0; i < cutlist.size(); i++) {
+		cout << cutlist[i]->name()<< ": " << output[i] << endl;
+	}
+	
 	
 
 	
