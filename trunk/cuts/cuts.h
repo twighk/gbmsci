@@ -3,9 +3,12 @@
 
 #include <string>
 #include <vector>
+#include <cmath>
 #include "../eventviewer/eventviewer.h"
 #include "matrix.h"
 #include "float2int.h"
+#include <TClonesArray.h>
+#include <TLorentzVector.h>
 
 class cuts;
 typedef std::vector<cuts*> cutvec;
@@ -284,6 +287,116 @@ public:
 	}
 	
 
+};
+
+class cutdphielectau : public cuts {
+private:
+	Float_t anginrad;
+
+public:
+	virtual std::string name(){return "dphielectau";}
+	
+	cutdphielectau(cutvec & cutlist, Float_t _anginrad):cuts(cutlist){anginrad = _anginrad;}
+	
+	virtual matrix <Int_t> cut(eventviewer& evt){
+		matrix <Int_t> result((*evt.Getlv_electron()).GetSize(), (*evt.Getlv_tau()).GetSize()); //get num of elecs and taus
+		
+		for (int i = 0; i != (*evt.Getlv_electron()).GetSize(); i++) {
+			for (int j = 0; j != (*evt.Getlv_tau()).GetSize(); j++) {
+				TLorentzVector* elecvec = dynamic_cast <TLorentzVector*> ((*evt.Getlv_electron()).At(i));
+				TLorentzVector* tauvec  = dynamic_cast <TLorentzVector*> ((*evt.Getlv_tau()).At(j));
+				
+				TVector3 electmp(elecvec->Px(), elecvec->Py(), 0), 
+						 tautmp(tauvec->Px(), tauvec->Py(), 0);
+				
+				float_t dphi = electmp.Angle(tautmp);
+				
+				
+				//float_t dphi = elecvec->DeltaPhi((*tauvec));
+				//dphi = fabs(dphi);
+				//std::cout << dphi << std::endl;
+				
+				if(dphi > anginrad ) {
+					result(i,j) = 1;
+				} else {
+					result(i,j) = 0; 
+				}
+			}
+		}
+		return result;
+	}
+};
+
+class cutdphielecmet : public cuts {
+private:
+	Float_t anginrad;
+	
+public:
+	virtual std::string name(){return "dphielecmet";}
+	
+	cutdphielecmet(cutvec & cutlist, Float_t _anginrad):cuts(cutlist){anginrad = _anginrad;}
+	
+	virtual matrix <Int_t> cut(eventviewer& evt){
+		matrix <Int_t> result((*evt.Getlv_electron()).GetSize(), (*evt.Getlv_tau()).GetSize()); //get num of elecs and taus
+		
+		for (int i = 0; i != (*evt.Getlv_electron()).GetSize(); i++) {
+			for (int j = 0; j != (*evt.Getlv_tau()).GetSize(); j++) {
+				TLorentzVector* elecvec = dynamic_cast <TLorentzVector*> ((*evt.Getlv_electron()).At(i));
+				TLorentzVector* metvec  = dynamic_cast <TLorentzVector*> ((*evt.Getlv_met()).At(0));
+				
+				TVector3 electmp(elecvec->Px(), elecvec->Py(), 0), 
+				mettmp(metvec->Px(), metvec->Py(), 0);
+				
+				float_t dphi = electmp.Angle(mettmp);
+				
+				if(dphi < anginrad ) {
+					result(i,j) = 1;
+				} else {
+					result(i,j) = 0; 
+				}
+			}
+		}
+		return result;
+	}
+};
+
+
+class cutmtelecmet : public cuts {
+private:
+	Double_t energy;
+	
+public:
+	virtual std::string name(){return "mtelecmet";}
+	
+	cutmtelecmet(cutvec & cutlist, Double_t _energy):cuts(cutlist){energy = _energy;}
+	
+	virtual matrix <Int_t> cut(eventviewer& evt){
+		matrix <Int_t> result((*evt.Getlv_electron()).GetSize(), (*evt.Getlv_tau()).GetSize()); //get num of elecs and taus
+		
+		for (int i = 0; i != (*evt.Getlv_electron()).GetSize(); i++) {
+			for (int j = 0; j != (*evt.Getlv_tau()).GetSize(); j++) {
+				TLorentzVector* elecvec = dynamic_cast <TLorentzVector*> ((*evt.Getlv_electron()).At(i));
+				TLorentzVector* metvec  = dynamic_cast <TLorentzVector*> ((*evt.Getlv_met()).At(0));
+
+
+				Double_t mt = sqrt(  pow(elecvec->E()  + metvec->E() ,2)
+								   - pow(elecvec->Pz() + metvec->Pz(),2) 
+								   );
+				
+				
+				if(mt < energy ) {
+					result(i,j) = 1;
+				} else {
+					result(i,j) = 0; 
+				}
+			}
+		}
+		
+		std::cout << result;
+		std::cout << '\n';
+		
+		return result;
+	}
 };
 
 /*
