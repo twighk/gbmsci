@@ -13,8 +13,9 @@ int main(int argc, char** argv) {
 	TApplication theApp("App", &argc, argv); // this must be instantiated only once 
 	
 	//TFile f("../root/AH115elec.root");
-	TFile f("../root/AH115elec.root");
-
+	//TFile f("../root/WplusJetselec.root");
+	TFile f("../root/AH115bbelec.root");
+	
 	TTree *t = dynamic_cast<TTree*>(f.Get("bbAHCutTree"));
 	
 	eventviewer evtv(t);
@@ -38,7 +39,11 @@ int main(int argc, char** argv) {
 	cuttauElectron tauElectron(cutlist);
 	
 	cutoppositecharge oppositecharge(cutlist);
-
+	
+	cutdphielectau dphielectau(cutlist, 2.5);
+	cutdphielecmet dphielecmet(cutlist, 0.6);
+	
+	cutmtelecmet mtelecmet(cutlist, 20);
 	
 //	cout << tauLeadTrack.cut(evtv) << tauLeadTrack.pos() << endl;
 
@@ -75,8 +80,17 @@ int main(int argc, char** argv) {
 		}
 
 		
-		intermediate3 = cutlist[8]->cut(evtv);
-		output[8] += ((intermediate * intermediate2) && intermediate3).onecheck();
+		intermediate3 = ((intermediate * intermediate2) && cutlist[8]->cut(evtv));
+		output[8] += intermediate3.onecheck();
+		
+		intermediate3 = intermediate3 && cutlist[9]->cut(evtv);
+		output[9] += intermediate3.onecheck();
+		
+		intermediate3 = intermediate3 && cutlist[10]->cut(evtv);
+		output[10] += intermediate3.onecheck();
+		
+		intermediate3 = intermediate3 && cutlist[11]->cut(evtv);
+		output[11] += intermediate3.onecheck();
 		
 	}
 	
@@ -87,8 +101,8 @@ int main(int argc, char** argv) {
 	
 	
 
-	cout << float2int(-0.9) << endl;
-	cout << float2int(-1.1) << endl;
+//	cout << float2int(-0.9) << endl;
+//	cout << float2int(-1.1) << endl;
 	//matrix
 //	matrix <Int_t> mat(3,3);
 //	mat(1,2) = 92;
@@ -122,23 +136,23 @@ int main(int argc, char** argv) {
 //	cout << mat5.onecheck() << endl;; 
 	
 	
-	matrix <Int_t> mat6(6);
-	mat6(0) = 1;
-	mat6(1) = 1;
-	mat6(2) = 1;
-	mat6(3) = 0;
-	mat6(4) = 0;
-	mat6(5) = 0;
+//	matrix <Int_t> mat6(6);
+//	mat6(0) = 1;
+//	mat6(1) = 1;
+//	mat6(2) = 1;
+//	mat6(3) = 0;
+//	mat6(4) = 0;
+//	mat6(5) = 0;
 //	cout << mat6;
 	
-	matrix <Int_t> mat7(3);
-	mat7(0) = 0;
-	mat7(1) = 1;
-	mat7(2) = 0;
+//	matrix <Int_t> mat7(3);
+//	mat7(0) = 0;
+//	mat7(1) = 1;
+//	mat7(2) = 0;
 //	cout << mat7;
 	
 	
-	cout << mat7 * mat6;
+//	cout << mat7 * mat6;
 	
 	
 	

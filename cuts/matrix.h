@@ -94,6 +94,18 @@ public:
 		return false;
 	}
 	
+	Int_t onecount(){
+		Int_t count = 0;
+		for (int i = 0; i != x; i++) {
+			for (int j = 0; j != y; j++) {
+				if (mat[i][j] == 1) {
+					count++;
+				}
+			}
+		}
+		return count;
+	}	
+	
 	//direct access to elements // do the inversion of _x,_y here for users
 	T& operator()(){return mat[0][0];} // scalar
 	T& operator()(Int_t _x){return mat[_x][0];} // vector
