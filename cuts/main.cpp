@@ -43,7 +43,7 @@ int main(int argc, char** argv) {
 	cutdphielectau dphielectau(cutlist, 2.5);
 	cutdphielecmet dphielecmet(cutlist, 0.6);
 	
-	cutmtelecmet mtelecmet(cutlist, 20);
+	cutmtelecmet mtelecmet(cutlist, 30);
 	
 //	cout << tauLeadTrack.cut(evtv) << tauLeadTrack.pos() << endl;
 
@@ -79,18 +79,15 @@ int main(int argc, char** argv) {
 			output[i] += (intermediate2).onecheck();
 		}
 
+		if(intermediate2.onecheck() == false){continue;}
 		
 		intermediate3 = ((intermediate * intermediate2) && cutlist[8]->cut(evtv));
 		output[8] += intermediate3.onecheck();
 		
-		intermediate3 = intermediate3 && cutlist[9]->cut(evtv);
-		output[9] += intermediate3.onecheck();
-		
-		intermediate3 = intermediate3 && cutlist[10]->cut(evtv);
-		output[10] += intermediate3.onecheck();
-		
-		intermediate3 = intermediate3 && cutlist[11]->cut(evtv);
-		output[11] += intermediate3.onecheck();
+		for (int i = 9; i != cutlist.size(); i++) {
+			intermediate3 = intermediate3 && cutlist[i]->cut(evtv);
+			output[i] += (intermediate3).onecheck();
+		}
 		
 	}
 	
