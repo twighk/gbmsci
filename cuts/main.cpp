@@ -85,7 +85,7 @@ int main(int argc, char** argv) {
 		output[8] += intermediate3.onecheck();
 		
 		for (int i = 9; i != cutlist.size(); i++) {
-			intermediate3 = /*intermediate3 &&*/ cutlist[i]->cut(evtv);
+			intermediate3 = intermediate3 && cutlist[i]->cut(evtv);
 			output[i] += (intermediate3).onecheck();
 
 		}
