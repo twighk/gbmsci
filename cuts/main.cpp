@@ -15,6 +15,7 @@ int main(int argc, char** argv) {
 	//TFile f("../root/AH115elec.root");
 	//TFile f("../root/WplusJetselec.root");
 	TFile f("../root/AH115elec.root");
+	//TFile f("../root/AH115.root");
 	
 	TTree *t = dynamic_cast<TTree*>(f.Get("bbAHCutTree"));
 	
@@ -59,9 +60,12 @@ int main(int argc, char** argv) {
 	matrix <Int_t> intermediate3(1);
 	
 
-
+	cout <<endl<< f.GetName()<< endl;
 	for(ULong64_t j = 0; j < evtv.totaleventnumber(); j++){
 		evtv.GetEntry(j);
+		
+		if(float2int((*evtv.GetnumElectrons())) == 0){continue;}
+		
 		output[0] += cutlist[0]->cut(evtv).onecheck();		
 		intermediate = cutlist[0]->cut(evtv);
 		for (int i = 1; i != 3; i++) {
