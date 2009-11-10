@@ -378,9 +378,8 @@ public:
 				TLorentzVector* elecvec = dynamic_cast <TLorentzVector*> ((*evt.Getlv_electron()).At(i));
 				TLorentzVector* metvec  = dynamic_cast <TLorentzVector*> ((*evt.Getlv_met()).At(0));
 
-
 				Double_t mt = sqrt(  pow(elecvec->E()  + metvec->E() ,2)
-								   - pow(elecvec->Pz() + metvec->Pz(),2) 
+								   - pow(elecvec->Pz() /*+ metvec->Pz()*/,2) 
 								   );
 				
 				
@@ -392,8 +391,8 @@ public:
 			}
 		}
 		
-		std::cout << result;
-		std::cout << '\n';
+//		std::cout << result;
+//		std::cout << '\n';
 		
 		return result;
 	}
