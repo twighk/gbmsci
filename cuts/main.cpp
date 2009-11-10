@@ -14,7 +14,7 @@ int main(int argc, char** argv) {
 	
 	//TFile f("../root/AH115elec.root");
 	//TFile f("../root/WplusJetselec.root");
-	TFile f("../root/AH115bbelec.root");
+	TFile f("../root/AH115elec.root");
 	
 	TTree *t = dynamic_cast<TTree*>(f.Get("bbAHCutTree"));
 	
@@ -49,9 +49,9 @@ int main(int argc, char** argv) {
 
 	vector <Int_t> output(cutlist.size(), 0);
 	
-	for(ULong64_t i = 0; i < 2; i++){
-		evtv.Show(i);
-	}
+//	for(ULong64_t i = 0; i < 2; i++){
+//		evtv.Show(i);
+//	}
 
 	int sum = 0;
 	matrix <Int_t> intermediate(1);
@@ -60,8 +60,8 @@ int main(int argc, char** argv) {
 	
 
 
-	for(ULong64_t i = 0; i < evtv.totaleventnumber(); i++){
-		evtv.GetEntry(i);
+	for(ULong64_t j = 0; j < evtv.totaleventnumber(); j++){
+		evtv.GetEntry(j);
 		output[0] += cutlist[0]->cut(evtv).onecheck();		
 		intermediate = cutlist[0]->cut(evtv);
 		for (int i = 1; i != 3; i++) {
@@ -85,9 +85,12 @@ int main(int argc, char** argv) {
 		output[8] += intermediate3.onecheck();
 		
 		for (int i = 9; i != cutlist.size(); i++) {
-			intermediate3 = intermediate3 && cutlist[i]->cut(evtv);
+			intermediate3 = /*intermediate3 &&*/ cutlist[i]->cut(evtv);
 			output[i] += (intermediate3).onecheck();
+
 		}
+		
+		
 		
 	}
 	
