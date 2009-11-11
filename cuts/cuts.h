@@ -299,18 +299,18 @@ public:
 	cutdphielectau(cutvec & cutlist, Float_t _anginrad):cuts(cutlist){anginrad = _anginrad;}
 	
 	virtual matrix <Int_t> cut(eventviewer& evt){
-		matrix <Int_t> result((*evt.Getlv_electron()).GetSize(), (*evt.Getlv_tau()).GetSize()); //get num of elecs and taus
+		matrix <Int_t> result((*evt.Getlv_electron()).GetEntriesFast(), (*evt.Getlv_tau()).GetEntriesFast()); //get num of elecs and taus
 		
-		for (int i = 0; i != (*evt.Getlv_electron()).GetSize(); i++) {
-			for (int j = 0; j != (*evt.Getlv_tau()).GetSize(); j++) {
+		for (int i = 0; i != (*evt.Getlv_electron()).GetEntriesFast(); i++) {
+			for (int j = 0; j != (*evt.Getlv_tau()).GetEntriesFast(); j++) {
 				TLorentzVector* elecvec = dynamic_cast <TLorentzVector*> ((*evt.Getlv_electron()).At(i));
 				TLorentzVector* tauvec  = dynamic_cast <TLorentzVector*> ((*evt.Getlv_tau()).At(j));
 				
 				TVector3 electmp(elecvec->Px(), elecvec->Py(), 0), 
 						 tautmp(tauvec->Px(), tauvec->Py(), 0);
 				
-				float_t dphi = electmp.Angle(tautmp);
-				
+				//float_t dphi = electmp.Angle(tautmp);
+				float_t dphi = fabs(tauvec->Phi() - elecvec->Phi());
 				
 				//float_t dphi = elecvec->DeltaPhi((*tauvec));
 				//dphi = fabs(dphi);
@@ -337,18 +337,21 @@ public:
 	cutdphielecmet(cutvec & cutlist, Float_t _anginrad):cuts(cutlist){anginrad = _anginrad;}
 	
 	virtual matrix <Int_t> cut(eventviewer& evt){
-		matrix <Int_t> result((*evt.Getlv_electron()).GetSize(), (*evt.Getlv_tau()).GetSize()); //get num of elecs and taus
+		matrix <Int_t> result((*evt.Getlv_electron()).GetEntriesFast(), (*evt.Getlv_tau()).GetEntriesFast()); //get num of elecs and taus
 		
-		for (int i = 0; i != (*evt.Getlv_electron()).GetSize(); i++) {
-			for (int j = 0; j != (*evt.Getlv_tau()).GetSize(); j++) {
+		for (int i = 0; i != (*evt.Getlv_electron()).GetEntriesFast(); i++) {
+			for (int j = 0; j != (*evt.Getlv_tau()).GetEntriesFast(); j++) {
 				TLorentzVector* elecvec = dynamic_cast <TLorentzVector*> ((*evt.Getlv_electron()).At(i));
 				TLorentzVector* metvec  = dynamic_cast <TLorentzVector*> ((*evt.Getlv_met()).At(0));
 				
 				TVector3 electmp(elecvec->Px(), elecvec->Py(), 0), 
 				mettmp(metvec->Px(), metvec->Py(), 0);
 				
-				float_t dphi = electmp.Angle(mettmp);
 				
+				
+				//float_t dphi = electmp.Angle(mettmp);
+				float_t dphi = fabs(metvec->Phi() - elecvec->Phi());
+
 				if(dphi < anginrad ) {
 					result(i,j) = 1;
 				} else {
@@ -371,15 +374,21 @@ public:
 	cutmtelecmet(cutvec & cutlist, Double_t _energy):cuts(cutlist){energy = _energy;}
 	
 	virtual matrix <Int_t> cut(eventviewer& evt){
-		matrix <Int_t> result((*evt.Getlv_electron()).GetSize(), (*evt.Getlv_tau()).GetSize()); //get num of elecs and taus
+		matrix <Int_t> result((*evt.Getlv_electron()).GetEntriesFast(), (*evt.Getlv_tau()).GetEntriesFast()); //get num of elecs and taus
 		
-		for (int i = 0; i != (*evt.Getlv_electron()).GetSize(); i++) {
-			for (int j = 0; j != (*evt.Getlv_tau()).GetSize(); j++) {
+		for (int i = 0; i != (*evt.Getlv_electron()).GetEntriesFast(); i++) {
+			for (int j = 0; j != (*evt.Getlv_tau()).GetEntriesFast(); j++) {
 				TLorentzVector* elecvec = dynamic_cast <TLorentzVector*> ((*evt.Getlv_electron()).At(i));
 				TLorentzVector* metvec  = dynamic_cast <TLorentzVector*> ((*evt.Getlv_met()).At(0));
 
-				Double_t mt = sqrt(  pow(elecvec->E()  + metvec->E() ,2)
-								   - pow(elecvec->Pz() /*+ metvec->Pz()*/,2) 
+//				Double_t mt = sqrt(  pow(elecvec->E()  + metvec->E() ,2)
+//								   - pow(elecvec->Pz() /*+ metvec->Pz()*/,2) 
+//								   );
+				
+				Double_t mt = sqrt(  pow(elecvec->Et() + sqrt(metvec->Px() * metvec->Px() + metvec->Py() * metvec->Py()),2)
+								   - pow(elecvec->Px() + metvec->Px(),2) 
+								   - pow(elecvec->Py() + metvec->Py(),2) 
+
 								   );
 				
 				
