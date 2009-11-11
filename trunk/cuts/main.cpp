@@ -5,6 +5,7 @@
 #include "../eventviewer/eventviewer.h"
 #include "cuts.h"
 #include "matrix.h"
+#include <TH1f.h>
 
 
 using namespace std;
@@ -58,21 +59,20 @@ int main(int argc, char** argv) {
 	matrix <Int_t> intermediate(1);
 	matrix <Int_t> intermediate2(1);
 	matrix <Int_t> intermediate3(1);
-	
+	TFile outfile("../root/output.root","RECREATE");
+	TH1F hist("Mt Dist","Mt Dist", 100, 0, 100);
+
 
 	cout <<endl<< f.GetName()<< endl;
 	for(ULong64_t j = 0; j < evtv.totaleventnumber(); j++){
 		evtv.GetEntry(j);
-		
-		if(float2int((*evtv.GetnumElectrons())) == 0){continue;}
-		
+				
 		output[0] += cutlist[0]->cut(evtv).onecheck();		
 		intermediate = cutlist[0]->cut(evtv);
 		for (int i = 1; i != 3; i++) {
 			intermediate = intermediate && cutlist[i]->cut(evtv);
 			output[i] += (intermediate).onecheck();
 		}
-		
 		if(intermediate.onecheck() == false){continue;}
 		
 		output[3] += cutlist[3]->cut(evtv).onecheck();
@@ -91,6 +91,22 @@ int main(int argc, char** argv) {
 		for (int i = 9; i != cutlist.size(); i++) {
 			intermediate3 = intermediate3 && cutlist[i]->cut(evtv);
 			output[i] += (intermediate3).onecheck();
+//			if (i == 10 && intermediate3.onecheck() == 1){
+//				//evtv.Show(j);
+//				for (int a = 0; a < intermediate3.Getx(); a++) {
+//					for (int b = 0; b < intermediate3.Gety(); b++){
+//					if (intermediate3(a, b) == 1) {
+//						TLorentzVector* elecvec = dynamic_cast <TLorentzVector*> ((*evtv.Getlv_electron()).At(a));
+//						TLorentzVector* metvec  = dynamic_cast <TLorentzVector*> ((*evtv.Getlv_met()).At(0));
+//						TLorentzVector tempvec = *elecvec + *metvec;
+//						Double_t mt = tempvec.Mt();
+//				   		hist.Fill(mt);
+//						
+//					}
+//					
+//					}
+//				}
+//			}
 
 		}
 		
@@ -98,11 +114,13 @@ int main(int argc, char** argv) {
 		
 	}
 	
+	outfile.cd();
+	hist.Write();
+	
 	cout <<"Total Events: "<< evtv.totaleventnumber() << endl;
 	for (int i = 0; i < cutlist.size(); i++) {
 		cout << cutlist[i]->name()<< ": " << output[i] << endl;
 	}
-	
 	
 
 //	cout << float2int(-0.9) << endl;
