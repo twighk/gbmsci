@@ -11,6 +11,14 @@
 // 2. Default constructor that makes 1 x 1 matrix with value -1 (good practice?)
 //
 
+struct coord{
+	Int_t x, y;
+	coord(Int_t _x, Int_t _y){
+		x = _x;
+		y = _y;
+	}
+};
+
 template <class T>
 class matrix { // Matrix Storage template
 	
@@ -94,12 +102,12 @@ public:
 		return false;
 	}
 	
-	Int_t onecount(){
-		Int_t count = 0;
+	std::vector <coord> onecount(){
+		std::vector <coord> count;
 		for (int i = 0; i != x; i++) {
 			for (int j = 0; j != y; j++) {
 				if (mat[i][j] == 1) {
-					count++;
+					count.push_back(coord(i,j));
 				}
 			}
 		}
@@ -110,6 +118,7 @@ public:
 	T& operator()(){return mat[0][0];} // scalar
 	T& operator()(Int_t _x){return mat[_x][0];} // vector
 	T& operator()(Int_t _x, Int_t _y){return mat[_x][_y];} // matrix
+	T& operator()(coord c){return mat[c.x][c.y];} // coord
 	
 	//for easy outputting 
 	friend std::ostream& operator<< (std::ostream& out, matrix mat){ //We can't pass by reference here
