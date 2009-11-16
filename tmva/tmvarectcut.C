@@ -1,6 +1,6 @@
 #include <cstdlib>
 #include <iostream> 
-#include <map>
+//#include <map>
 #include <string>
 
 // idenify at a later point in time
@@ -17,12 +17,40 @@
 
 #if not defined(__CINT__) || defined(__MAKECINT__)
 // needs to be included when makecint runs (ACLIC)
-#include "TMVA/Factory.h"
-#include "TMVA/Tools.h"
+#include <TMVA/Factory.h>
+#include <TMVA/Tools.h>
 #endif
 
-int main(){
+using namespace std;
+
+int tmvarectcut(){
+	cout << "hello andrew" << endl;
 	
+	TFile* outfile = TFile::Open("TMVAout.root", "RECREATE");
 	
+	TMVA::Factory *factory  = new TMVA::Factory("tmvarectcut", outfile, "!V:!Silent:Color:DrawProgressBar:Transformations=I;D;P;G,D");
+	
+	factory->AddVariable("lv_electron[0]->Et()", 'F');
+	factory->AddVariable("lv_tau[0]->Et()", 'F');
+	
+	TFile f1("../root/AH115elec.root");
+	TFile f2("../root/Zbbelec.root");
+	TTree *t1 = dynamic_cast<TTree*>(f1.Get("bbAHCutTree"));
+	TTree *t2 = dynamic_cast<TTree*>(f2.Get("bbAHCutTree"));
+	
+	factory->AddSignalTree(t1, 1.0);
+	factory->AddBackgroundTree(t2, 1.0);
+	
+	factory->PrepareTrainingAndTestTree("", "nTrain_Signal=0:nTrain_Background=0:SplitMode=Random:NormMode=NumEvents:!V" );
+	
+	factory->BookMethod( TMVA::Types::kCuts, "Cuts", 
+						"H:!V:FitMethod=MC:EffSel:VarProp=FSmart");
+	
+	factory->TrainAllMethods();
+	factory->TestAllMethods();
+	factory->EvaluateAllMethods();
+
+	
+	outfile->Close();
 	return 0;
 }
