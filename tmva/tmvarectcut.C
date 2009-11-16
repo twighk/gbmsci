@@ -54,3 +54,9 @@ int tmvarectcut(){
 	outfile->Close();
 	return 0;
 }
+
+
+int main(){
+	tmvarectcut();
+	return 0;
+}
