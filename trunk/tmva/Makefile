@@ -1,6 +1,6 @@
 BIN = tmvarect
 GPP = g++
-ROOTLIB = `root-config --libs` -lTMVA -lMinuit -lXMLIO 
+ROOTLIB = `root-config --libs` -lTMVA -lMinuit -lXMLIO -lTreePlayer
 ROOTFLAG = `root-config --cflags` 
 OPTI = #-fast -ffast-math -mfpmath=sse -funroll-loops #-funsafe-math-optimizations 
 
