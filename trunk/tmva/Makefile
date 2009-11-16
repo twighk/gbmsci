@@ -1,7 +1,7 @@
 BIN = tmvarect
 GPP = g++
-ROOTLIB = `root-config --libs`
-ROOTFLAG = `root-config --cflags`
+ROOTLIB = `root-config --libs` -L/opt/root/math/mathcore/src
+ROOTFLAG = `root-config --cflags` 
 OPTI = #-fast -ffast-math -mfpmath=sse -funroll-loops #-funsafe-math-optimizations 
 
 CFLAGS = ${ROOTFLAG}
