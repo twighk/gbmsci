@@ -3,46 +3,77 @@
 #include <TClonesArray.h>
 #include <TTree.h>
 #include <TLorentzVector.h>
+#include <vector>
+#include <stdio.h>
 #include "../eventviewer/eventviewer.h"
 
 using namespace std;
 
+
 int main( int argc, const char* argv[] )
 {
-	TFile* fin;
-	if (argc != 2){
-		fin = new TFile("../root/AH115elec.root");
-	} else {
-		fin = new TFile(argv[1]);
-	}
-	//TFile fin("../root/AH115elec.root");
+//	TFile* fin;
+//	if (argc != 2){
+//		fin = new TFile("../root/AH115.root");
+//	} else {
+//		fin = new TFile(argv[1]);
+//	}
 	
-	TTree *t = dynamic_cast<TTree*>(fin->Get("bbAHCutTree"));
+	vector <TFile*> infile;
+	vector <TFile*> outfile;
 	
-	TFile* fout = new TFile("fout.root", "RECREATE");
-	
-	TTree *tree = new TTree("bbAHCutTree","bbAHCutTree");
-	
-	TLorentzVector lv_electron_out;
-	
-	tree->Branch("lv_electron",&lv_electron_out);
+	infile.push_back(new TFile("../root/AH115bb.root"));
+	infile.push_back(new TFile("../root/Zbb.root"));
+			
 	
 	
 	
 	
-	eventviewer evtv(t);
-	cout <<endl<< fin->GetName()<< endl;
-	for(ULong64_t j = 0; j < evtv.totaleventnumber(); j++){
-		evtv.GetEntry(j);
-		lv_electron_out = *(dynamic_cast<TLorentzVector*> ((evtv.Getlv_electron())->At(0)));
-		tree->Fill();
+	cout << "Input ROOT Files" << endl;
+	for (Int_t i = 0; i < infile.size(); i++) {
 		
-		
+		//Make appropriately named skimmed trees - not very elegant method - could improve?
+		cout << "\t" << infile[i]->GetName() << endl;
+		char test[] = "";
+		strncpy(test, infile[i]->GetName(), strlen(infile[i]->GetName()) - 5);
+		test[strlen(infile[i]->GetName()) - 5] = '\0';
+		strcat(test, "_skim.root");
+		outfile.push_back(new TFile(test, "RECREATE"));
+						  
+						  
+		outfile[i]->Write();
+					
 	}
-	tree->Print();
-	fout->Write();
 
 	
-	printf( "\nHello World\n\n" );
-	return 0;
+//	TFile fin("../root/AH115elec.root");
+//	
+//	TTree *t = dynamic_cast<TTree*>(fin->Get("bbAHCutTree"));
+//	
+//	TFile* fout = new TFile("fout.root", "RECREATE");
+//	
+//	TTree *tree = new TTree("bbAHCutTree","bbAHCutTree");
+//	
+//	TLorentzVector lv_electron_out;
+//	
+//	tree->Branch("lv_electron",&lv_electron_out);
+//	
+//	
+//	
+//	
+//	eventviewer evtv(t);
+//	cout <<endl<< fin->GetName()<< endl;
+//	for(ULong64_t j = 0; j < evtv.totaleventnumber(); j++){
+//		evtv.GetEntry(j);
+//		//evtv.Show();
+//		//lv_electron_out = *(dynamic_cast<TLorentzVector*> ((evtv.Getlv_electron())->At(0)));
+//		//tree->Fill();
+//		
+//		
+//	}
+//	tree->Print();
+//	fout->Write();
+
+		return 0;
 }
+
