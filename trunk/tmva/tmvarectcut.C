@@ -2,6 +2,7 @@
 #include <iostream> 
 //#include <map>
 #include <string>
+#include <TLorentzVector.h>
 
 // idenify at a later point in time
 #include "TChain.h" // magic includes
@@ -30,12 +31,16 @@ int tmvarectcut(){
 	
 	TMVA::Factory *factory  = new TMVA::Factory("tmvarectcut", outfile, "!V:!Silent:Color:DrawProgressBar:Transformations=I;D;P;G,D");
 	
-	factory->AddVariable("lv_electron[0]->Et()", 'F');
-	factory->AddVariable("lv_tau[0]->Et()", 'F');
+	factory->AddVariable("lv_electron->Et()", 'F');
+//	factory->AddVariable("lv_tau->Et()", 'F');
 
 	
-	TFile f1("../root/AH115elec.root");
-	TFile f2("../root/Zbbelec.root");
+	factory->AddVariable("electronEcalIso", 'F');
+//	factory->AddVariable("electronHcalIso", 'F');
+
+	
+	TFile f1("../root/AH115bb_skim.root");
+	TFile f2("../root/Zbb_skim.root");
 	TTree *t1 = dynamic_cast<TTree*>(f1.Get("bbAHCutTree"));
 	TTree *t2 = dynamic_cast<TTree*>(f2.Get("bbAHCutTree"));
 	
@@ -45,7 +50,7 @@ int tmvarectcut(){
 	factory->PrepareTrainingAndTestTree("", "nTrain_Signal=0:nTrain_Background=0:SplitMode=Random:NormMode=NumEvents:!V" );
 	
 	factory->BookMethod( TMVA::Types::kCuts, "Cuts", 
-						"H:!V:FitMethod=MC:EffSel:VarProp=FSmart");
+						"!H:!V:FitMethod=MC:EffSel:VarProp=FSmart");
 	
 	factory->TrainAllMethods();
 	factory->TestAllMethods();
