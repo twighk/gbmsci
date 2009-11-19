@@ -43,12 +43,12 @@ int main( int argc, const char* argv[] )
 		instr += "_skim.root";
 		outfile.push_back(new TFile(instr.c_str(), "RECREATE"));
 						  
-//		TLorentzVector lv_electron_out;
-//		TLorentzVector lv_tau_out;
-//		TLorentzVector lv_met_out;
-		TClonesArray lv_electron_out("TLorentzVector",1);
-		TClonesArray lv_tau_out("TLorentzVector",1);
-		TClonesArray lv_met_out("TLorentzVector",1);
+		TLorentzVector lv_electron_out;
+		TLorentzVector lv_tau_out;
+		TLorentzVector lv_met_out;
+//		TClonesArray lv_electron_out("TLorentzVector",1);
+//		TClonesArray lv_tau_out("TLorentzVector",1);
+//		TClonesArray lv_met_out("TLorentzVector",1);
 		Float_t electronEcalIso_out; 
 		Float_t electronTrackIso_out;
 		Float_t electronHcalIso_out;
@@ -83,12 +83,12 @@ int main( int argc, const char* argv[] )
 		for(ULong64_t j = 0; j < evtv.totaleventnumber(); j++){
 			evtv.GetEntry(j);
 			if (evtv.Getlv_electron()->GetEntriesFast() == 1 && evtv.Getlv_tau()->GetEntriesFast() == 1) {
-//				lv_electron_out = *(dynamic_cast<TLorentzVector*> ((evtv.Getlv_electron())->At(0)));
-//				lv_tau_out		= *(dynamic_cast<TLorentzVector*> ((evtv.Getlv_tau())->At(0)));
-//				lv_met_out		= *(dynamic_cast<TLorentzVector*> ((evtv.Getlv_met())->At(0)));
-				lv_electron_out[0] = (dynamic_cast<TLorentzVector*> ((evtv.Getlv_electron())->At(0)));
-				lv_tau_out[0] = (dynamic_cast<TLorentzVector*> ((evtv.Getlv_tau())->At(0)));
-				lv_met_out[0] = (dynamic_cast<TLorentzVector*> ((evtv.Getlv_met())->At(0)));
+				lv_electron_out = *(dynamic_cast<TLorentzVector*> ((evtv.Getlv_electron())->At(0)));
+				lv_tau_out		= *(dynamic_cast<TLorentzVector*> ((evtv.Getlv_tau())->At(0)));
+				lv_met_out		= *(dynamic_cast<TLorentzVector*> ((evtv.Getlv_met())->At(0)));
+//				lv_electron_out[0] = (dynamic_cast<TLorentzVector*> ((evtv.Getlv_electron())->At(0)));
+//				lv_tau_out[0] = (dynamic_cast<TLorentzVector*> ((evtv.Getlv_tau())->At(0)));
+//				lv_met_out[0] = (dynamic_cast<TLorentzVector*> ((evtv.Getlv_met())->At(0)));
 				electronEcalIso_out = evtv.GetelectronEcalIso()->operator[](0);
 				electronTrackIso_out = evtv.GetelectronTrackIso()->operator[](0);
 				electronHcalIso_out = evtv.GetelectronHcalIso()->operator[](0);

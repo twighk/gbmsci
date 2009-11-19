@@ -24,21 +24,18 @@
 using namespace std;
 
 int tmvarectcut(){
-	cout << "hello andrew" << endl;
-	
 	TFile* outfile = TFile::Open("TMVAout.root", "RECREATE");
 	
 	TMVA::Factory *factory  = new TMVA::Factory("tmvarectcut", outfile, "!V:!Silent:Color:DrawProgressBar:Transformations=I;D;P;G,D");
 	
-	factory->AddVariable("lv_electron[0]->Et()", 'F');
-	factory->AddVariable("lv_tau[0]->Et()", 'F');
-
+	factory->AddVariable("lv_electron->Et()", 'F');
+	factory->AddVariable("lv_tau->Et()", 'F');
 	
-	TFile f1("../root/AH115elec.root");
-	TFile f2("../root/Zbbelec.root");
+	TFile f1("../root/AH115bb_skim.root");
+	TFile f2("../root/Zbb_skim.root");
 	TTree *t1 = dynamic_cast<TTree*>(f1.Get("bbAHCutTree"));
 	TTree *t2 = dynamic_cast<TTree*>(f2.Get("bbAHCutTree"));
-	
+
 	factory->AddSignalTree(t1, 1.0);
 	factory->AddBackgroundTree(t2, 1.0);
 	
