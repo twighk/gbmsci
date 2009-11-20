@@ -28,6 +28,10 @@ int tmvarectcut(){
 	
 	TMVA::Factory *factory  = new TMVA::Factory("tmvarectcut", outfile, "!V:!Silent:Color:DrawProgressBar:Transformations=I;D;P;G,D");
 	
+<<<<<<< HEAD
+	factory->AddVariable("lv_electron->Et()", 'F');
+	factory->AddVariable("lv_tau->Et()", 'F');
+=======
 	factory->AddVariable("lv_electron_Et", 'F');
 	factory->AddVariable("lv_tau_Et", 'F');
 	factory->AddVariable("lv_met_Et",'F');
@@ -42,6 +46,7 @@ int tmvarectcut(){
 	factory->AddVariable("electronCharge", 'I');
 	factory->AddVariable("tauCharge", 'I');
 
+>>>>>>> master
 	
 	TFile f1("../root/AH115bb_skim.root");
 	TFile f2("../root/Zbb_skim.root");
