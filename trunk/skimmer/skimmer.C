@@ -15,13 +15,6 @@ using namespace std;
 
 int main( int argc, const char* argv[] )
 {
-//	TFile* fin;
-//	if (argc != 2){
-//		fin = new TFile("../root/AH115.root");
-//	} else {
-//		fin = new TFile(argv[1]);
-//	}
-	
 	vector <TFile*> infile;
 	vector <TFile*> outfile;
 	
@@ -40,7 +33,13 @@ int main( int argc, const char* argv[] )
 		cout << "\t" << infile[i]->GetName() << '\t';
 		string instr = infile[i]->GetName();
 		instr.erase(instr.length() - 5, 5);
-		instr += "_skim.root";
+			instr += "_";
+			if (argc > 1){
+				instr += argv[1];
+			} else {
+				instr += "skim";
+			}
+			instr += ".root";
 		outfile.push_back(new TFile(instr.c_str(), "RECREATE"));
 						  
 //		TLorentzVector lv_electron_out;
