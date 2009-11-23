@@ -30,17 +30,17 @@ int tmvarectcut(){
 	
 	factory->AddVariable("lv_electron_Et", 'F');
 	factory->AddVariable("lv_tau_Et", 'F');
-	factory->AddVariable("lv_met_Et",'F');
-	factory->AddVariable("electronEcalIso", 'F');
-	factory->AddVariable("electronTrackIso", 'F');
-	factory->AddVariable("electronHcalIso", 'F');
-	factory->AddVariable("tauTrack", 'I');
-	factory->AddVariable("tauLeadTrk", 'I');
-	factory->AddVariable("tauECALIso", 'I');
-	factory->AddVariable("tauTrackIso", 'I');
-	factory->AddVariable("tauElectron", 'I');
-	factory->AddVariable("electronCharge", 'I');
-	factory->AddVariable("tauCharge", 'I');
+//	factory->AddVariable("lv_met_Et",'F');
+//	factory->AddVariable("electronEcalIso", 'F');
+//	factory->AddVariable("electronTrackIso", 'F');
+//	factory->AddVariable("electronHcalIso", 'F');
+//	factory->AddVariable("tauTrack", 'I');
+//	factory->AddVariable("tauLeadTrk", 'I');
+//	factory->AddVariable("tauECALIso", 'I');
+//	factory->AddVariable("tauTrackIso", 'I');
+//	factory->AddVariable("tauElectron", 'I');
+//	factory->AddVariable("electronCharge", 'I');
+//	factory->AddVariable("tauCharge", 'I');
 
 	
 	TFile f1("../root/AH115bb_skim.root");
