@@ -25,7 +25,6 @@ int main( int argc, const char* argv[] )
 	Int_t number_of_electrons = 1;
 	Int_t number_of_taus = 1;
 	
-	
 	cout << "Input ROOT Files" << endl;
 	for (Int_t i = 0; i < infile.size(); i++) {
 		
@@ -83,7 +82,6 @@ int main( int argc, const char* argv[] )
 		Int_t elec = 0;
 		for(ULong64_t j = 0; j < evtv.totaleventnumber(); j++){
 			evtv.GetEntry(j);
-			
 			if (evtv.Getlv_electron()->GetEntriesFast() != 1) elec++;
 			if (evtv.Getlv_electron()->GetEntriesFast() == 1 && evtv.Getlv_tau()->GetEntriesFast() == 1) {sum++;
 //				lv_electron_out = *(dynamic_cast<TLorentzVector*> ((evtv.Getlv_electron())->At(0)));
@@ -91,7 +89,7 @@ int main( int argc, const char* argv[] )
 //				lv_met_out		= *(dynamic_cast<TLorentzVector*> ((evtv.Getlv_met())->At(0)));
 				lv_electron_Et_out = (dynamic_cast<TLorentzVector*> ((evtv.Getlv_electron())->At(0)))->Et();
 				lv_tau_Et_out = (dynamic_cast<TLorentzVector*> ((evtv.Getlv_tau())->At(0)))->Et();
-				lv_met_Et_out = (dynamic_cast<TLorentzVector*> ((evtv.Getlv_met())->At(0)))->Et();
+				lv_met_Et_out = (dynamic_cast<TLorentzVector*> ((evtv.Getlv_pfmet())->At(0)))->Et();
 				electronEcalIso_out = evtv.GetelectronEcalIso()->operator[](0);
 				electronTrackIso_out = evtv.GetelectronTrackIso()->operator[](0);
 				electronHcalIso_out = evtv.GetelectronHcalIso()->operator[](0);
@@ -112,6 +110,7 @@ int main( int argc, const char* argv[] )
 		cout << sum << '/' << elec << '/'<< evtv.totaleventnumber() << '\t' << (double)sum / (double)elec *100 << "%"<< endl;
 		
 		outfile[i]->Write();
+		delete outtree;
 					
 	}
 
