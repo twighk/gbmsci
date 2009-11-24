@@ -28,19 +28,19 @@ int tmvarectcut(){
 	
 	TMVA::Factory *factory  = new TMVA::Factory("tmvarectcut", outfile, "!V:!Silent:Color:DrawProgressBar:Transformations=I;D;P;G,D");
 	
-	factory->AddVariable("lv_electron_Et", 'F');	// 1
-	factory->AddVariable("lv_tau_Et", 'F');			// 1
-	factory->AddVariable("lv_met_Et",'F');			// 1
+//	factory->AddVariable("lv_electron_Et", 'F');	// 1
+//	factory->AddVariable("lv_tau_Et", 'F');			// 1
+//	factory->AddVariable("lv_met_Et",'F');			// 1
 	factory->AddVariable("electronEcalIso", 'F');	// 1
 	factory->AddVariable("electronTrackIso", 'F');	// 1
 //	factory->AddVariable("electronHcalIso", 'F');	// 0
-	factory->AddVariable("tauTrack", 'I');			// 1
+//	factory->AddVariable("tauTrack", 'I');			// 1
 //	factory->AddVariable("tauLeadTrk", 'I');		// 0
 //	factory->AddVariable("tauECALIso", 'I');		// 0
 //	factory->AddVariable("tauTrackIso", 'I');		// 0
 //	factory->AddVariable("tauElectron", 'I');		// 0
 //	factory->AddVariable("electronCharge", 'I');	// 0 //matrix diag error
-	factory->AddVariable("tauCharge", 'I');			// 1
+//	factory->AddVariable("tauCharge", 'I');			// 1
 
 	
 	TFile f1("../root/AH115bb_skim.root");
@@ -55,7 +55,7 @@ int tmvarectcut(){
 	
 	factory->BookMethod( TMVA::Types::kCuts, "Cuts", 
 						"!H:!V:FitMethod=MC:EffSel:VarProp=FSmart");
-	factory->BookMethod(TMVA::Types::kBDT, "BDTG","");
+//	factory->BookMethod(TMVA::Types::kBDT, "BDTG","");
 	
 	factory->TrainAllMethods();
 	factory->TestAllMethods();
