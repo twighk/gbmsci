@@ -89,7 +89,9 @@ int main( int argc, const char* argv[] )
 //				lv_met_out		= *(dynamic_cast<TLorentzVector*> ((evtv.Getlv_met())->At(0)));
 				lv_electron_Et_out = (dynamic_cast<TLorentzVector*> ((evtv.Getlv_electron())->At(0)))->Et();
 				lv_tau_Et_out = (dynamic_cast<TLorentzVector*> ((evtv.Getlv_tau())->At(0)))->Et();
-				lv_met_Et_out = (dynamic_cast<TLorentzVector*> ((evtv.Getlv_pfmet())->At(0)))->Et();
+				lv_met_Et_out = (dynamic_cast<TLorentzVector*> ((evtv.Getlv_met())->At(0)))->Et();
+				
+				//cout << lv_electron_Et_out << '\t' << lv_tau_Et_out << '\t' << lv_met_Et_out << endl;
 				electronEcalIso_out = evtv.GetelectronEcalIso()->operator[](0);
 				electronTrackIso_out = evtv.GetelectronTrackIso()->operator[](0);
 				electronHcalIso_out = evtv.GetelectronHcalIso()->operator[](0);
