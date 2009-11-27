@@ -33,7 +33,7 @@ int tmvarectcut(){
 	
 //	factory->AddVariable("lv_met_Et",'F');			// 0 1
 //	factory->AddVariable("lv_electron_Et", 'F');	// 0 1
-//	factory->AddVariable("lv_tau_Et", 'F');			// 0 1
+	factory->AddVariable("lv_tau_Et", 'F');			// 0 1
 	
 	factory->AddVariable("electronEcalIso", 'F');	// 1 1
 	factory->AddVariable("electronTrackIso", 'F');	// 1 1
@@ -57,9 +57,12 @@ int tmvarectcut(){
 	
 	factory->PrepareTrainingAndTestTree("", "nTrain_Signal=0:nTrain_Background=0:SplitMode=Random:NormMode=NumEvents:!V" );
 	
-	factory->BookMethod( TMVA::Types::kCuts, "Cuts", 
-						"!H:!V:FitMethod=MC:EffSel:VarProp=FSmart");
+//	factory->BookMethod( TMVA::Types::kCuts, "Cuts", 
+//						"!H:!V:FitMethod=MC:EffSel:VarProp=FSmart");
 //	factory->BookMethod(TMVA::Types::kBDT, "BDTG","");
+	
+	factory->BookMethod( TMVA::Types::kMLP, "MLP", "H:!V:NeuronType=tanh:VarTransform=N:NCycles=600:HiddenLayers=N+5:TestRate=5" );
+
 	
 	factory->TrainAllMethods();
 	factory->TestAllMethods();
