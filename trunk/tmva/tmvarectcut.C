@@ -31,20 +31,23 @@ int tmvarectcut(){
 	// col1 : no warings /errors
 	// col2 : just 0:0 warning
 	
-//	factory->AddVariable("lv_met_Et",'F');			// 0 1
-//	factory->AddVariable("lv_electron_Et", 'F');	// 0 1
+	factory->AddVariable("lv_met_Et",'F');			// 0 1
+	factory->AddVariable("lv_electron_Et", 'F');	// 0 1
 	factory->AddVariable("lv_tau_Et", 'F');			// 0 1
+	factory->AddVariable("dphielectau", 'F');			// 0 1
+	factory->AddVariable("dphielecmet", 'F');			// 0 1
+	factory->AddVariable("mtelecmet", 'F');			// 0 1
 	
-	factory->AddVariable("electronEcalIso", 'F');	// 1 1
-	factory->AddVariable("electronTrackIso", 'F');	// 1 1
+//	factory->AddVariable("electronEcalIso", 'F');	// 1 1
+//	factory->AddVariable("electronTrackIso", 'F');	// 1 1
 //	factory->AddVariable("electronHcalIso", 'F');	// 0 0
-	factory->AddVariable("tauTrack", 'I');			// 1 1
-	factory->AddVariable("tauLeadTrk", 'I');		// 1 0
+//	factory->AddVariable("tauTrack", 'I');			// 1 1
+//	factory->AddVariable("tauLeadTrk", 'I');		// 1 0
 //	factory->AddVariable("tauECALIso", 'I');		// 0 0
 //	factory->AddVariable("tauTrackIso", 'I');		// 0 0
 //	factory->AddVariable("tauElectron", 'I');		// 0 0
 //	factory->AddVariable("electronCharge", 'I');	// 0 0 //matrix diag error is linked to et
-	factory->AddVariable("tauCharge", 'I');			// 1 1
+//	factory->AddVariable("tauCharge", 'I');			// 1 1
 
 	
 	TFile f1("../root/AH115bb_skim.root");
@@ -61,16 +64,18 @@ int tmvarectcut(){
 //						"!H:!V:FitMethod=MC:EffSel:VarProp=FSmart");
 //	factory->BookMethod(TMVA::Types::kBDT, "BDTG","");
 	
-	factory->BookMethod( TMVA::Types::kMLP, "MLP", "H:!V:NeuronType=tanh:VarTransform=N:NCycles=600:HiddenLayers=N+5:TestRate=5" );
+	factory->BookMethod( TMVA::Types::kMLP, "MLP", "H:!V:NeuronType=tanh:VarTransform=N:NCycles=600:HiddenLayers=N+5:TestRate=5:CreateMVAPdfs" );
 
 	
 	factory->TrainAllMethods();
 	factory->TestAllMethods();
 	factory->EvaluateAllMethods();
+	outfile->Close();
+
+	TMVAGui("TMVAout.root");
 
 	
-	outfile->Close();
-	return 0;
+		return 0;
 }
 
 
