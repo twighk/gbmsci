@@ -15,6 +15,8 @@
 
 #include "TMVAGui.C"
 
+#include <TApplication.h>
+
 #if not defined(__CINT__) || defined(__MAKECINT__)
 // needs to be included when makecint runs (ACLIC)
 #include <TMVA/Factory.h>
@@ -34,20 +36,20 @@ int tmvarectcut(){
 	factory->AddVariable("lv_met_Et",'F');			// 0 1
 	factory->AddVariable("lv_electron_Et", 'F');	// 0 1
 	factory->AddVariable("lv_tau_Et", 'F');			// 0 1
-	factory->AddVariable("dphielectau", 'F');			// 0 1
-	factory->AddVariable("dphielecmet", 'F');			// 0 1
+	factory->AddVariable("dphielectau", 'F');		// 0 1
+	factory->AddVariable("dphielecmet", 'F');		// 0 1
 	factory->AddVariable("mtelecmet", 'F');			// 0 1
 	
-//	factory->AddVariable("electronEcalIso", 'F');	// 1 1
-//	factory->AddVariable("electronTrackIso", 'F');	// 1 1
-//	factory->AddVariable("electronHcalIso", 'F');	// 0 0
-//	factory->AddVariable("tauTrack", 'I');			// 1 1
-//	factory->AddVariable("tauLeadTrk", 'I');		// 1 0
-//	factory->AddVariable("tauECALIso", 'I');		// 0 0
-//	factory->AddVariable("tauTrackIso", 'I');		// 0 0
-//	factory->AddVariable("tauElectron", 'I');		// 0 0
-//	factory->AddVariable("electronCharge", 'I');	// 0 0 //matrix diag error is linked to et
-//	factory->AddVariable("tauCharge", 'I');			// 1 1
+	factory->AddVariable("electronEcalIso", 'F');	// 1 1
+	factory->AddVariable("electronTrackIso", 'F');	// 1 1
+	factory->AddVariable("electronHcalIso", 'F');	// 0 0
+	factory->AddVariable("tauTrack", 'I');			// 1 1
+	factory->AddVariable("tauLeadTrk", 'I');		// 1 0
+	factory->AddVariable("tauECALIso", 'I');		// 0 0
+	factory->AddVariable("tauTrackIso", 'I');		// 0 0
+	factory->AddVariable("tauElectron", 'I');		// 0 0
+	factory->AddVariable("electronCharge", 'I');	// 0 0 //matrix diag error is linked to et
+	factory->AddVariable("tauCharge", 'I');			// 1 1
 
 	
 	TFile f1("../root/AH115bb_skim.root");
@@ -73,13 +75,13 @@ int tmvarectcut(){
 	outfile->Close();
 
 	TMVAGui("TMVAout.root");
-
-	
-		return 0;
+	return 0;
 }
 
 
-int main(){
+int main(int argc, char** argv){
+	TApplication theApp("App", &argc, argv); // this must be instantiated only once 
 	tmvarectcut();
+	theApp.Run(); // probably pauses it 
 	return 0;
 }
