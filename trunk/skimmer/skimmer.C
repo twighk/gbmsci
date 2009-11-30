@@ -29,7 +29,6 @@ int main( int argc, const char* argv[] )
 	cout << "Input ROOT Files" << endl;
 	for (Int_t i = 0; i < infile.size(); i++) {
 		
-		//Make appropriately named skimmed trees - not very elegant method - could improve?
 		cout << "\t" << infile[i]->GetName() << '\t';
 		string instr = infile[i]->GetName();
 		instr.erase(instr.length() - 5, 5);
@@ -42,9 +41,7 @@ int main( int argc, const char* argv[] )
 			instr += ".root";
 		outfile.push_back(new TFile(instr.c_str(), "RECREATE"));
 						  
-//		TLorentzVector lv_electron_out;
-//		TLorentzVector lv_tau_out;
-//		TLorentzVector lv_met_out;
+
 		Float_t lv_electron_Et_out;
 		Float_t lv_tau_Et_out;
 		Float_t lv_met_Et_out;
@@ -58,7 +55,9 @@ int main( int argc, const char* argv[] )
 		Int_t tauElectron_out;
 		Int_t electronCharge_out;
 		Int_t tauCharge_out;
-		
+		Float_t dphielectau_out;
+		Float_t dphielecmet_out;
+		Float_t mtelecmet_out;
 		
 		
 		TTree *intree = dynamic_cast<TTree*>(infile[i]->Get("bbAHCutTree"));
@@ -76,7 +75,11 @@ int main( int argc, const char* argv[] )
 		outtree->Branch("tauElectron", &tauElectron_out);
 		outtree->Branch("electronCharge", &electronCharge_out);
 		outtree->Branch("tauCharge", &tauCharge_out);
-		
+		outtree->Branch("dphielectau", &dphielectau_out);
+		outtree->Branch("dphielecmet", &dphielecmet_out);
+		outtree->Branch("mtelecmet", &mtelecmet_out);
+
+
 		eventviewer evtv(intree);
 		
 		Int_t sum = 0;
@@ -106,6 +109,21 @@ int main( int argc, const char* argv[] )
 				electronCharge_out = float2int(evtv.GetelectronCharge()->operator[](0));
 				tauCharge_out = float2int(evtv.GettauCharge()->operator[](0));
 				
+				//Calculate electron tau delta phi
+				TLorentzVector* elecvec = dynamic_cast <TLorentzVector*> ((*evtv.Getlv_electron()).At(0));
+				TLorentzVector* tauvec  = dynamic_cast <TLorentzVector*> ((*evtv.Getlv_tau()).At(0));
+				TLorentzVector* metvec  = dynamic_cast <TLorentzVector*> ((*evtv.Getlv_met()).At(0));
+				
+				TVector3 electmp(elecvec->Px(), elecvec->Py(), 0), 
+				tautmp(tauvec->Px(), tauvec->Py(), 0),
+				mettmp(metvec->Px(), metvec->Py(), 0);
+
+				dphielectau_out = electmp.Angle(tautmp);
+				dphielecmet_out = electmp.Angle(mettmp);
+				mtelecmet_out = sqrt(  pow(elecvec->Et() + sqrt(metvec->Px() * metvec->Px() + metvec->Py() * metvec->Py()),2)
+								 - pow(elecvec->Px() + metvec->Px(),2) 
+								 - pow(elecvec->Py() + metvec->Py(),2) 
+								 );
 				outtree->Fill();
 			
 			}
