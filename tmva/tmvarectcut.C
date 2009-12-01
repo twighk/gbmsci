@@ -35,8 +35,14 @@ int tmvarectcut(){
 	
 	vector <string> trees;
 	
+	trees.push_back("../root/AH115_skim.root");
 	trees.push_back("../root/AH115bb_skim.root");
+	trees.push_back("../root/AH160_skim.root");
+	trees.push_back("../root/AH160bb_skim.root");
+	trees.push_back("../root/WplusJets_skim.root");
 	trees.push_back("../root/Zbb_skim.root");
+	trees.push_back("../root/Zcc_skim.root");
+	trees.push_back("../root/ZplusJets_skim.root");
 	
 	
 	
@@ -77,13 +83,13 @@ int tmvarectcut(){
 		
 		factory->AddVariable("electronEcalIso", 'F');	// 1 1
 		factory->AddVariable("electronTrackIso", 'F');	// 1 1
-		factory->AddVariable("electronHcalIso", 'F');	// 0 0
+//		factory->AddVariable("electronHcalIso", 'F');	// 0 0
 		factory->AddVariable("tauTrack", 'I');			// 1 1
 		factory->AddVariable("tauLeadTrk", 'I');		// 1 0
 		factory->AddVariable("tauECALIso", 'I');		// 0 0
-		factory->AddVariable("tauTrackIso", 'I');		// 0 0
+//		factory->AddVariable("tauTrackIso", 'I');		// 0 0
 		factory->AddVariable("tauElectron", 'I');		// 0 0
-		factory->AddVariable("electronCharge", 'I');	// 0 0 //matrix diag error is linked to et
+//		factory->AddVariable("electronCharge", 'I');	// 0 0 //matrix diag error is linked to et
 		factory->AddVariable("tauCharge", 'I');			// 1 1
 
 		
