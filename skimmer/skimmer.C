@@ -18,8 +18,15 @@ int main( int argc, const char* argv[] )
 	vector <TFile*> infile;
 	vector <TFile*> outfile;
 	
+	infile.push_back(new TFile("../root/AH115.root"));
 	infile.push_back(new TFile("../root/AH115bb.root"));
+	infile.push_back(new TFile("../root/AH160.root"));
+	infile.push_back(new TFile("../root/AH160bb.root"));
+//	infile.push_back(new TFile("../root/TTplusJets.root")); -something strange with this
+	infile.push_back(new TFile("../root/WplusJets.root"));
 	infile.push_back(new TFile("../root/Zbb.root"));
+	infile.push_back(new TFile("../root/Zcc.root"));
+	infile.push_back(new TFile("../root/ZplusJets.root"));
 			
 	
 	Int_t number_of_electrons = 1;
@@ -58,6 +65,8 @@ int main( int argc, const char* argv[] )
 		Float_t dphielectau_out;
 		Float_t dphielecmet_out;
 		Float_t mtelecmet_out;
+		Float_t jetBTagTrackCountHighEff_out;
+		
 		
 		
 		TTree *intree = dynamic_cast<TTree*>(infile[i]->Get("bbAHCutTree"));
@@ -78,6 +87,7 @@ int main( int argc, const char* argv[] )
 		outtree->Branch("dphielectau", &dphielectau_out);
 		outtree->Branch("dphielecmet", &dphielecmet_out);
 		outtree->Branch("mtelecmet", &mtelecmet_out);
+		outtree->Branch("jetBTagTrackCountHighEff", &jetBTagTrackCountHighEff_out);
 
 
 		eventviewer evtv(intree);
@@ -89,15 +99,10 @@ int main( int argc, const char* argv[] )
 			evtv.GetEntry(j);
 			if (evtv.Getlv_electron()->GetEntriesFast() != 1) elec++;
 			if (evtv.Getlv_electron()->GetEntriesFast() == 1 && evtv.Getlv_tau()->GetEntriesFast() == 1) {sum++;
-//				lv_electron_out = *(dynamic_cast<TLorentzVector*> ((evtv.Getlv_electron())->At(0)));
-//				lv_tau_out		= *(dynamic_cast<TLorentzVector*> ((evtv.Getlv_tau())->At(0)));
-//				lv_met_out		= *(dynamic_cast<TLorentzVector*> ((evtv.Getlv_met())->At(0)));
-				
+
 				lv_electron_Et_out = (dynamic_cast<TLorentzVector*> ((evtv.Getlv_electron())->At(0)))->Et();
 				lv_tau_Et_out = (dynamic_cast<TLorentzVector*> ((evtv.Getlv_tau())->At(0)))->Et();
 				lv_met_Et_out = (dynamic_cast<TLorentzVector*> ((evtv.Getlv_met())->At(0)))->Et();
-				
-				//cout << lv_electron_Et_out << '\t' << lv_tau_Et_out << '\t' << lv_met_Et_out << endl;
 				electronEcalIso_out = evtv.GetelectronEcalIso()->operator[](0);
 				electronTrackIso_out = evtv.GetelectronTrackIso()->operator[](0);
 				electronHcalIso_out = evtv.GetelectronHcalIso()->operator[](0);
@@ -108,6 +113,7 @@ int main( int argc, const char* argv[] )
 				tauElectron_out = float2int(evtv.GettauElectron()->operator[](0));
 				electronCharge_out = float2int(evtv.GetelectronCharge()->operator[](0));
 				tauCharge_out = float2int(evtv.GettauCharge()->operator[](0));
+				jetBTagTrackCountHighEff_out = evtv.GetjetBTagTrackCountHighEff()->operator[](0);
 				
 				//Calculate electron tau delta phi
 				TLorentzVector* elecvec = dynamic_cast <TLorentzVector*> ((*evtv.Getlv_electron()).At(0));
