@@ -21,6 +21,8 @@ clean: cleanish
 	
 cleanish:
 	rm -f *.o
+	rm -rf output
+	rm -rf weights
 	
 run: clean all
 	./${BIN}
