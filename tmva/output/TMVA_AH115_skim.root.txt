@@ -1,0 +1,289 @@
+
+
+RUN--- Factory                  : You are running ROOT Version: 5.24/00, Jun 29, 2009
+--- Factory                  : 
+--- Factory                  : _/_/_/_/_/ _|      _|  _|      _|    _|_|   
+--- Factory                  :    _/      _|_|  _|_|  _|      _|  _|    _| 
+--- Factory                  :   _/       _|  _|  _|  _|      _|  _|_|_|_| 
+--- Factory                  :  _/        _|      _|    _|  _|    _|    _| 
+--- Factory                  : _/         _|      _|      _|      _|    _| 
+--- Factory                  : 
+--- Factory                  : ___________TMVA Version 4.0.1, Jun 25, 2009
+--- Factory                  : 
+--- DataSetInfo              : Added class "Signal"	 with internal class number 0
+--- DataSetInfo              : Added class "Background"	 with internal class number 1
+--- DataSetInfo              : Class index : 0  name : Signal
+--- DataSetInfo              : Class index : 1  name : Background
+--- Factory                  : Booking method: MLP
+--- DataSetFactory           : Create training and testing trees: looping over class Signal...
+--- DataSetFactory           : No weight expression defined for class "Signal"
+--- DataSetFactory           : Create training and testing trees: looping over class Background...
+--- DataSetFactory           : No weight expression defined for class "Background"
+--- DataSetFactory           : Number of events in input trees (after possible flattening of arrays):
+--- DataSetFactory           :     Signal          -- number of events       : 8064   / sum of weights: 8064 
+--- DataSetFactory           :     Background      -- number of events       : 220677  / sum of weights: 220677
+--- DataSetFactory           :     Signal     tree -- total number of entries: 8064 
+--- DataSetFactory           :     Background tree -- total number of entries: 220677
+--- DataSetFactory           : Preselection:
+--- DataSetFactory           :     Signal     requirement: ""
+--- DataSetFactory           :     Signal          -- number of events passed: 8064   / sum of weights: 8064 
+--- DataSetFactory           :     Signal          -- efficiency             : 1     
+--- DataSetFactory           :     Background requirement: ""
+--- DataSetFactory           :     Background      -- number of events passed: 220677  / sum of weights: 220677
+--- DataSetFactory           :     Background      -- efficiency             : 1     
+--- DataSetFactory           : Prepare training and Test samples:
+--- DataSetFactory           : Weight renormalisation mode: "NumEvents": renormalise the different classes
+--- DataSetFactory           : ... weights independently so that Sum[i=1..N_j]{w_i} = N_j, j=0,1,2...
+--- DataSetFactory           : ... (note that N_j is the sum of training and test events)
+--- DataSetFactory           : Rescale Signal event weights by factor: 1
+--- DataSetFactory           : Rescale Background event weights by factor: 1
+--- DataSetFactory           : Randomly shuffle events in training and testing trees for Signal
+--- DataSetFactory           : Randomly shuffle events in training and testing trees for Background
+--- DataSetFactory           : Create internal training tree
+--- DataSetFactory           : Create internal testing tree
+--- DataSetFactory           : Collected:
+--- DataSetFactory           :     Signal     training entries: 80
+--- DataSetFactory           :     Signal     testing  entries: 7984
+--- DataSetFactory           :     Background training entries: 2206
+--- DataSetFactory           :     Background testing  entries: 218471
+--- DataSetInfo              : Correlation matrix (Signal):
+--- DataSetInfo              : ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--- DataSetInfo              :                   lv_met_Et lv_electron_Et lv_tau_Et dphielectau dphielecmet mtelecmet electronEcalIso electronTrackIso tauTrack tauLeadTrk tauECALIso tauElectron tauCharge
+--- DataSetInfo              :        lv_met_Et:    +1.000         +0.489    +0.628      -0.312      -0.085    +0.343          -0.076           -0.065   +0.370     +0.132     -0.048      +0.147    -0.025
+--- DataSetInfo              :   lv_electron_Et:    +0.489         +1.000    +0.571      -0.148      +0.234    +0.456          +0.085           -0.010   +0.391     +0.067     -0.129      +0.056    +0.211
+--- DataSetInfo              :        lv_tau_Et:    +0.628         +0.571    +1.000      +0.068      -0.274    +0.020          -0.123           -0.048   +0.542     +0.145     -0.015      +0.061    +0.062
+--- DataSetInfo              :      dphielectau:    -0.312         -0.148    +0.068      +1.000      -0.252    -0.318          -0.153           -0.003   -0.055     -0.120     +0.122      -0.154    +0.076
+--- DataSetInfo              :      dphielecmet:    -0.085         +0.234    -0.274      -0.252      +1.000    +0.850          +0.139           +0.066   -0.155     -0.113     -0.078      -0.120    +0.086
+--- DataSetInfo              :        mtelecmet:    +0.343         +0.456    +0.020      -0.318      +0.850    +1.000          +0.031           +0.027   +0.046     -0.050     -0.120      -0.026    +0.068
+--- DataSetInfo              :  electronEcalIso:    -0.076         +0.085    -0.123      -0.153      +0.139    +0.031          +1.000           +0.387   -0.096     -0.106     -0.003      +0.043    +0.129
+--- DataSetInfo              : electronTrackIso:    -0.065         -0.010    -0.048      -0.003      +0.066    +0.027          +0.387           +1.000   +0.011     -0.234     -0.095      -0.031    -0.006
+--- DataSetInfo              :         tauTrack:    +0.370         +0.391    +0.542      -0.055      -0.155    +0.046          -0.096           +0.011   +1.000     +0.397     +0.089      +0.393    +0.091
+--- DataSetInfo              :       tauLeadTrk:    +0.132         +0.067    +0.145      -0.120      -0.113    -0.050          -0.106           -0.234   +0.397     +1.000     +0.289      +0.547    +0.014
+--- DataSetInfo              :       tauECALIso:    -0.048         -0.129    -0.015      +0.122      -0.078    -0.120          -0.003           -0.095   +0.089     +0.289     +1.000      +0.359    +0.042
+--- DataSetInfo              :      tauElectron:    +0.147         +0.056    +0.061      -0.154      -0.120    -0.026          +0.043           -0.031   +0.393     +0.547     +0.359      +1.000    +0.088
+--- DataSetInfo              :        tauCharge:    -0.025         +0.211    +0.062      +0.076      +0.086    +0.068          +0.129           -0.006   +0.091     +0.014     +0.042      +0.088    +1.000
+--- DataSetInfo              : ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--- DataSetInfo              : Correlation matrix (Background):
+--- DataSetInfo              : ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--- DataSetInfo              :                   lv_met_Et lv_electron_Et lv_tau_Et dphielectau dphielecmet mtelecmet electronEcalIso electronTrackIso tauTrack tauLeadTrk tauECALIso tauElectron tauCharge
+--- DataSetInfo              :        lv_met_Et:    +1.000         +0.007    +0.046      -0.437      +0.117    +0.574          -0.017           +0.017   +0.230     -0.069     -0.137      +0.255    -0.019
+--- DataSetInfo              :   lv_electron_Et:    +0.007         +1.000    +0.048      +0.267      +0.074    +0.368          -0.007           +0.006   +0.151     +0.073     -0.043      +0.026    +0.005
+--- DataSetInfo              :        lv_tau_Et:    +0.046         +0.048    +1.000      -0.009      -0.039    +0.002          -0.005           -0.006   +0.022     +0.005     -0.024      -0.015    -0.002
+--- DataSetInfo              :      dphielectau:    -0.437         +0.267    -0.009      +1.000      -0.338    -0.391          -0.005           -0.058   +0.009     +0.218     +0.152      -0.149    -0.009
+--- DataSetInfo              :      dphielecmet:    +0.117         +0.074    -0.039      -0.338      +1.000    +0.731          -0.000           -0.020   -0.174     -0.272     -0.145      -0.048    +0.015
+--- DataSetInfo              :        mtelecmet:    +0.574         +0.368    +0.002      -0.391      +0.731    +1.000          -0.004           -0.001   +0.007     -0.217     -0.176      +0.108    +0.001
+--- DataSetInfo              :  electronEcalIso:    -0.017         -0.007    -0.005      -0.005      -0.000    -0.004          +1.000           +0.238   +0.012     +0.000     -0.021      +0.017    -0.006
+--- DataSetInfo              : electronTrackIso:    +0.017         +0.006    -0.006      -0.058      -0.020    -0.001          +0.238           +1.000   -0.013     -0.031     -0.060      -0.014    +0.017
+--- DataSetInfo              :         tauTrack:    +0.230         +0.151    +0.022      +0.009      -0.174    +0.007          +0.012           -0.013   +1.000     +0.442     +0.231      +0.465    +0.057
+--- DataSetInfo              :       tauLeadTrk:    -0.069         +0.073    +0.005      +0.218      -0.272    -0.217          +0.000           -0.031   +0.442     +1.000     +0.450      +0.299    -0.023
+--- DataSetInfo              :       tauECALIso:    -0.137         -0.043    -0.024      +0.152      -0.145    -0.176          -0.021           -0.060   +0.231     +0.450     +1.000      +0.208    -0.011
+--- DataSetInfo              :      tauElectron:    +0.255         +0.026    -0.015      -0.149      -0.048    +0.108          +0.017           -0.014   +0.465     +0.299     +0.208      +1.000    -0.004
+--- DataSetInfo              :        tauCharge:    -0.019         +0.005    -0.002      -0.009      +0.015    +0.001          -0.006           +0.017   +0.057     -0.023     -0.011      -0.004    +1.000
+--- DataSetInfo              : ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--- DataSetFactory           :  
+--- Id                       : Preparing the Identity transformation...
+--- TFHandler_Factory        : ---------------------------------------------------------------------------------------------------
+--- TFHandler_Factory        :         Variable                Mean                RMS        [        Min                Max ]
+--- TFHandler_Factory        : ---------------------------------------------------------------------------------------------------
+--- TFHandler_Factory        :        lv_met_Et:            29.030            21.416   [           0.18221            216.22 ]
+--- TFHandler_Factory        :   lv_electron_Et:            37.752            16.082   [            15.014            156.76 ]
+--- TFHandler_Factory        :        lv_tau_Et:            42.543            164.95   [            20.065            7856.3 ]
+--- TFHandler_Factory        :      dphielectau:            2.3979           0.79045   [         0.0012124            3.1414 ]
+--- TFHandler_Factory        :      dphielecmet:            2.0047            1.0207   [        0.00051916            3.1409 ]
+--- TFHandler_Factory        :        mtelecmet:            46.623            30.270   [          0.011368            189.49 ]
+--- TFHandler_Factory        :  electronEcalIso:            1.0666            2.0441   [            0.0000            44.213 ]
+--- TFHandler_Factory        : electronTrackIso:           0.67185            1.5827   [            0.0000            34.359 ]
+--- TFHandler_Factory        :         tauTrack:            1.2419           0.96419   [            0.0000            6.0000 ]
+--- TFHandler_Factory        :       tauLeadTrk:           0.69335           0.46110   [            0.0000            1.0000 ]
+--- TFHandler_Factory        :       tauECALIso:           0.59536           0.49082   [            0.0000            1.0000 ]
+--- TFHandler_Factory        :      tauElectron:           0.63036           0.48271   [            0.0000            1.0000 ]
+--- TFHandler_Factory        :        tauCharge:         -0.013123           0.92822   [           -3.0000            3.0000 ]
+--- TFHandler_Factory        : ---------------------------------------------------------------------------------------------------
+--- TFHandler_Factory        : Create scatter and profile plots in target-file directory: 
+--- TFHandler_Factory        : output/TMVA_AH115_skim.root:/InputVariables_Id/CorrelationPlots
+--- TFHandler_Factory        : Ranking input variables...
+--- IdTransformation         : Ranking result (top variable is best ranked)
+--- IdTransformation         : -----------------------------------------
+--- IdTransformation         : Rank : Variable         : Separation
+--- IdTransformation         : -----------------------------------------
+--- IdTransformation         :    1 : dphielecmet      : 3.421e-01
+--- IdTransformation         :    2 : mtelecmet        : 2.456e-01
+--- IdTransformation         :    3 : dphielectau      : 1.701e-01
+--- IdTransformation         :    4 : lv_electron_Et   : 1.555e-01
+--- IdTransformation         :    5 : lv_met_Et        : 1.302e-01
+--- IdTransformation         :    6 : tauElectron      : 7.224e-02
+--- IdTransformation         :    7 : electronTrackIso : 6.843e-02
+--- IdTransformation         :    8 : electronEcalIso  : 6.132e-02
+--- IdTransformation         :    9 : tauTrack         : 6.106e-02
+--- IdTransformation         :   10 : tauCharge        : 3.576e-02
+--- IdTransformation         :   11 : tauLeadTrk       : 3.412e-02
+--- IdTransformation         :   12 : tauECALIso       : 2.314e-02
+--- IdTransformation         :   13 : lv_tau_Et        : 1.482e-02
+--- IdTransformation         : -----------------------------------------
+--- Factory                  : Train all methods for Classification ...
+--- MLP                      : Building Network
+--- MLP                      : initializing weights
+--- Factory                  : Train method: MLP for Classification
+--- Norm                     : Preparing the transformation.
+--- TFHandler_MLP            : ---------------------------------------------------------------------------------------------------
+--- TFHandler_MLP            :         Variable                Mean                RMS        [        Min                Max ]
+--- TFHandler_MLP            : ---------------------------------------------------------------------------------------------------
+--- TFHandler_MLP            :        lv_met_Et:          -0.73294           0.19826   [           -1.0000            1.0000 ]
+--- TFHandler_MLP            :   lv_electron_Et:          -0.67916           0.22692   [           -1.0000            1.0000 ]
+--- TFHandler_MLP            :        lv_tau_Et:          -0.99426          0.042099   [           -1.0000            1.0000 ]
+--- TFHandler_MLP            :      dphielectau:           0.52648           0.50345   [           -1.0000            1.0000 ]
+--- TFHandler_MLP            :      dphielecmet:           0.27639           0.65004   [           -1.0000            1.0000 ]
+--- TFHandler_MLP            :        mtelecmet:          -0.50801           0.31951   [           -1.0000            1.0000 ]
+--- TFHandler_MLP            :  electronEcalIso:          -0.95175          0.092466   [           -1.0000            1.0000 ]
+--- TFHandler_MLP            : electronTrackIso:          -0.96089          0.092129   [           -1.0000            1.0000 ]
+--- TFHandler_MLP            :         tauTrack:          -0.58603           0.32140   [           -1.0000            1.0000 ]
+--- TFHandler_MLP            :       tauLeadTrk:           0.38670           0.92220   [           -1.0000            1.0000 ]
+--- TFHandler_MLP            :       tauECALIso:           0.19073           0.98164   [           -1.0000            1.0000 ]
+--- TFHandler_MLP            :      tauElectron:           0.26072           0.96542   [           -1.0000            1.0000 ]
+--- TFHandler_MLP            :        tauCharge:        -0.0043744           0.30941   [           -1.0000            1.0000 ]
+--- TFHandler_MLP            : ---------------------------------------------------------------------------------------------------
+--- MLP                      : Begin training
+--- MLP                      : Training Network
+--- MLP                      : End of training                                              
+--- MLP                      : Elapsed time for training with 2286 events: [1;31m232 sec[0m         
+--- MLP                      : Create MVA output for classification on training sample
+--- MLP                      : Evaluation of MLP on training sample
+--- MLP                      : Elapsed time for evaluation of 2286 events: [1;31m0.048 sec[0m       
+--- MLP_PDFSig               : Validation result for PDF "MLP_tr_S": 
+--- MLP_PDFSig               :     chi2/ndof(!=0) = 0.0/14 = 0.00 (Prob = 1.00)
+--- MLP_PDFSig               :     #bins-found(#expected-bins) deviating > [1,2,3,6] sigmas: [0(4),0(0),0(0),0(0)]
+--- MLP_PDFBkg               : Validation result for PDF "MLP_tr_B": 
+--- MLP_PDFBkg               :     chi2/ndof(!=0) = 0.0/18 = 0.00 (Prob = 1.00)
+--- MLP_PDFBkg               :     #bins-found(#expected-bins) deviating > [1,2,3,6] sigmas: [0(5),0(0),0(0),0(0)]
+--- MLP                      : <CreateMVAPdfs> Separation from histogram (PDF): 0.355 (0.351)
+--- MLP                      : Evaluation of MLP on training sample
+--- MLP                      : Elapsed time for evaluation of 2286 events: [1;31m0.0456 sec[0m       
+--- MLP                      : Creating weight file in xml format: [0;36mweights/AH115_skim.root_MLP.weights.xml[0m
+--- MLP                      : Creating standalone response class: [0;36mweights/AH115_skim.root_MLP.class.C[0m
+--- MLP                      : write special histos to file: output/TMVA_AH115_skim.root:/Method_MLP/MLP
+--- Factory                  : Training finished
+--- Factory                  : 
+--- Factory                  : Begin ranking of input variables...
+--- MLP                      : Ranking result (top variable is best ranked)
+--- MLP                      : -----------------------------------------
+--- MLP                      : Rank : Variable         : Importance
+--- MLP                      : -----------------------------------------
+--- MLP                      :    1 : electronEcalIso  : 2.343e+01
+--- MLP                      :    2 : lv_tau_Et        : 2.256e+01
+--- MLP                      :    3 : electronTrackIso : 1.833e+01
+--- MLP                      :    4 : lv_met_Et        : 1.481e+01
+--- MLP                      :    5 : dphielectau      : 8.379e+00
+--- MLP                      :    6 : tauLeadTrk       : 7.938e+00
+--- MLP                      :    7 : lv_electron_Et   : 7.047e+00
+--- MLP                      :    8 : tauTrack         : 5.751e+00
+--- MLP                      :    9 : mtelecmet        : 5.711e+00
+--- MLP                      :   10 : tauElectron      : 5.315e+00
+--- MLP                      :   11 : tauECALIso       : 3.572e+00
+--- MLP                      :   12 : tauCharge        : 8.066e-03
+--- MLP                      :   13 : dphielecmet      : 1.114e-05
+--- MLP                      : -----------------------------------------
+--- Factory                  : 
+--- Factory                  : === Destroy and recreate all methods via weight files for testing ===
+--- Factory                  : 
+--- MethodBase               : Reading weight file: [0;36mweights/AH115_skim.root_MLP.weights.xml[0m
+--- MLP                      : Read method "MLP" of type "MLP"
+--- MLP                      : Building Network
+--- MLP                      : initializing weights
+--- MLP                      : Building Network
+--- MLP                      : initializing weights
+--- Factory                  : Test all methods...
+--- Factory                  : Test method: MLP for Classification performance
+--- MLP                      : Evaluation of MLP on testing sample
+--- MLP                      : Elapsed time for evaluation of 226455 events: [1;31m1.92 sec[0m       
+--- MLP                      : Evaluation of MLP on testing sample
+--- MLP                      : Elapsed time for evaluation of 226455 events: [1;31m1.9 sec[0m       
+--- Factory                  : Evaluate all methods...
+--- Factory                  : Evaluate classifier: MLP
+--- TFHandler_MLP            : ---------------------------------------------------------------------------------------------------
+--- TFHandler_MLP            :         Variable                Mean                RMS        [        Min                Max ]
+--- TFHandler_MLP            : ---------------------------------------------------------------------------------------------------
+--- TFHandler_MLP            :        lv_met_Et:          -0.71445            1.8544   [           -1.0010            542.26 ]
+--- TFHandler_MLP            :   lv_electron_Et:          -0.67298           0.23874   [           -1.0002            5.0875 ]
+--- TFHandler_MLP            :        lv_tau_Et:          -0.99476          0.016874   [           -1.0000            2.8595 ]
+--- TFHandler_MLP            :      dphielectau:           0.53005           0.50138   [           -1.0007            1.0001 ]
+--- TFHandler_MLP            :      dphielecmet:           0.27914           0.65560   [           -1.0003            1.0004 ]
+--- TFHandler_MLP            :        mtelecmet:          -0.50458           0.35771   [           -1.0001            31.980 ]
+--- TFHandler_MLP            :  electronEcalIso:          -0.95483          0.083335   [           -1.0000            15.600 ]
+--- TFHandler_MLP            : electronTrackIso:          -0.95901           0.14121   [           -1.0000            22.735 ]
+--- TFHandler_MLP            :         tauTrack:          -0.58251           0.33270   [           -1.0000            3.3333 ]
+--- TFHandler_MLP            :       tauLeadTrk:           0.35980           0.93303   [           -1.0000            1.0000 ]
+--- TFHandler_MLP            :       tauECALIso:           0.17892           0.98386   [           -1.0000            1.0000 ]
+--- TFHandler_MLP            :      tauElectron:           0.23306           0.97246   [           -1.0000            1.0000 ]
+--- TFHandler_MLP            :        tauCharge:        -0.0021181           0.30770   [           -1.6667            2.0000 ]
+--- TFHandler_MLP            : ---------------------------------------------------------------------------------------------------
+--- MLP                      : Loop over test events and fill histograms with classifier response...
+--- MLP                      : Also filling probability and rarity histograms (on request)...
+--- Factory                  : Write Evaluation Histos to file
+--- MLP                      : Write Results Histos to File
+--- TFHandler_MLP            : Create scatter and profile plots in target-file directory: 
+--- TFHandler_MLP            : output/TMVA_AH115_skim.root:/Method_MLP/MLP/CorrelationPlots
+--- Factory                  : Correlations between input variables and MVA response (signal):
+--- Factory                  : ----------------
+--- Factory                  :                       MLP
+--- Factory                  :        lv_met_Et:  +0.227
+--- Factory                  :   lv_electron_Et:  -0.201
+--- Factory                  :        lv_tau_Et:  +0.123
+--- Factory                  :      dphielectau:  +0.045
+--- Factory                  :      dphielecmet:  -0.526
+--- Factory                  :        mtelecmet:  -0.056
+--- Factory                  :  electronEcalIso:  +0.003
+--- Factory                  : electronTrackIso:  +0.083
+--- Factory                  :         tauTrack:  +0.157
+--- Factory                  :       tauLeadTrk:  +0.243
+--- Factory                  :       tauECALIso:  +0.282
+--- Factory                  :      tauElectron:  +0.331
+--- Factory                  :        tauCharge:  +0.175
+--- Factory                  : ----------------
+--- Factory                  : 
+--- Factory                  : Correlations between input variables and MVA response (background):
+--- Factory                  : ----------------
+--- Factory                  :                       MLP
+--- Factory                  :        lv_met_Et:  +0.195
+--- Factory                  :   lv_electron_Et:  -0.203
+--- Factory                  :        lv_tau_Et:  +0.152
+--- Factory                  :      dphielectau:  +0.189
+--- Factory                  :      dphielecmet:  -0.528
+--- Factory                  :        mtelecmet:  -0.317
+--- Factory                  :  electronEcalIso:  -0.003
+--- Factory                  : electronTrackIso:  +0.084
+--- Factory                  :         tauTrack:  +0.123
+--- Factory                  :       tauLeadTrk:  +0.209
+--- Factory                  :       tauECALIso:  +0.204
+--- Factory                  :      tauElectron:  +0.277
+--- Factory                  :        tauCharge:  +0.135
+--- Factory                  : ----------------
+--- Factory                  : 
+--- Factory                  : The following "overlap" matrices contain the fraction of events for which 
+--- Factory                  : the MVAs 'i' and 'j' have returned conform answers about "signal-likeness"
+--- Factory                  : An event is signal-like, if its MVA output exceeds the following value:
+--- Factory                  : --------------------
+--- Factory                  :  Method:  Cut value:
+--- Factory                  : --------------------
+--- Factory                  :     MLP:     -0.922
+--- Factory                  : --------------------
+--- Factory                  : which correspond to the working point: eff(signal) = 1 - eff(background)
+--- Factory                  : 
+--- Factory                  : Evaluation results ranked by best signal efficiency and purity (area)
+--- Factory                  : --------------------------------------------------------------------------------
+--- Factory                  : MVA              Signal efficiency at bkg eff.(error):       | Sepa-    Signifi- 
+--- Factory                  : Method:          @B=0.01    @B=0.10    @B=0.30    ROC-integ. | ration:  cance:   
+--- Factory                  : --------------------------------------------------------------------------------
+--- Factory                  : MLP            : 0.040(02)  0.358(05)  0.701(05)    0.745    | 0.187    0.523
+--- Factory                  : --------------------------------------------------------------------------------
+--- Factory                  : 
+--- Factory                  : Testing efficiency compared to training efficiency (overtraining check)
+--- Factory                  : --------------------------------------------------------------------------------
+--- Factory                  : MVA              Signal efficiency: from test sample (from training sample) 
+--- Factory                  : Method:          @B=0.01             @B=0.10            @B=0.30   
+--- Factory                  : --------------------------------------------------------------------------------
+--- Factory                  : MLP            : 0.040 (0.057)       0.358 (0.381)      0.701 (0.697)
+--- Factory                  : --------------------------------------------------------------------------------
+--- Factory                  : 
+mv weights output/AH115_skim.root
+
+
