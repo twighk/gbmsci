@@ -57,7 +57,7 @@ int tmvarectcut(){
 
 	
 	for (Int_t i = 0; i != t.size() ; i++) {
-		cerr << "Number -" << i + 1 << t.size() << endl;
+		cerr << "Number - " << i + 1 << '/' << t.size() << endl;
 		
 		string fname = f[i]->GetName();
 		fname = fname.substr((1 + fname.find_last_of("/\\")), fname.length() - (1 + fname.find_last_of("/\\")));
