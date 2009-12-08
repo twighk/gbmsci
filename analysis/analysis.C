@@ -131,14 +131,12 @@ int main(){
 									 - pow(elecvec->Py() + metvec->Py(),2) 
 									 );
 				
-				Double_t pSig;
 				
-				const int number = 10; 
-				
-				for (int i = 0; i <= number; i++) {
-					pSig = reader->GetProba("MLP", (double) i / (double) number);
-					cout << "Probability(" << (double) i / (double) number << ") :" << pSig << endl;
-				}
+				//Calculate probability
+				const double f = 0.5;
+				double prob = reader->GetProba("MLP", f);
+				double X = prob * (1-f)/(f*(1-prob));
+				cout << "Probability: " << X << " "<< X/(X+1) << endl;
 			}
 		}
 	}
