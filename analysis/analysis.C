@@ -50,10 +50,6 @@ int main(){
 	Int_t number_of_electrons = 1;
 	Int_t number_of_taus = 1;
 	
-		
-	TMVA::Reader* reader = new TMVA::Reader("");
-	
-	
 	Float_t lv_electron_Et;
 	Float_t lv_tau_Et;
 	Float_t lv_met_Et;
@@ -72,33 +68,49 @@ int main(){
 	Float_t mtelecmet;
 	Float_t jetBTagTrackCountHighEff;
 	
-	reader->AddVariable("lv_met_Et",&lv_met_Et);
-	reader->AddVariable("lv_electron_Et",&lv_electron_Et);
-	reader->AddVariable("lv_tau_Et",&lv_tau_Et);
-	reader->AddVariable("dphielectau",&dphielectau);
-	reader->AddVariable("dphielecmet",&dphielecmet);
-	reader->AddVariable("mtelecmet",&mtelecmet);
-	reader->AddVariable("electronEcalIso",&electronEcalIso);
-	reader->AddVariable("electronTrackIso",&electronTrackIso);
-	//reader->AddVariable("electronHcalIso",&electronHcalIso);
-	reader->AddVariable("tauTrack",&tauTrack);
-	reader->AddVariable("tauLeadTrk",&tauLeadTrk);
-	reader->AddVariable("tauECALIso",&tauECALIso);
-	//reader->AddVariable("tauTrackIso",&tauTrackIso);
-	reader->AddVariable("tauElectron",&tauElectron);
-	//reader->AddVariable("electronCharge",&electronCharge);
-	reader->AddVariable("tauCharge",&tauCharge);
+	vector <string> fmethod;
+	vector <TMVA::Reader*> reader;
+	for (int i = 0; i != 8/*infile.size()*/; i++) {
+		reader.push_back(new TMVA::Reader(""));
 	
-	reader->BookMVA("MLP", "../tmva/weights/AH115_skim.root_MLP.weights.xml");
-	
+		reader[i]->AddVariable("lv_met_Et",&lv_met_Et);
+		reader[i]->AddVariable("lv_electron_Et",&lv_electron_Et);
+		reader[i]->AddVariable("lv_tau_Et",&lv_tau_Et);
+		reader[i]->AddVariable("dphielectau",&dphielectau);
+		reader[i]->AddVariable("dphielecmet",&dphielecmet);
+		reader[i]->AddVariable("mtelecmet",&mtelecmet);
+		reader[i]->AddVariable("electronEcalIso",&electronEcalIso);
+		reader[i]->AddVariable("electronTrackIso",&electronTrackIso);
+		//reader[i]->AddVariable("electronHcalIso",&electronHcalIso);
+		reader[i]->AddVariable("tauTrack",&tauTrack);
+		reader[i]->AddVariable("tauLeadTrk",&tauLeadTrk);
+		reader[i]->AddVariable("tauECALIso",&tauECALIso);
+		//reader[i]->AddVariable("tauTrackIso",&tauTrackIso);
+		reader[i]->AddVariable("tauElectron",&tauElectron);
+		//reader[i]->AddVariable("electronCharge",&electronCharge);
+		reader[i]->AddVariable("tauCharge",&tauCharge);
+		
+		
+		string fmeth= infile[i]->GetName();
+		fmeth = fmeth.substr((1 + fmeth.find_last_of("/\\")), fmeth.length() - (1 + fmeth.find_last_of("/\\")));
+		fmeth = fmeth.substr(0,fmeth.find_last_of("."));
+		string fname = "../tmva/weights/";
+		fname += fmeth;
+		fname += "_skim.root_MLP.weights.xml";
+		cout << fmeth << endl; // file name
+		
+		fmethod.push_back(fmeth);
+		reader[i]->BookMVA(fmeth.c_str(), fname.c_str());
+	}
+
 	for (Int_t i = 0; i < 1/*infile.size()*/; i++) {
 		TTree *intree = dynamic_cast<TTree*>(infile[i]->Get("bbAHCutTree"));
 		eventviewer evtv(intree);
 		
 		for(ULong64_t j = 0; j < 100/* evtv.totaleventnumber()*/; j++){
 			evtv.GetEntry(j);
-			evtv.Show();
 			if (evtv.Getlv_electron()->GetEntriesFast() == 1 && evtv.Getlv_tau()->GetEntriesFast() == 1) {
+			evtv.Show();
 				
 				lv_electron_Et = (dynamic_cast<TLorentzVector*> ((evtv.Getlv_electron())->At(0)))->Et();
 				lv_tau_Et = (dynamic_cast<TLorentzVector*> ((evtv.Getlv_tau())->At(0)))->Et();
@@ -131,36 +143,20 @@ int main(){
 									 - pow(elecvec->Py() + metvec->Py(),2) 
 									 );
 				
-				
-				//Calculate probability
-				const double f = 0.5;
-				double prob = reader->GetProba("MLP", f);
-				double X = prob * (1-f)/(f*(1-prob));
-				cout << "Probability: " << X << " "<< X/(X+1) << endl;
+				double sum = 0;
+				for (int k = 0; k != reader.size(); k++) {
+					//Calculate probability
+					const double f = 1.0/8.0;// 0.5;
+					double prob = reader[k]->GetProba(fmethod[k], f);
+					double X = prob * (1-f)/(f*(1-prob));
+					double actualprob = X/(X+1);
+					sum += prob;
+					//cout << fmethod[k] << ": "<< actualprob << endl;
+					cout << fmethod[k] << ": "<< prob << endl;
+				}
+				cout << "Sum: " << sum << endl;
 			}
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-	
 	return 0;
 }
