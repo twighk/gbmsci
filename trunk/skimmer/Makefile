@@ -10,13 +10,13 @@ FLAGS =
 
 #it's important to do the linking seperately from the compiling, other wise it doesn't work
 all: skimmer 
-skimmer: skimmer.o eventviewer.o
+skimmer: main.o skimmer.o
 	${GPP} $^ -o ${BIN} ${FLAGS} ${LIBS} ${OPTI}
 	
-skimmer.o: skimmer.C 
+main.o: main.cpp
 	${GPP} -c $< -o $@ ${COMPFLAGS} ${CFLAGS} ${OPTI}
 
-eventviewer.o: ../eventviewer/eventviewer.c ../eventviewer/eventviewer.h 
+skimmer.o: skimmer.cxx skimmer.h 
 	${GPP} -c $< -o $@ ${COMPFLAGS} ${CFLAGS} ${OPTI}
 
 clean: cleanish 
