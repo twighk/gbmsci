@@ -25,16 +25,17 @@ int main(int argc, char** argv) {
 	b_ElectronTauDPhi->SetAddress(&ElectronTauDPhi);
 	
 	mlp tester;
+	for (int i = 0; i < tree->GetEntries(); i++){
+		tree->GetEntry(i);
+		Double_t a = tester.Value(0, ElectronEt, TauEt, MetEt, ElectronTauDPhi);
+		Double_t b = tester.Value(1, ElectronEt, TauEt, MetEt, ElectronTauDPhi);
+		Double_t c = tester.Value(2, ElectronEt, TauEt, MetEt, ElectronTauDPhi);
+		cout << "A " << a << endl;
+		cout << "B " << b << endl;
+		cout << "C " << c << endl;
+		cout << "Sum: " << (a + b + c) << endl << endl;
+	}
 	
-	tree->GetEntry(160000);
-	cout << ElectronTauDPhi << endl;
-	
-	Double_t a = tester.Value(0, ElectronEt, TauEt, MetEt, ElectronTauDPhi);
-	Double_t b = tester.Value(1, ElectronEt, TauEt, MetEt, ElectronTauDPhi);
-	Double_t c = tester.Value(2, ElectronEt, TauEt, MetEt, ElectronTauDPhi);
-	cout << "A " << a << endl;
-	cout << "B " << b << endl;
-	cout << "B " << c << endl;
-	cout << "Sum: " << (a + b + c) << endl;
+
 
 }
