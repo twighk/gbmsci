@@ -16,7 +16,7 @@ cmpays: main.o skimmer.o
 main.o: main.cpp 
 	${GPP} -c $< -o $@ ${COMPFLAGS} ${CFLAGS} ${OPTI}
 
-skimmer.o: skimmer.cpp skimmer.hpp
+skimmer.o: skimmer.cpp skimmer.h
 	${GPP} -c $< -o $@ ${COMPFLAGS} ${CFLAGS} ${OPTI}
 
 clean: cleanish 
@@ -25,8 +25,11 @@ clean: cleanish
 cleanish:
 	rm -f *.o
 	
-run: clean all
+run: clear clean all
 	./${BIN}
+
+clear:
+	clear
 	
 time: all
 	time ./${BIN}
