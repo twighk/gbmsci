@@ -26,7 +26,7 @@
 
 using namespace std;
 
-const double evtfrac = 0.01;
+const double evtfrac = 0.05;
 
 int tmvarectcut(){
 	char * output = "output";
@@ -119,7 +119,7 @@ int tmvarectcut(){
 		ptattstr << signum;
 		ptattstr << ":nTrain_Background=";
 		ptattstr << bkgnum;
-		ptattstr << ":SplitMode=Random:NormMode=NumEvents:!V";
+		ptattstr << ":SplitMode=Block:NormMode=NumEvents:!V";
 
 		
 		factory->PrepareTrainingAndTestTree("", ptattstr.str().c_str() );
