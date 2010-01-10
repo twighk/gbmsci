@@ -1,1 +1,5 @@
-#include "skimmer.hpp" 
+#include "skimmer.h" 
+
+skimmer::skimmer(){
+	;
+}
