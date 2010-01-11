@@ -17,6 +17,13 @@ skimmer::skimmer(){
 	bElectronCharge = false;
 	bTauCharge = false;
 	bElecTauChargeProd = false;
+	bTauProng = false;
+	bTauLeadTrk = false;
+	bTauEcalIso = false;
+	bTauTrackIso = false;
+	bTauAntiElectron = false;
+	bElectronMetDPhi = false;
+	bElectronMetMt = false;
 	
 	filecombo = 0;
 	treecombo = 0;
@@ -73,7 +80,14 @@ void skimmer::GoSkim(){
 	Double_t ElectronCharge = 0;
 	Double_t TauCharge = 0;
 	Double_t ElecTauChargeProd = 0;
-
+	Double_t TauProng = 0;
+	Double_t TauLeadTrk = 0;
+	Double_t TauEcalIso = 0;
+	Double_t TauTrackIso = 0;
+	Double_t TauAntiElectron = 0;
+	Double_t ElectronMetDPhi = 0;
+	Double_t ElectronMetMt = 0;
+	
 	vector<Int_t> type (infile.size(), 0);
 	
 	//Register Output Branches
@@ -90,6 +104,14 @@ void skimmer::GoSkim(){
 		if (bElectronCharge) outtree[i]->Branch("ElectronCharge", &ElectronCharge);
 		if (bTauCharge) outtree[i]->Branch("TauCharge", &TauCharge);
 		if (bElecTauChargeProd) outtree[i]->Branch("ElecTauChargeProd", &ElecTauChargeProd);
+		if (bTauProng) outtree[i]->Branch("TauProng", &TauProng);
+		if (bTauLeadTrk) outtree[i]->Branch("TauLeadTrk", &TauLeadTrk);
+		if (bTauEcalIso) outtree[i]->Branch("TauEcalIso", &TauEcalIso);
+		if (bTauTrackIso) outtree[i]->Branch("TauTrackIso", &TauTrackIso);
+		if (bTauAntiElectron) outtree[i]->Branch("TauAntiElectron", &TauAntiElectron);
+
+		if (bElectronMetDPhi) outtree[i]->Branch("ElectronMetDPhi", &ElectronMetDPhi);
+		if (bElectronMetMt) outtree[i]->Branch("ElectronMetMt", &ElectronMetMt);
 
 		
 		for (Int_t k = 0; k < type.size(); k++) {
@@ -120,7 +142,16 @@ void skimmer::GoSkim(){
 				if (bElectronCharge) ElectronCharge = GetElectronCharge(i, j, eindex);
 				if (bTauCharge) TauCharge = GetTauCharge(i, j, tindex);
 				if (bElecTauChargeProd) ElecTauChargeProd = GetElecTauChargeProd(i, j, eindex, tindex);
+				if (bTauProng) TauProng = GetTauProng(i, j, tindex);
+				if (bTauLeadTrk) TauLeadTrk = GetTauLeadTrk(i, j, tindex);
+				if (bTauEcalIso) TauEcalIso = GetTauEcalIso(i, j, tindex);
+				if (bTauTrackIso) TauTrackIso = GetTauTrackIso(i, j, tindex);
+				if (bTauAntiElectron) TauAntiElectron = GetTauAntiElectron(i, j, tindex);
 
+				if (bElectronMetDPhi) ElectronMetDPhi = GetElectronMetDPhi(i, j, eindex);
+				if (bElectronMetMt) ElectronMetMt = GetElectronMetMt(i, j, eindex);
+
+				
 				for (Int_t k = 0; k < type.size(); k++) {
 					if (i == k) {type[k] = 1;} else {type[k] = 0;}
 				}
@@ -312,6 +343,88 @@ Double_t skimmer::GetElecTauChargeProd(Int_t i, Int_t j, Int_t eindex, Int_t tin
 	
 	return (((*tau)[tindex]) * ((*electron)[eindex]));
 }
+
+Double_t skimmer::GetTauProng(Int_t i, Int_t j, Int_t index){
+	vector<Double_t> * tau = 0;
+	TBranch *b_lv_tau = intree[i]->GetBranch("tauTracks");
+	b_lv_tau->SetAddress(&tau);	
+	b_lv_tau->GetEntry(j);
+	return (*tau)[index];
+}
+
+Double_t skimmer::GetTauLeadTrk(Int_t i, Int_t j, Int_t index){
+	vector<Double_t> * tau = 0;
+	TBranch *b_lv_tau = intree[i]->GetBranch("tauLeadTrk");
+	b_lv_tau->SetAddress(&tau);	
+	b_lv_tau->GetEntry(j);
+	return (*tau)[index];
+}
+
+Double_t skimmer::GetTauEcalIso(Int_t i, Int_t j, Int_t index){
+	vector<Double_t> * tau = 0;
+	TBranch *b_lv_tau = intree[i]->GetBranch("tauECALIso");
+	b_lv_tau->SetAddress(&tau);	
+	b_lv_tau->GetEntry(j);
+	return (*tau)[index];
+}
+
+Double_t skimmer::GetTauTrackIso(Int_t i, Int_t j, Int_t index){
+	vector<Double_t> * tau = 0;
+	TBranch *b_lv_tau = intree[i]->GetBranch("tauTrackIso");
+	b_lv_tau->SetAddress(&tau);	
+	b_lv_tau->GetEntry(j);
+	return (*tau)[index];
+}
+
+Double_t skimmer::GetTauAntiElectron(Int_t i, Int_t j, Int_t index){
+	vector<Double_t> * tau = 0;
+	TBranch *b_lv_tau = intree[i]->GetBranch("tauElectron");
+	b_lv_tau->SetAddress(&tau);	
+	b_lv_tau->GetEntry(j);
+	return (*tau)[index];
+}
+
+Double_t skimmer::GetElectronMetDPhi(Int_t i, Int_t j, Int_t eindex){
+	TClonesArray* electron = 0;
+	TClonesArray* met = 0;
+	TLorentzVector* temp_electron = 0;
+	TLorentzVector* temp_met = 0;
+	TBranch *b_lv_electron = intree[i]->GetBranch("lv_electron");
+	TBranch *b_lv_met = intree[i]->GetBranch("lv_met");
+	b_lv_electron->SetAddress(&electron);	
+	b_lv_met->SetAddress(&met);	
+	b_lv_electron->GetEntry(j);
+	b_lv_met->GetEntry(j);
+	
+	temp_electron = (dynamic_cast<TLorentzVector*>(electron->At(eindex)));
+	temp_met = (dynamic_cast<TLorentzVector*>(met->At(0)));
+	
+	return fabs(temp_electron->DeltaPhi(*temp_met));
+}
+
+Double_t skimmer::GetElectronMetMt(Int_t i, Int_t j, Int_t eindex){
+	TClonesArray* electron = 0;
+	TClonesArray* met = 0;
+	TLorentzVector* temp_electron = 0;
+	TLorentzVector* temp_met = 0;
+	TBranch *b_lv_electron = intree[i]->GetBranch("lv_electron");
+	TBranch *b_lv_met = intree[i]->GetBranch("lv_met");
+	b_lv_electron->SetAddress(&electron);	
+	b_lv_met->SetAddress(&met);	
+	b_lv_electron->GetEntry(j);
+	b_lv_met->GetEntry(j);
+	temp_electron = (dynamic_cast<TLorentzVector*>(electron->At(eindex)));
+	temp_met = (dynamic_cast<TLorentzVector*>(met->At(0)));
+	
+	Double_t mt = sqrt(  pow(temp_electron->Et() + sqrt(temp_met->Px() * temp_met->Px() + temp_met->Py() * temp_met->Py()),2)
+					   - pow(temp_electron->Px() + temp_met->Px(),2) 
+					   - pow(temp_electron->Py() + temp_met->Py(),2) 
+					   );
+	
+	return mt;
+}
+
+
 
 string skimmer::Int2String(Int_t num){
 	stringstream out;

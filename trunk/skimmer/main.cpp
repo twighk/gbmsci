@@ -24,6 +24,14 @@ int main(int argc, char** argv) {
 	a.AddVarElectronCharge();
 	a.AddVarTauCharge();
 	a.AddVarElecTauChargeProd();
+	a.AddVarTauProng();
+	a.AddVarTauLeadTrk();
+	a.AddVarTauEcalIso();
+	a.AddVarTauTrackIso();
+	a.AddVarTauAntiElectron();
+	a.AddVarElectronMetDPhi();
+	a.AddVarElectronMetMt();
+	
 	a.GoSkim();
 
 	
