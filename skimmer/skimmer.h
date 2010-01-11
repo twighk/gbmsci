@@ -46,10 +46,16 @@ private:
 	bool bElectronEcalIso;
 	bool bElectronHcalIso;
 	bool bElectronTrackIso;
-	
 	bool bElectronCharge;
 	bool bTauCharge;
 	bool bElecTauChargeProd;
+	bool bTauProng;
+	bool bTauLeadTrk;
+	bool bTauEcalIso;
+	bool bTauTrackIso;
+	bool bTauAntiElectron;
+	bool bElectronMetDPhi;
+	bool bElectronMetMt;
 	
 public:
 
@@ -65,10 +71,16 @@ public:
 	void AddVarElectronEcalIso(){bElectronEcalIso = true; std::cout << "Added Variable ElectronEcalIso" << std::endl;}
 	void AddVarElectronHcalIso(){bElectronHcalIso = true; std::cout << "Added Variable ElectronHcalIso" << std::endl;}
 	void AddVarElectronTrackIso(){bElectronTrackIso = true; std::cout << "Added Variable ElectronTrackIso" << std::endl;}
-	
 	void AddVarElectronCharge(){bElectronCharge = true; std::cout << "Added Variable ElectronCharge" << std::endl;}
 	void AddVarTauCharge(){bTauCharge = true; std::cout << "Added Variable TauCharge" << std::endl;}
 	void AddVarElecTauChargeProd(){bElecTauChargeProd = true; std::cout << "Added Variable ElecTauChargeProd" << std::endl;}
+	void AddVarTauProng(){bTauProng = true; std::cout << "Added Variable TauProng" << std::endl;}
+	void AddVarTauLeadTrk(){bTauLeadTrk = true; std::cout << "Added Variable TauLeadTrk" << std::endl;}
+	void AddVarTauEcalIso(){bTauEcalIso = true; std::cout << "Added Variable TauEcalIso" << std::endl;}
+	void AddVarTauTrackIso(){bTauTrackIso = true; std::cout << "Added Variable TauTrackIso" << std::endl;}
+	void AddVarTauAntiElectron(){bTauAntiElectron = true; std::cout << "Added Variable TauAntiElectron" << std::endl;}
+	void AddVarElectronMetDPhi(){bElectronMetDPhi = true; std::cout << "Added Variable ElectronMetDPhi" << std::endl;}
+	void AddVarElectronMetMt(){bElectronMetMt = true; std::cout << "Added Variable ElectronMetMt" << std::endl;}
 
 
 	void GoSkim();
@@ -83,10 +95,16 @@ public:
 	Double_t GetElectronEcalIso(Int_t, Int_t, Int_t);
 	Double_t GetElectronHcalIso(Int_t, Int_t, Int_t);
 	Double_t GetElectronTrackIso(Int_t, Int_t, Int_t);
-	
 	Double_t GetElectronCharge(Int_t, Int_t, Int_t);
 	Double_t GetTauCharge(Int_t, Int_t, Int_t);
 	Double_t GetElecTauChargeProd(Int_t, Int_t, Int_t, Int_t);
+	Double_t GetTauProng(Int_t, Int_t, Int_t);
+	Double_t GetTauLeadTrk(Int_t, Int_t, Int_t);
+	Double_t GetTauEcalIso(Int_t, Int_t, Int_t);
+	Double_t GetTauTrackIso(Int_t, Int_t, Int_t);
+	Double_t GetTauAntiElectron(Int_t, Int_t, Int_t);
+	Double_t GetElectronMetDPhi(Int_t, Int_t, Int_t);
+	Double_t GetElectronMetMt(Int_t, Int_t, Int_t);
 
 
 	std::string Int2String(Int_t);
