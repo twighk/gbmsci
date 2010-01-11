@@ -47,6 +47,10 @@ private:
 	bool bElectronHcalIso;
 	bool bElectronTrackIso;
 	
+//	bool bElectronCharge;
+//	bool bTauCharge;
+//	bool 
+	
 public:
 
 	skimmer();
