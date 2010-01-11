@@ -72,10 +72,15 @@ void skimmer::GoSkim(){
 		cout << "Skimming Channel " << channel[i] << endl;
 		for (Int_t j = 0; j < intree[i]->GetEntries(); j++) {
 			if (PassCuts(i, j)) {
-				if (bElectronEt) ElectronEt = GetElectronEt(i, j);
-				if (bTauEt) TauEt = GetTauEt(i, j);
+				
+				//Preselection
+				Int_t eindex = 0;
+				Int_t tindex = 0;
+				
+				if (bElectronEt) ElectronEt = GetElectronEt(i, j, eindex);
+				if (bTauEt) TauEt = GetTauEt(i, j, tindex);
 				if (bMetEt) MetEt = GetMetEt(i ,j);
-				if (bElectronTauDPhi) ElectronTauDPhi = GetElectronTauDPhi(i, j);
+				if (bElectronTauDPhi) ElectronTauDPhi = GetElectronTauDPhi(i, j, eindex, tindex);
 				for (Int_t k = 0; k < type.size(); k++) {
 					if (i == k) {type[k] = 1;} else {type[k] = 0;}
 				}
@@ -114,20 +119,20 @@ bool skimmer::PassCuts(Int_t i, Int_t j){
 	
 }
 
-Double_t skimmer::GetElectronEt(Int_t i, Int_t j){
+Double_t skimmer::GetElectronEt(Int_t i, Int_t j, Int_t index){
 	TClonesArray* electron = 0;
 	TBranch *b_lv_electron = intree[i]->GetBranch("lv_electron");
 	b_lv_electron->SetAddress(&electron);	
 	b_lv_electron->GetEntry(j);
-	return ((dynamic_cast<TLorentzVector*>(electron->At(0)))->Et());
+	return ((dynamic_cast<TLorentzVector*>(electron->At(index)))->Et());
 }
 
-Double_t skimmer::GetTauEt(Int_t i, Int_t j){
+Double_t skimmer::GetTauEt(Int_t i, Int_t j, Int_t index){
 	TClonesArray* tau = 0;
 	TBranch *b_lv_tau = intree[i]->GetBranch("lv_tau");
 	b_lv_tau->SetAddress(&tau);	
 	b_lv_tau->GetEntry(j);
-	return ((dynamic_cast<TLorentzVector*>(tau->At(0)))->Et());
+	return ((dynamic_cast<TLorentzVector*>(tau->At(index)))->Et());
 }
 
 Double_t skimmer::GetMetEt(Int_t i, Int_t j){
@@ -138,7 +143,7 @@ Double_t skimmer::GetMetEt(Int_t i, Int_t j){
 	return ((dynamic_cast<TLorentzVector*>(met->At(0)))->Et());
 }
 
-Double_t skimmer::GetElectronTauDPhi(Int_t i, Int_t j){
+Double_t skimmer::GetElectronTauDPhi(Int_t i, Int_t j, Int_t eindex, Int_t tindex){
 	TClonesArray* electron = 0;
 	TClonesArray* tau = 0;
 	TLorentzVector* temp_electron = 0;
@@ -150,8 +155,8 @@ Double_t skimmer::GetElectronTauDPhi(Int_t i, Int_t j){
 	b_lv_electron->GetEntry(j);
 	b_lv_tau->GetEntry(j);
 	
-	temp_electron = (dynamic_cast<TLorentzVector*>(electron->At(0)));
-	temp_tau = (dynamic_cast<TLorentzVector*>(tau->At(0)));
+	temp_electron = (dynamic_cast<TLorentzVector*>(electron->At(eindex)));
+	temp_tau = (dynamic_cast<TLorentzVector*>(tau->At(tindex)));
 	
 
 	return fabs(temp_electron->DeltaPhi(*temp_tau));
