@@ -53,6 +53,7 @@ public:
 	void AddVarElectronTauDPhi(){bElectronTauDPhi = true; std::cout << "Added Variable ElectronTauDPhi" << std::endl;}
 	void GoSkim();
 	bool PassCuts(Int_t, Int_t);
+	bool DoPreselection(Int_t, Int_t, Int_t&, Int_t&);
 	Double_t GetElectronEt(Int_t, Int_t, Int_t);
 	Double_t GetTauEt(Int_t, Int_t, Int_t);
 	Double_t GetMetEt(Int_t, Int_t);
