@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <algorithm>
 
 #include <TFile.h>
 #include <TTree.h>
@@ -39,23 +40,41 @@ int main( int argc, char ** argv){
 		branches[i] -> SetAddress(&leafs[i]);
 	}
 	
+	vector <Int_t> vtypes;
+	vector <TBranch *> btypes;
+	vtypes.resize(types.size());
+	btypes.resize(types.size());
+	for (unsigned int i = 0; i < types.size(); ++i){
+		btypes[i] = tree->GetBranch(types[i].c_str());
+		btypes[i] -> SetAddress(&vtypes[i]);
+	}
+	
 	
 	vector <Double_t> outs;
 	outs.resize(types.size());
 	mlp tester;
-	for(int i = 0; i<100/*tree->GetEntries()*/; ++i){
+	
+	
+	
+	for(int i = 0; i < tree->GetEntries(); ++i){
 		cout << "Event: " << i << endl;
 		tree->GetEntry(i);
 		for (unsigned int j = 0; j < outs.size(); ++j) {
 			outs[j] = tester.Value(j,&leafs[0]);
-			cout << "type" << j+1 << ": " << outs[j] << endl;
+			cout << "type" << j+1 << ": " << outs[j] << " / " << vtypes[j]  << endl;
 		}
 		Double_t sum = 0;
 		for (unsigned int j = 0; j < outs.size(); ++j) {
 			sum += outs[j];
 		}
-		cout << "Sum: " << sum << endl << endl;
-
+		cout << "Sum: " << sum;
+		if (max_element(outs.begin(), outs.end()) - outs.begin() ==
+			max_element(vtypes.begin(), vtypes.end())- vtypes.begin()){
+			cout << " / " << 1; 
+		} else {
+			cout << " / " << 0;
+		}
+		cout<< endl << endl;
 		
 	}
 	
