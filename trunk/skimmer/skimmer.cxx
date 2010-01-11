@@ -44,12 +44,14 @@ void skimmer::SetRootPath(std::string _rootpath){
 	cout << "Input ROOT file path set to " << rootpath << endl;
 	filecombo = new TFile( (rootpath + "combo.root").c_str(), "RECREATE");
 	treecombo = new TTree("combotree","combotree");
-	outtree.push_back(treecombo);
 	
 	
 }
 
 void skimmer::GoSkim(){
+	
+	outtree.push_back(treecombo);
+
 	Double_t ElectronEt = 0;
 	Double_t TauEt = 0;
 	Double_t MetEt = 0;
@@ -72,10 +74,12 @@ void skimmer::GoSkim(){
 		cout << "Skimming Channel " << channel[i] << endl;
 		for (Int_t j = 0; j < intree[i]->GetEntries(); j++) {
 			if (PassCuts(i, j)) {
-				
+
 				//Preselection
-				Int_t eindex = 0;
-				Int_t tindex = 0;
+				Int_t eindex;
+				Int_t tindex;
+				
+				DoPreselection(i, j, eindex, tindex);
 				
 				if (bElectronEt) ElectronEt = GetElectronEt(i, j, eindex);
 				if (bTauEt) TauEt = GetTauEt(i, j, tindex);
@@ -117,6 +121,12 @@ bool skimmer::PassCuts(Int_t i, Int_t j){
 		return false;
 	}
 	
+}
+
+bool skimmer::DoPreselection(Int_t i, Int_t j, Int_t& _eindex, Int_t& _tindex){
+	_eindex = 0;
+	_tindex = 0;
+	return true;	
 }
 
 Double_t skimmer::GetElectronEt(Int_t i, Int_t j, Int_t index){
