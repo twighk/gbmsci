@@ -1,7 +1,5 @@
-#ifndef __mlp__
-#define __mlp__
-
-#include <cmath>
+#ifndef mlp_h
+#define mlp_h
 
 class mlp { 
 public:
@@ -14,43 +12,43 @@ private:
    double input1;
    double input2;
    double input3;
-   double neuron0x10632d160();
-   double neuron0x10632d440();
-   double neuron0x10632d720();
-   double neuron0x10632da00();
-   double input0x10632dce0();
-   double neuron0x10632dce0();
-   double input0x10632dfa0();
-   double neuron0x10632dfa0();
-   double input0x106333f50();
-   double neuron0x106333f50();
-   double input0x106334270();
-   double neuron0x106334270();
-   double input0x1063344e0();
-   double neuron0x1063344e0();
-   double input0x106334970();
-   double neuron0x106334970();
-   double synapse0x10630f830();
-   double synapse0x10632d000();
-   double synapse0x10632df40();
-   double synapse0x10632df70();
-   double synapse0x10632e2b0();
-   double synapse0x10632e2e0();
-   double synapse0x10632e310();
-   double synapse0x10632e340();
-   double synapse0x1063341b0();
-   double synapse0x1063341e0();
-   double synapse0x106334210();
-   double synapse0x106334240();
-   double synapse0x106334450();
-   double synapse0x106334480();
-   double synapse0x1063344b0();
-   double synapse0x1063347e0();
-   double synapse0x106334810();
-   double synapse0x106334940();
-   double synapse0x10630f670();
-   double synapse0x106334bd0();
-   double synapse0x106334c00();
+   double neuron0x1043aca20();
+   double neuron0x1043acc00();
+   double neuron0x1043acee0();
+   double neuron0x1043ad1c0();
+   double input0x1043ad5e0();
+   double neuron0x1043ad5e0();
+   double input0x1043ad7c0();
+   double neuron0x1043ad7c0();
+   double input0x1043adb60();
+   double neuron0x1043adb60();
+   double input0x1043adf30();
+   double neuron0x1043adf30();
+   double input0x1043ae1a0();
+   double neuron0x1043ae1a0();
+   double input0x1043ae610();
+   double neuron0x1043ae610();
+   double synapse0x1043a1ff0();
+   double synapse0x1043ac850();
+   double synapse0x1043ac880();
+   double synapse0x1043ac9c0();
+   double synapse0x1043adaa0();
+   double synapse0x1043adad0();
+   double synapse0x1043adb00();
+   double synapse0x1043adb30();
+   double synapse0x1043ade70();
+   double synapse0x1043adea0();
+   double synapse0x1043aded0();
+   double synapse0x1043adf00();
+   double synapse0x1043ae110();
+   double synapse0x1043ae140();
+   double synapse0x1043ae170();
+   double synapse0x1043ae480();
+   double synapse0x1043ae4b0();
+   double synapse0x1043ae5e0();
+   double synapse0x1043ad4a0();
+   double synapse0x1043ae870();
+   double synapse0x1043ae8a0();
 };
 
 #endif // mlp_h

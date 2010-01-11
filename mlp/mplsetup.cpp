@@ -5,10 +5,12 @@
 #include <TSystem.h>
 #include <TObjArray.h>
 #include <TMultiLayerPerceptron.h>
+#include <TApplication.h>
 
 #include <iostream>
 #include <vector>
 #include <string>
+#include <sstream>
 
 using namespace std;
 
@@ -30,17 +32,29 @@ void mlpsetup(TTree *tree, Int_t ntrain=100){
 			types.push_back(bname);
 		}
 	}
-	for (int i = 0; i < types.size(); ++i) {
-		cout << types[i] << endl;
-	}
+
 	
+	
+	ostringstream outstrm(ostringstream::out);
 	for (int i = 0; i < branchnames.size(); ++i) {
-		cout << branchnames[i] << endl;
+		outstrm << "@" << branchnames[i];
+		if (i != branchnames.size()-1) {
+			outstrm << ",";
+		}
+	}
+	outstrm << ":" << branchnames.size()-1 << ":";	
+	
+	for (int i = 0; i < types.size(); ++i) {
+		outstrm << types[i];
+		if (i != types.size()-1) {
+			outstrm << ",";
+		}
 	}
 	
-	exit(0);
+	cout << outstrm.str() << endl;
+
 	TMultiLayerPerceptron *mlp = 
-	new TMultiLayerPerceptron("@types:ntypes-1:type1,type2,type3",
+	new TMultiLayerPerceptron(outstrm.str().c_str(),
 							  tree,
 							  "Entry$%2",
 							  "(Entry$+1)%2");
@@ -49,10 +63,13 @@ void mlpsetup(TTree *tree, Int_t ntrain=100){
 	mlp->Export("mlp","C++");
 }
 
-int main(){
+int main(int argc, char** argv){
+	TApplication theApp("App", &argc, argv); // this must be instantiated only once 
 	TFile * f = new TFile("../root/combo.root");
 	TTree * t = (TTree*)f->Get("combotree");
 	
 	mlpsetup(t);
+	cerr << "Hanging for X11" << endl;
+	theApp.Run();
 	return 0;
 }

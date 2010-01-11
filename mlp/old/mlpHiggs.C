@@ -23,7 +23,7 @@ void mlpHiggs(Int_t ntrain=100) {
 //   }
 //   if (!input) return;
 
-	TFile *input = new TFile("../root/combo.root");
+	TFile *input = new TFile("../../root/combo.root");
     TTree *simu = (TTree *) input->Get("combotree");
 //   Float_t ElectronEt, TauEt, MetEt, ElectronTauDPhi;
 //   Int_t type1, type2, type3;
