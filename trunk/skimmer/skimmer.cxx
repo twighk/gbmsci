@@ -9,6 +9,12 @@ skimmer::skimmer(){
 	bTauEt = false;
 	bMetEt = false;
 	bElectronTauDPhi = false;
+	bool bElectronEta = false;
+	bool bTauEta = false;
+	bool bElectronEcalIso = false;
+	bool bElectronHcalIso = false;
+	bool ElectronTrackIso = false;
+	
 	filecombo = 0;
 	treecombo = 0;
 }
@@ -56,6 +62,15 @@ void skimmer::GoSkim(){
 	Double_t TauEt = 0;
 	Double_t MetEt = 0;
 	Double_t ElectronTauDPhi = 0;
+	Double_t ElectronEta = 0;
+	Double_t TauEta = 0;
+	Double_t ElectronEcalIso = 0;
+	Double_t ElectronHcalIso = 0;
+	Double_t ElectronTrackIso = 0;
+
+	
+	
+	
 	vector<Int_t> type (infile.size(), 0);
 	
 	//Register Output Branches
@@ -78,7 +93,6 @@ void skimmer::GoSkim(){
 				//Preselection
 				Int_t eindex;
 				Int_t tindex;
-				
 				DoPreselection(i, j, eindex, tindex);
 				
 				if (bElectronEt) ElectronEt = GetElectronEt(i, j, eindex);
@@ -124,8 +138,44 @@ bool skimmer::PassCuts(Int_t i, Int_t j){
 }
 
 bool skimmer::DoPreselection(Int_t i, Int_t j, Int_t& _eindex, Int_t& _tindex){
-	_eindex = 0;
-	_tindex = 0;
+
+	TClonesArray* electron = 0;
+	TClonesArray* tau = 0;
+	TLorentzVector* temp_electron = 0;
+	TLorentzVector* temp_tau = 0;
+	TBranch *b_lv_electron = intree[i]->GetBranch("lv_electron");
+	TBranch *b_lv_tau = intree[i]->GetBranch("lv_tau");
+	b_lv_electron->SetAddress(&electron);	
+	b_lv_tau->SetAddress(&tau);	
+	b_lv_electron->GetEntry(j);
+	b_lv_tau->GetEntry(j);
+	
+	Double_t next_e_et;
+	Int_t best_e_index = 0;
+	Double_t next_t_et;
+	Int_t best_t_index = 0;
+	
+	//Pick the highest Et tau
+	
+	for (int k = 1; k < tau->GetEntriesFast(); k++) {
+		temp_tau = (dynamic_cast<TLorentzVector*>(tau->At(k)));
+		next_t_et = temp_tau->Et();
+		if (next_t_et > (dynamic_cast<TLorentzVector*>(tau->At(best_t_index)))->Et()) {
+			best_t_index = k;
+		}
+	}
+	
+	for (int k = 1; k < electron->GetEntriesFast(); k++) {
+		temp_electron = (dynamic_cast<TLorentzVector*>(electron->At(k)));
+		next_e_et = temp_electron->Et();
+		if (next_e_et > (dynamic_cast<TLorentzVector*>(electron->At(best_e_index)))->Et()) {
+			best_e_index = k;
+		}
+	}
+	
+	_eindex = best_e_index;
+	_tindex = best_t_index;
+
 	return true;	
 }
 

@@ -41,6 +41,11 @@ private:
 	bool bTauEt;
 	bool bMetEt;
 	bool bElectronTauDPhi;
+	bool bElectronEta;
+	bool bTauEta;
+	bool bElectronEcalIso;
+	bool bElectronHcalIso;
+	bool bElectronTrackIso;
 	
 public:
 
@@ -51,6 +56,13 @@ public:
 	void AddVarTauEt(){bTauEt = true; std::cout << "Added Variable TauEt" << std::endl;}
 	void AddVarMetEt(){bMetEt = true; std::cout << "Added Variable MetEt" << std::endl;}
 	void AddVarElectronTauDPhi(){bElectronTauDPhi = true; std::cout << "Added Variable ElectronTauDPhi" << std::endl;}
+	void AddVarElectronEta(){bElectronEta = true; std::cout << "Added Variable ElectronEta" << std::endl;}
+	void AddVarTauEta(){bTauEta = true; std::cout << "Added Variable TauEta" << std::endl;}
+	void AddVarElectronEcalIso(){bElectronEcalIso = true; std::cout << "Added Variable ElectronEcalIso" << std::endl;}
+	void AddVarElectronHcalIso(){bElectronHcalIso = true; std::cout << "Added Variable ElectronHcalIso" << std::endl;}
+	void AddVarElectronTrackIso(){bElectronTrackIso = true; std::cout << "Added Variable ElectronTrackIso" << std::endl;}
+
+
 	void GoSkim();
 	bool PassCuts(Int_t, Int_t);
 	bool DoPreselection(Int_t, Int_t, Int_t&, Int_t&);
@@ -58,6 +70,12 @@ public:
 	Double_t GetTauEt(Int_t, Int_t, Int_t);
 	Double_t GetMetEt(Int_t, Int_t);
 	Double_t GetElectronTauDPhi(Int_t, Int_t, Int_t, Int_t);
+	Double_t GetElectronEta(Int_t, Int_t, Int_t);
+	Double_t GetTauEta(Int_t, Int_t, Int_t);
+	Double_t GetElectronEcalIso(Int_t, Int_t, Int_t);
+	Double_t GetElectronHcalIso(Int_t, Int_t, Int_t);
+	Double_t GetElectronTrackIso(Int_t, Int_t, Int_t);
+
 	std::string Int2String(Int_t);
 
 };
