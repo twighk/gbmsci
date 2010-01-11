@@ -21,6 +21,9 @@ int main(int argc, char** argv) {
 	a.AddVarElectronEcalIso();
 	a.AddVarElectronHcalIso();
 	a.AddVarElectronTrackIso();
+	a.AddVarElectronCharge();
+	a.AddVarTauCharge();
+	a.AddVarElecTauChargeProd();
 	a.GoSkim();
 
 	

@@ -14,6 +14,9 @@ skimmer::skimmer(){
 	bElectronEcalIso = false;
 	bElectronHcalIso = false;
 	bElectronTrackIso = false;
+	bElectronCharge = false;
+	bTauCharge = false;
+	bElecTauChargeProd = false;
 	
 	filecombo = 0;
 	treecombo = 0;
@@ -67,6 +70,9 @@ void skimmer::GoSkim(){
 	Double_t ElectronEcalIso = 0;
 	Double_t ElectronHcalIso = 0;
 	Double_t ElectronTrackIso = 0;
+	Double_t ElectronCharge = 0;
+	Double_t TauCharge = 0;
+	Double_t ElecTauChargeProd = 0;
 
 	vector<Int_t> type (infile.size(), 0);
 	
@@ -76,12 +82,14 @@ void skimmer::GoSkim(){
 		if (bTauEt) outtree[i]->Branch("TauEt", &TauEt);
 		if (bMetEt) outtree[i]->Branch("MetEt", &MetEt);
 		if (bElectronTauDPhi) outtree[i]->Branch("ElectronTauDPhi", &ElectronTauDPhi);
-		
 		if (bElectronEta) outtree[i]->Branch("ElectronEta", &ElectronEta);
 		if (bTauEta) outtree[i]->Branch("TauEta", &TauEta);
 		if (bElectronEcalIso) outtree[i]->Branch("ElectronEcalIso", &ElectronEcalIso);
 		if (bElectronHcalIso) outtree[i]->Branch("ElectronHcalIso", &ElectronHcalIso);
 		if (bElectronTrackIso) outtree[i]->Branch("ElectronTrackIso", &ElectronTrackIso);
+		if (bElectronCharge) outtree[i]->Branch("ElectronCharge", &ElectronCharge);
+		if (bTauCharge) outtree[i]->Branch("TauCharge", &TauCharge);
+		if (bElecTauChargeProd) outtree[i]->Branch("ElecTauChargeProd", &ElecTauChargeProd);
 
 		
 		for (Int_t k = 0; k < type.size(); k++) {
@@ -109,9 +117,10 @@ void skimmer::GoSkim(){
 				if (bElectronEcalIso) ElectronEcalIso = GetElectronEcalIso(i, j, eindex);
 				if (bElectronHcalIso) ElectronHcalIso = GetElectronHcalIso(i, j, eindex);
 				if (bElectronTrackIso) ElectronTrackIso = GetElectronTrackIso(i, j, eindex);
+				if (bElectronCharge) ElectronCharge = GetElectronCharge(i, j, eindex);
+				if (bTauCharge) TauCharge = GetTauCharge(i, j, tindex);
+				if (bElecTauChargeProd) ElecTauChargeProd = GetElecTauChargeProd(i, j, eindex, tindex);
 
-				
-			
 				for (Int_t k = 0; k < type.size(); k++) {
 					if (i == k) {type[k] = 1;} else {type[k] = 0;}
 				}
@@ -275,8 +284,34 @@ Double_t skimmer::GetElectronTrackIso(Int_t i, Int_t j, Int_t index){
 	return (*electron)[index];
 }
 
+Double_t skimmer::GetElectronCharge(Int_t i, Int_t j, Int_t index){
+	vector<Double_t> * electron = 0;
+	TBranch *b_lv_electron = intree[i]->GetBranch("electronCharge");
+	b_lv_electron->SetAddress(&electron);	
+	b_lv_electron->GetEntry(j);
+	return (*electron)[index];
+}
 
+Double_t skimmer::GetTauCharge(Int_t i, Int_t j, Int_t index){
+	vector<Double_t> * tau = 0;
+	TBranch *b_lv_tau = intree[i]->GetBranch("tauCharge");
+	b_lv_tau->SetAddress(&tau);	
+	b_lv_tau->GetEntry(j);
+	return (*tau)[index];
+}
 
+Double_t skimmer::GetElecTauChargeProd(Int_t i, Int_t j, Int_t eindex, Int_t tindex){
+	vector<Double_t> * electron = 0;
+	vector<Double_t> * tau = 0;
+	TBranch *b_lv_electron = intree[i]->GetBranch("electronCharge");
+	TBranch *b_lv_tau = intree[i]->GetBranch("tauCharge");
+	b_lv_electron->SetAddress(&electron);	
+	b_lv_tau->SetAddress(&tau);
+	b_lv_electron->GetEntry(j);
+	b_lv_tau->GetEntry(j);
+	
+	return (((*tau)[tindex]) * ((*electron)[eindex]));
+}
 
 string skimmer::Int2String(Int_t num){
 	stringstream out;
