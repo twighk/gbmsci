@@ -33,6 +33,7 @@ int main(int argc, char** argv) {
 	a.AddVarElectronMetMt();
 	
 	a.GoSkim();
+	a.WriteCombo();
 
 	
 	

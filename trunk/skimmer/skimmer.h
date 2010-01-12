@@ -81,7 +81,7 @@ public:
 	void AddVarTauAntiElectron(){bTauAntiElectron = true; std::cout << "Added Variable TauAntiElectron" << std::endl;}
 	void AddVarElectronMetDPhi(){bElectronMetDPhi = true; std::cout << "Added Variable ElectronMetDPhi" << std::endl;}
 	void AddVarElectronMetMt(){bElectronMetMt = true; std::cout << "Added Variable ElectronMetMt" << std::endl;}
-
+	void WriteCombo();
 
 	void GoSkim();
 	bool PassCuts(Int_t, Int_t);
