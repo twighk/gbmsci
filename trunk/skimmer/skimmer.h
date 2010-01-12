@@ -31,6 +31,7 @@ class skimmer{
 private:
 	std::string rootpath;
 	std::vector<std::string> channel;
+	std::vector<Double_t> int_lum;
 	std::vector<TFile*> infile;
 	std::vector<TTree*> intree;
 	std::vector<TFile*> outfile;
@@ -61,7 +62,7 @@ public:
 
 	skimmer();
 	void SetRootPath(std::string);
-	void AddChannel(std::string, std::string);
+	void AddChannel(std::string, std::string, Double_t);
 	void AddVarElectronEt(){bElectronEt = true; std::cout << "Added Variable ElectronEt" << std::endl;}
 	void AddVarTauEt(){bTauEt = true; std::cout << "Added Variable TauEt" << std::endl;}
 	void AddVarMetEt(){bMetEt = true; std::cout << "Added Variable MetEt" << std::endl;}

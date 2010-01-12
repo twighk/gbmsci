@@ -9,9 +9,9 @@ int main(int argc, char** argv) {
 
 	skimmer a;
 	a.SetRootPath("../root/");
-	a.AddChannel("AH115","bbAHCutTree");
-	a.AddChannel("WplusJets","bbAHCutTree");
-//	a.AddChannel("Zcc","bbAHCutTree");
+	a.AddChannel("AH115","bbAHCutTree", 3831.);
+//	a.AddChannel("WplusJets","bbAHCutTree", 243.);
+	a.AddChannel("Zcc","bbAHCutTree", 3483.);
 	a.AddVarElectronEt();
 	a.AddVarTauEt();
 	a.AddVarMetEt();
