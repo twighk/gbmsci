@@ -11,6 +11,7 @@
 #include <THStack.h>
 
 #include "histogram.h"
+#include "histostack.h"
 
 using namespace std;
 
@@ -40,10 +41,12 @@ int main(int argc, char** argv){
 		h2.fill(350 - x*350, 1.0f);
 	}
 	
+	Histostack hs("test histostack");
+	
 	THStack hs("hs","test stacked histograms");
 	hs.Add(h1.gethist());
 	hs.Add(h2.gethist());
-	TCanvas c1("c1","stacked hists",10,10,700,900);
+	TCanvas c1("casdf","stacked hists",10,10,700,900);
 	hs.Draw();
 	cerr << "Hanging for X11" << endl;
 	theApp.Run();
