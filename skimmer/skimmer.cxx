@@ -109,7 +109,6 @@ void skimmer::GoSkim(){
 		if (bTauEcalIso) outtree[i]->Branch("TauEcalIso", &TauEcalIso);
 		if (bTauTrackIso) outtree[i]->Branch("TauTrackIso", &TauTrackIso);
 		if (bTauAntiElectron) outtree[i]->Branch("TauAntiElectron", &TauAntiElectron);
-
 		if (bElectronMetDPhi) outtree[i]->Branch("ElectronMetDPhi", &ElectronMetDPhi);
 		if (bElectronMetMt) outtree[i]->Branch("ElectronMetMt", &ElectronMetMt);
 
@@ -166,7 +165,6 @@ void skimmer::GoSkim(){
 		cout << "Writing " << (rootpath + channel[i] + "_skim.root") << endl;
 		outfile[i]->Write();
 	}
-	filecombo->Write();
 
 	cout << "Skimming Complete!" << endl;
 }
@@ -424,7 +422,21 @@ Double_t skimmer::GetElectronMetMt(Int_t i, Int_t j, Int_t eindex){
 	return mt;
 }
 
-
+void skimmer::WriteCombo(){
+	filecombo->cd();	
+	string channelname;
+	TTree* metadata = new TTree("metadata","metadata");
+	metadata->Branch("ChannelName",&channelname);
+	
+	for (int i = 0; i < infile.size(); i++) {
+		channelname = channel[i];
+		metadata->Fill();
+	}
+	
+	filecombo->Write();
+	
+	
+}
 
 string skimmer::Int2String(Int_t num){
 	stringstream out;
