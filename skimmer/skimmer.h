@@ -57,6 +57,7 @@ private:
 	bool bTauAntiElectron;
 	bool bElectronMetDPhi;
 	bool bElectronMetMt;
+	bool bVisibleMass;
 	
 public:
 
@@ -82,6 +83,8 @@ public:
 	void AddVarTauAntiElectron(){bTauAntiElectron = true; std::cout << "Added Variable TauAntiElectron" << std::endl;}
 	void AddVarElectronMetDPhi(){bElectronMetDPhi = true; std::cout << "Added Variable ElectronMetDPhi" << std::endl;}
 	void AddVarElectronMetMt(){bElectronMetMt = true; std::cout << "Added Variable ElectronMetMt" << std::endl;}
+	void AddVarVisibleMass(){bVisibleMass = true; std::cout << "Added Variable VisibleMass" << std::endl;}
+
 	void WriteCombo();
 
 	void GoSkim();
@@ -106,6 +109,7 @@ public:
 	Double_t GetTauAntiElectron(Int_t, Int_t, Int_t);
 	Double_t GetElectronMetDPhi(Int_t, Int_t, Int_t);
 	Double_t GetElectronMetMt(Int_t, Int_t, Int_t);
+	Double_t GetVisibleMass(Int_t, Int_t, Int_t, Int_t);
 
 
 	std::string Int2String(Int_t);

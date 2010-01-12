@@ -31,7 +31,7 @@ int main(int argc, char** argv) {
 	a.AddVarTauAntiElectron();
 	a.AddVarElectronMetDPhi();
 	a.AddVarElectronMetMt();
-	
+	a.AddVarVisibleMass();
 	a.GoSkim();
 	a.WriteCombo();
 

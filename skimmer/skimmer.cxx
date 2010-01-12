@@ -88,7 +88,7 @@ void skimmer::GoSkim(){
 	Double_t TauAntiElectron = 0;
 	Double_t ElectronMetDPhi = 0;
 	Double_t ElectronMetMt = 0;
-	
+	Double_t VisibleMass = 0;
 	vector<Int_t> type (infile.size(), 0);
 	
 	//Register Output Branches
@@ -112,6 +112,7 @@ void skimmer::GoSkim(){
 		if (bTauAntiElectron) outtree[i]->Branch("TauAntiElectron", &TauAntiElectron);
 		if (bElectronMetDPhi) outtree[i]->Branch("ElectronMetDPhi", &ElectronMetDPhi);
 		if (bElectronMetMt) outtree[i]->Branch("ElectronMetMt", &ElectronMetMt);
+		if (bVisibleMass) outtree[i]->Branch("VisibleMass", &VisibleMass);
 
 		
 		for (Int_t k = 0; k < type.size(); k++) {
@@ -147,9 +148,9 @@ void skimmer::GoSkim(){
 				if (bTauEcalIso) TauEcalIso = GetTauEcalIso(i, j, tindex);
 				if (bTauTrackIso) TauTrackIso = GetTauTrackIso(i, j, tindex);
 				if (bTauAntiElectron) TauAntiElectron = GetTauAntiElectron(i, j, tindex);
-
 				if (bElectronMetDPhi) ElectronMetDPhi = GetElectronMetDPhi(i, j, eindex);
 				if (bElectronMetMt) ElectronMetMt = GetElectronMetMt(i, j, eindex);
+				if (bVisibleMass) VisibleMass = GetVisibleMass(i, j, eindex, tindex);
 
 				
 				for (Int_t k = 0; k < type.size(); k++) {
@@ -422,6 +423,31 @@ Double_t skimmer::GetElectronMetMt(Int_t i, Int_t j, Int_t eindex){
 	
 	return mt;
 }
+
+Double_t skimmer::GetVisibleMass(Int_t i, Int_t j, Int_t eindex, Int_t tindex){
+	TClonesArray* electron = 0;
+	TClonesArray* tau = 0;
+	TLorentzVector* temp_electron = 0;
+	TLorentzVector* temp_tau = 0;
+	TLorentzVector higgs;
+	TBranch *b_lv_electron = intree[i]->GetBranch("lv_electron");
+	TBranch *b_lv_tau = intree[i]->GetBranch("lv_tau");
+	b_lv_electron->SetAddress(&electron);	
+	b_lv_tau->SetAddress(&tau);	
+	b_lv_electron->GetEntry(j);
+	b_lv_tau->GetEntry(j);
+	
+	temp_electron = (dynamic_cast<TLorentzVector*>(electron->At(eindex)));
+	temp_tau = (dynamic_cast<TLorentzVector*>(tau->At(tindex)));
+	higgs = (*temp_electron) + (*temp_tau);
+	
+	
+	return higgs.M();
+}
+
+
+
+
 
 void skimmer::WriteCombo(){
 	filecombo->cd();	
