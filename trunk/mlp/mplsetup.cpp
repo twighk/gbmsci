@@ -14,7 +14,7 @@
 
 using namespace std;
 
-void mlpsetup(TTree *tree, Int_t ntrain=100){
+void mlpsetup(TTree *tree, Int_t ntrain=101){
 	if (!gROOT->GetClass("TMultiLayerPerceptron")) {
 		gSystem->Load("libMLP");
 	}
@@ -36,15 +36,17 @@ void mlpsetup(TTree *tree, Int_t ntrain=100){
 	
 	
 	ostringstream outstrm(ostringstream::out);
-	for (int i = 0; i < branchnames.size(); ++i) {
+	for (unsigned int i = 0; i < branchnames.size(); ++i) {
 		outstrm << "@" << branchnames[i];
 		if (i != branchnames.size()-1) {
 			outstrm << ",";
 		}
 	}
-	outstrm << ":" << branchnames.size()-1 << ":";	
 	
-	for (int i = 0; i < types.size(); ++i) {
+	coutstrm << ":" << branchnames.size() << ":";	
+		
+	
+	for (unsigned int i = 0; i < types.size(); ++i) {
 		outstrm << types[i];
 		if (i != types.size()-1) {
 			outstrm << ",";
