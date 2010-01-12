@@ -29,7 +29,7 @@ skimmer::skimmer(){
 	treecombo = 0;
 }
 
-void skimmer::AddChannel(std::string instring, std::string _tree){
+void skimmer::AddChannel(std::string instring, std::string _tree, Double_t lum){
 	
 	if (rootpath == ""){ // Make sure we have set the filepath for the root files
 	cout << "Cannot add channel, input ROOT file path not set \nQuitting" << endl;
@@ -38,6 +38,7 @@ void skimmer::AddChannel(std::string instring, std::string _tree){
 	
 	infile.push_back(new TFile((rootpath + instring + ".root").c_str()));
 	channel.push_back(instring);
+	int_lum.push_back(lum);
 	if (infile[infile.size() - 1]->IsOpen() == 0){
 		cout << "Quitting" << endl;
 		exit(1);
@@ -425,11 +426,15 @@ Double_t skimmer::GetElectronMetMt(Int_t i, Int_t j, Int_t eindex){
 void skimmer::WriteCombo(){
 	filecombo->cd();	
 	string channelname;
+	Double_t lum;
 	TTree* metadata = new TTree("metadata","metadata");
 	metadata->Branch("ChannelName",&channelname);
+	metadata->Branch("IntLum",&lum);
+
 	
 	for (int i = 0; i < infile.size(); i++) {
 		channelname = channel[i];
+		lum = int_lum[i];
 		metadata->Fill();
 	}
 	
