@@ -5,7 +5,6 @@
 #include <TCanvas.h>
 #include <TROOT.h>
 #include <TStyle.h>
-#include <TLatex.h>
 
 #include <sstream>
 
@@ -20,8 +19,9 @@ public:
 	Histogram(const char * Title){
 		mycount = count;
 		std::ostringstream str (std::ostringstream::out);
-		str << "h" << count++ ; 
+		str << "histh" << count++ ; 
 		hist = new TH1F(str.str().c_str(), Title,100,0,350);
+		hist->SetFillColor(mycount+1);
 		gROOT->SetStyle("Plain");
 		gROOT->ForceStyle(); 
 		gStyle->SetOptStat(kFALSE);
@@ -45,9 +45,8 @@ public:
 	
 	void show(){
 		std::ostringstream str (std::ostringstream::out);
-		str << "c" << canvas++ ; 
+		str << "histc" << canvas++ ; 
 		TCanvas* my_canvas = new TCanvas(str.str().c_str(),hist->GetTitle() ,200,10,600,400); 
-		hist->SetFillColor(mycount+1);
 		hist->Draw();
 	}
 

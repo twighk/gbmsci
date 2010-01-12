@@ -21,12 +21,14 @@ int main(int argc, char** argv){
 
 	Histogram h1("Example Histogram");
 	Histogram h2("Histogram Example");
+	Histogram h3("Histogram a Example");
 	
 	h1.setXLabel("Xh1 $x^2$");
 	h1.setYLabel("Yh1");
 	
-	h1.show();
-	h2.show();
+	//h1.show();
+	//h2.show();
+	//h3.show();
 	
 	for (Int_t i = 0; i < 100000; i++) {
 		Float_t x = randgen->Rndm(); 
@@ -39,15 +41,15 @@ int main(int argc, char** argv){
 		
 		h1.fill(x*350, 1.0f);
 		h2.fill(350 - x*350, 1.0f);
+		h3.fill(x*x*350, 1.0f);
 	}
 	
-	Histostack hs("test histostack");
-	
-	THStack hs("hs","test stacked histograms");
-	hs.Add(h1.gethist());
-	hs.Add(h2.gethist());
-	TCanvas c1("casdf","stacked hists",10,10,700,900);
-	hs.Draw();
+	Histostack hstack("test histostack");
+	hstack.add(h1);
+	hstack.add(h2);
+	hstack.add(h3);
+	hstack.draw();
+	hstack.draw("Leg");
 	cerr << "Hanging for X11" << endl;
 	theApp.Run();
 	return 0;
