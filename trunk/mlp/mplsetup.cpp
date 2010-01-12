@@ -43,7 +43,7 @@ void mlpsetup(TTree *tree, Int_t ntrain=101){
 		}
 	}
 	
-	coutstrm << ":" << branchnames.size() << ":";	
+	outstrm << ":" << branchnames.size() << ":";	
 		
 	
 	for (unsigned int i = 0; i < types.size(); ++i) {
