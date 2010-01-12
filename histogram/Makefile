@@ -13,7 +13,7 @@ all: histtest
 histtest:main.o
 	${GPP} $^ -o ${BIN} ${FLAGS} ${LIBS} ${OPTI}
 	
-main.o: main.cpp histogram.h 
+main.o: main.cpp histogram.h histostack.h
 	${GPP} -c $< -o $@ ${COMPFLAGS} ${CFLAGS} ${OPTI}
 
 clean: cleanish 
