@@ -450,7 +450,7 @@ void skimmer::WriteCombo(){
 	TString channelname;
 	Double_t lum;
 	TTree* metadata = new TTree("metadata","metadata");
-	metadata->Branch("ChannelName",&channelname);
+	metadata->Branch("ChannelName",&channelname,256000,0);
 	metadata->Branch("IntLum",&lum);
 
 	
