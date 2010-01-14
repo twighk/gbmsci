@@ -445,13 +445,9 @@ Double_t skimmer::GetVisibleMass(Int_t i, Int_t j, Int_t eindex, Int_t tindex){
 	return higgs.M();
 }
 
-
-
-
-
 void skimmer::WriteCombo(){
 	filecombo->cd();	
-	string channelname;
+	TString channelname;
 	Double_t lum;
 	TTree* metadata = new TTree("metadata","metadata");
 	metadata->Branch("ChannelName",&channelname);
@@ -459,7 +455,7 @@ void skimmer::WriteCombo(){
 
 	
 	for (int i = 0; i < infile.size(); i++) {
-		channelname = channel[i];
+		channelname = (channel[i]).c_str();
 		lum = int_lum[i];
 		metadata->Fill();
 	}
