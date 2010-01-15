@@ -61,6 +61,8 @@ void mlpsetup(TTree *tree, Int_t ntrain=21){
 							  "Entry$%2",
 							  "(Entry$+1)%2");
 	
+	mlp->SetLearningMethod(kBFGS);
+	
 	mlp->Train(ntrain, "text,graph,update=10");
 	mlp->Export("mlp","C++");
 }

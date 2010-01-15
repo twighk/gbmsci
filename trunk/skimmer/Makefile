@@ -13,7 +13,7 @@ all: skimmer
 skimmer: main.o skimmer.o
 	${GPP} $^ -o ${BIN} ${FLAGS} ${LIBS} ${OPTI}
 	
-main.o: main.cpp
+main.o: main.cpp skimmer.h
 	${GPP} -c $< -o $@ ${COMPFLAGS} ${CFLAGS} ${OPTI}
 
 skimmer.o: skimmer.cxx skimmer.h 
