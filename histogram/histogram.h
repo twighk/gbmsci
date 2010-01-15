@@ -46,7 +46,7 @@ public:
 	void show(){
 		std::ostringstream str (std::ostringstream::out);
 		str << "histc" << canvas++ ; 
-		TCanvas* my_canvas = new TCanvas(str.str().c_str(),hist->GetTitle() ,200,10,600,400); 
+		/*TCanvas* my_canvas =*/ new TCanvas(str.str().c_str(),hist->GetTitle() ,200,10,600,400); 
 		hist->Draw();
 	}
 

@@ -34,10 +34,10 @@ cleanish:
 	rm -f *.o
 	
 run: clean mlp
-	./${BIN}
+	time ./${BIN}
 
 runsetup: setup
-	./${BINSETUP}
+	time ./${BINSETUP}
 	
 time: all
 	time ./${BIN}
