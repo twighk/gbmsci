@@ -24,7 +24,7 @@ public:
 		hist->SetFillColor(mycount+1);
 		gROOT->SetStyle("Plain");
 		gROOT->ForceStyle(); 
-		gStyle->SetOptStat(kFALSE);
+		gStyle->SetOptStat(kTRUE);
 	}
 	
 	TH1F* gethist(){ return hist;}

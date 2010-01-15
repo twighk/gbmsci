@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <cmath>
 
 #include <TFile.h>
 #include <TTree.h>
@@ -102,16 +103,68 @@ int main( int argc, char ** argv){
 							 );
 	}
 	
-	for (int i = 0; i < tree->GetEntries(); ++i) {
-		tree->GetEntry(i);
-		//Get output from mlp
-		for (unsigned int j = 0; j < outs.size(); ++j) {
-			outs[j] = tester.Value(j,&vars[0]/*pointer to array of leafs*/);
-			histograms[j].fill( *visibleMass, outs[j] /** targetlum /channellum[j]*/);
+	vector <Double_t> sum;
+	vector <Double_t> sum2;
+	sum.resize(outs.size());
+	sum2.resize(outs.size());
+	for (unsigned int j = 0; j < outs.size(); ++j) {
+		sum[j] = 0;
+		sum2[j] = 0;
+	} // set to 0
+	
+	int event = 0;
+	for (unsigned int x = 0; x < outs.size(); ++x) {
+		int num = 0;
+		int b = false;
+	
+
+
+		for (int i = event/*0*/; i < tree->GetEntries(); ++i) {
+			tree->GetEntry(i);
+			//Get output from mlp
+			for (unsigned int j = 0; j < outs.size(); ++j) {
+				outs[j] = tester.Value(j,&vars[0]/*pointer to array of leafs*/);
+				histograms[j].fill( *visibleMass, outs[j] * targetlum /channellum[j]);
+				
+				if(j==x && vtypes[x]){
+					num ++;
+					b = true;
+				} else if (j==x && !vtypes[x]){
+					b = false;
+				}
+				
+				if (vtypes[j] == 1){
+					sum[j]  += outs[j];
+					sum2[j] += outs[j] * outs[j];
+				} else {
+					sum[j]  += (1 - outs[j]);
+					sum2[j] += pow((1 - outs[j]),2);
+				}
+			}
+			
+				if (b&& num < 10) {
+					cout <<endl << "Event: " << i << endl;
+					for (unsigned int j = 0; j < outs.size(); ++j) {
+						cout<< "type" << j+1 << ": " << outs[j] << " / " << vtypes[j]  << endl;	
+					}
+					
+				} else if(num >= 100){
+					event = i;
+					break;
+				}
 		}
-		
-		
 	}
+	
+	
+	for (unsigned int j = 0; j < outs.size(); ++j) {
+		cout << channelname[j] << ": " << sum[j] / tree->GetEntries() << " "
+									   << sum2[j] / tree->GetEntries() - pow(sum[j] / tree->GetEntries(), 2)
+									   << endl;
+	} // Print out
+	
+	
+	
+	
 	
 	/*
 	for(int i = 0; i < tree->GetEntries(); ++i){

@@ -40,7 +40,7 @@ public:
 		str << "histstackc" << canvas++ ; 
 		/*TCanvas* my_canvas =*/ new TCanvas(str.str().c_str(),"test" ,200,10,600,400); 
 		
-		TLegend *legend = new TLegend(0.6,0.9,1.0f,1.0,legendname); //X:left -> right, Y:bottom -> top 
+		TLegend *legend = new TLegend(0.6,0.7,1.0f,1.0,legendname); //X:left -> right, Y:bottom -> top 
 		legend->SetTextSize(0.03);
 		for (unsigned int i = 0; i != histlist.size(); ++i) {
 			legend -> AddEntry(histlist[i]->gethist(),"","f");
