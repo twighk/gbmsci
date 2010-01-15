@@ -424,6 +424,26 @@ Double_t skimmer::GetElectronMetMt(Int_t i, Int_t j, Int_t eindex){
 	return mt;
 }
 
+Double_t skimmer::GetVisibleMass(Int_t i, Int_t j, Int_t eindex, Int_t tindex){
+	TClonesArray* electron = 0;
+	TClonesArray* tau = 0;
+	TLorentzVector* temp_electron = 0;
+	TLorentzVector* temp_tau = 0;
+	TLorentzVector higgs;
+	TBranch *b_lv_electron = intree[i]->GetBranch("lv_electron");
+	TBranch *b_lv_tau = intree[i]->GetBranch("lv_tau");
+	b_lv_electron->SetAddress(&electron);
+	b_lv_tau->SetAddress(&tau);
+	b_lv_electron->GetEntry(j);
+	b_lv_tau->GetEntry(j);
+	
+	temp_electron = (dynamic_cast<TLorentzVector*>(electron->At(eindex)));
+	temp_tau = (dynamic_cast<TLorentzVector*>(tau->At(tindex)));
+	higgs = (*temp_electron) + (*temp_tau);
+}
+	
+	
+
 
 void skimmer::WriteCombo(){
 	filecombo->cd();	
