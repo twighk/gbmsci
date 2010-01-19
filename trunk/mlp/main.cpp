@@ -19,6 +19,13 @@ using namespace std;
 
 const Double_t targetlum = 200.0;
 
+struct ChannelMeta {
+	string name;
+	Double_t luminocity;
+	Int_t begin;
+	Int_t end;
+};
+
 
 int main( int argc, char ** argv){
 	TApplication theApp("App", &argc, argv); // this must be instantiated only once 
@@ -30,19 +37,19 @@ int main( int argc, char ** argv){
 	
 	
 	// Get Channel names 
-	vector <string> channelname;
-	vector <Double_t> channellum;
+	vector <ChannelMeta> channeldata;
+	
 	TString* chnme = NULL; Double_t chlum = NULL;
 	TBranch * channelbranch = metatree->GetBranch("ChannelName");
 	TBranch * channellumbranch = metatree->GetBranch("IntLum");
 	channelbranch->SetAddress(&chnme);
 	channellumbranch->SetAddress(&chlum);
+	channeldata.resize(metatree->GetEntriesFast());
 	for (Int_t i = 0; i < metatree->GetEntriesFast(); ++i) {
 		metatree->GetEntry(i);
-		channellum.push_back(chlum);
-		channelname.push_back(string(chnme->Data()));
-		
-		cout << channelname[i] << ": " << channellum[i] << endl;
+		channeldata[i].name = string(chnme->Data());
+		channeldata[i].luminocity = chlum;
+		cout << channeldata[i].name << ": " << channeldata[i].luminocity << endl;
 	} 
 	
 	
@@ -50,14 +57,12 @@ int main( int argc, char ** argv){
 	vector <string> branchnames;
 	vector <string> types;
 	
-	
 	TObjArray* lob = tree->GetListOfBranches();
 	for (Int_t i = 0; i < lob->GetEntriesFast(); ++i) {
 		TBranch * branch = (TBranch *)lob->At(i);
 		string bname = string(branch -> GetName());
 		if(string(bname).compare(0,4,"type")){
 			branchnames.push_back(bname);
-
 		}else {
 			types.push_back(bname);
 		}
@@ -100,7 +105,7 @@ int main( int argc, char ** argv){
 	vector<Histogram> histograms;
 	for (unsigned int i = 0; i != outs.size(); i++) {
 		histograms.push_back(
-							 Histogram(channelname[i].c_str())
+							 Histogram(channeldata[i].name.c_str())
 							 );
 	}
 	
@@ -123,7 +128,10 @@ int main( int argc, char ** argv){
 			//Get output from mlp
 			for (unsigned int j = 0; j < outs.size(); ++j) {
 				outs[j] = tester.Value(j,&vars[0]/*pointer to array of leafs*/);
-				histograms[j].fill( *visibleMass, outs[j] * targetlum /channellum[j]);
+				if (outs[j] > 0){ // posible dodgy line
+					histograms[j].fill( *visibleMass, outs[j]/* * targetlum /channeldata[j].luminocity*/);	
+				}
+				
 				
 				if(j==x && vtypes[x]){
 					num ++;
@@ -156,7 +164,7 @@ int main( int argc, char ** argv){
 	
 	
 	for (unsigned int j = 0; j < outs.size(); ++j) {
-		cout << channelname[j] << ": " << sum[j] / tree->GetEntries() << " "
+		cout << channeldata[j].name << ": " << sum[j] / tree->GetEntries() << " "
 									   << sum2[j] / tree->GetEntries() - pow(sum[j] / tree->GetEntries(), 2)
 									   << endl;
 	} // Print out
