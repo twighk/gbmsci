@@ -42,7 +42,7 @@ int main( int argc, char ** argv){
 		channelname.push_back(string(chnme->Data()));
 		
 		cout << channelname[i] << ": " << channellum[i] << endl;
-	}
+	} 
 	
 	
 	// Get variable and type branch names -> split into vectors
@@ -116,8 +116,6 @@ int main( int argc, char ** argv){
 	for (unsigned int x = 0; x < outs.size(); ++x) {
 		int num = 0;
 		int b = false;
-	
-
 
 		for (int i = event/*0*/; i < tree->GetEntries(); ++i) {
 			tree->GetEntry(i);
@@ -142,16 +140,16 @@ int main( int argc, char ** argv){
 				}
 			}
 			
-				if (b&& num < 10) {
-					cout <<endl << "Event: " << i << endl;
-					for (unsigned int j = 0; j < outs.size(); ++j) {
-						cout<< "type" << j+1 << ": " << outs[j] << " / " << vtypes[j]  << endl;	
-					}
-					
-				} else if(num >= 100){
-					event = i;
-					break;
+			if (b&& num < 10) {
+				cout <<endl << "Event: " << i << endl;
+				for (unsigned int j = 0; j < outs.size(); ++j) {
+					cout<< "type" << j+1 << ": " << outs[j] << " / " << vtypes[j]  << endl;	
 				}
+				
+			} else if(num >= 100){
+				event = i;
+				break;
+			}
 		}
 	}
 	
@@ -191,7 +189,7 @@ int main( int argc, char ** argv){
 	*/
 	
 	
-	Histostack hstack("Visible mass");
+	Histostack hstack("Visible mass"); 
 
 	//Draw histograms
 	for (unsigned int i = 0; i != outs.size(); i++) {
