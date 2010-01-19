@@ -14,7 +14,7 @@
 
 using namespace std;
 
-void mlpsetup(TTree *tree, Int_t ntrain=151){
+void mlpsetup(TTree *tree, Int_t ntrain=21){
 	cout << "ntrain: " << ntrain << endl;
 	if (!gROOT->GetClass("TMultiLayerPerceptron")) {
 		gSystem->Load("libMLP");

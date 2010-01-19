@@ -3,6 +3,7 @@
 #include <vector>
 #include <algorithm>
 #include <cmath>
+#include <iomanip>
 
 #include <TFile.h>
 #include <TTree.h>
@@ -28,6 +29,7 @@ struct ChannelMeta {
 
 
 int main( int argc, char ** argv){
+	cout << "\033[0m" << endl;
 	TApplication theApp("App", &argc, argv); // this must be instantiated only once 
 	
 	// Open File -> Get trees
@@ -61,7 +63,6 @@ int main( int argc, char ** argv){
 		cout << channeldata[i].name << ": " << "\t" << channeldata[i].luminocity << "\t" << channeldata[i].begin << "\t" << channeldata[i].end << endl;
 	} 
 	
-	exit(0);
 	// Get variable and type branch names -> split into vectors
 	vector <string> branchnames;
 	vector <string> types;
@@ -127,57 +128,100 @@ int main( int argc, char ** argv){
 		sum2[j] = 0;
 	} // set to 0
 	
-	int event = 0;
-	for (unsigned int x = 0; x < outs.size(); ++x) {
-		int num = 0;
-		int b = false;
+//	int event = 0;
+//	for (unsigned int x = 0; x < outs.size(); ++x) {
+//		int num = 0;
+//		int b = false;
+//
+//		for (int i = event/*0*/; i < tree->GetEntries(); ++i) {
+//			tree->GetEntry(i);
+//			//Get output from mlp
+//			for (unsigned int j = 0; j < outs.size(); ++j) {
+//				outs[j] = tester.Value(j,&vars[0]/*pointer to array of leafs*/);
+//				if (outs[j] > 0){ // posible dodgy line
+//					histograms[j].fill( *visibleMass, outs[j]/* * targetlum /channeldata[j].luminocity*/);	
+//				}
+//				
+//				
+//				if(j==x && vtypes[x]){
+//					num ++;
+//					b = true;
+//				} else if (j==x && !vtypes[x]){
+//					b = false;
+//				}
+//				
+//				if (vtypes[j] == 1){
+//					sum[j]  += outs[j];
+//					sum2[j] += outs[j] * outs[j];
+//				} else {
+//					sum[j]  += (1 - outs[j]);
+//					sum2[j] += pow((1 - outs[j]),2);
+//				}
+//			}
+//			
+//			if (b&& num < 10) {
+//				cout <<endl << "Event: " << i << endl;
+//				for (unsigned int j = 0; j < outs.size(); ++j) {
+//					cout<< "type" << j+1 << ": " << outs[j] << " / " << vtypes[j]  << endl;	
+//				}
+//				
+//			} else if(num >= 100){
+//				event = i;
+//				break;
+//			}
+//		}
+//	}
+	
+	vector<vector <Histogram * > > perfmat;
+	perfmat.resize(channeldata.size());
+	
+	for (unsigned int i = 0; i != channeldata.size(); ++i){
+		for (unsigned int j = 0; j != channeldata.size(); ++j){
+			ostringstream str;
+			str << "Actual("<<channeldata[i].name << ") vs. Output("<< channeldata[j].name << ")";
+			perfmat[i].push_back(new Histogram(str.str().c_str(), 200, -0.5, 1.5));
+		}
+	}
 
-		for (int i = event/*0*/; i < tree->GetEntries(); ++i) {
-			tree->GetEntry(i);
-			//Get output from mlp
-			for (unsigned int j = 0; j < outs.size(); ++j) {
-				outs[j] = tester.Value(j,&vars[0]/*pointer to array of leafs*/);
-				if (outs[j] > 0){ // posible dodgy line
-					histograms[j].fill( *visibleMass, outs[j]/* * targetlum /channeldata[j].luminocity*/);	
+
+	for (unsigned int i = 0; i != channeldata.size();++i){
+		for (int j = channeldata[i].begin; j != channeldata[i].end + 1; ++j) {
+			tree->GetEntry(j);			for (unsigned int k = 0; k < outs.size(); ++k) {
+				outs[k] = tester.Value(k,&vars[0]);
+				perfmat[i][k]->fill(outs[k], 1);
+//				if (*visibleMass >100 && *visibleMass < 110){
+//					cout << *visibleMass << endl;
+//				}
+				if (outs[k] > 0){ 
+					histograms[k].fill( *visibleMass, outs[k]/* * targetlum /channeldata[j].luminocity*/);	
 				}
-				
-				
-				if(j==x && vtypes[x]){
-					num ++;
-					b = true;
-				} else if (j==x && !vtypes[x]){
-					b = false;
-				}
-				
-				if (vtypes[j] == 1){
-					sum[j]  += outs[j];
-					sum2[j] += outs[j] * outs[j];
-				} else {
-					sum[j]  += (1 - outs[j]);
-					sum2[j] += pow((1 - outs[j]),2);
-				}
-			}
-			
-			if (b&& num < 10) {
-				cout <<endl << "Event: " << i << endl;
-				for (unsigned int j = 0; j < outs.size(); ++j) {
-					cout<< "type" << j+1 << ": " << outs[j] << " / " << vtypes[j]  << endl;	
-				}
-				
-			} else if(num >= 100){
-				event = i;
-				break;
 			}
 		}
 	}
 	
+	cout << endl << "Matrix of means:" << endl;
+	for (unsigned int i = 0; i != channeldata.size();++i){
+		for (unsigned int j = 0; j != channeldata.size();++j){
+			if (i == j)
+				cout << "\033[0;31m"; // terminal red
+			
+			cout << fixed << setprecision(3) << perfmat[i][j]->getMean() << '\t';
+			if (i == j)
+				cout << "\033[0m"; // terminal default
+			perfmat[i][j]->show();
+			
+		}
+		cout << endl;
+	}
 	
-	for (unsigned int j = 0; j < outs.size(); ++j) {
-		cout << channeldata[j].name << ": " << sum[j] / tree->GetEntries() << " "
-									   << sum2[j] / tree->GetEntries() - pow(sum[j] / tree->GetEntries(), 2)
-									   << endl;
-	} // Print out
 	
+	
+//	for (unsigned int j = 0; j < outs.size(); ++j) {
+//		cout << channeldata[j].name << ": " << sum[j] / tree->GetEntries() << " "
+//									   << sum2[j] / tree->GetEntries() - pow(sum[j] / tree->GetEntries(), 2)
+//									   << endl;
+//	} // Print out
+//	
 	
 	
 	

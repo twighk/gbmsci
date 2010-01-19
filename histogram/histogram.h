@@ -26,8 +26,22 @@ public:
 		gROOT->ForceStyle(); 
 		gStyle->SetOptStat(kTRUE);
 	}
+	Histogram(const char * Title,int binnum, int begin, int end){
+		mycount = count;
+		std::ostringstream str (std::ostringstream::out);
+		str << "histh" << count++ ; 
+		hist = new TH1F(str.str().c_str(), Title,100, begin, end);
+		hist->SetFillColor(mycount+1);
+		gROOT->SetStyle("Plain");
+		gROOT->ForceStyle(); 
+		gStyle->SetOptStat(kTRUE);
+	}
 	
 	TH1F* gethist(){ return hist;}
+	
+	Double_t getMean(){
+		return hist->GetMean();
+	}
 	
 	void fill(Float_t x, Float_t weight){
 		hist->Fill(x,weight);
