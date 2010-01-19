@@ -127,6 +127,8 @@ void skimmer::GoSkim(){
 	for (Int_t i = 0; i < intree.size() ; i++) {
 		cout << "Skimming Channel " << channel[i] << endl;
 		beginvec.push_back(eventcounter);
+		eventcounter += intree[i]->GetEntries();
+		endvec.push_back(eventcounter - 1);
 		for (Int_t j = 0; j < intree[i]->GetEntries(); j++) {
 			if (PassCuts(i, j)) {
 				//Preselection
@@ -161,10 +163,8 @@ void skimmer::GoSkim(){
 				}
 				outtree[i]->Fill();
 				treecombo->Fill();
-				eventcounter++;
 			}
 		}
-		endvec.push_back(eventcounter);
 	}
 
 	//Write resulting ROOT files

@@ -40,19 +40,28 @@ int main( int argc, char ** argv){
 	vector <ChannelMeta> channeldata;
 	
 	TString* chnme = NULL; Double_t chlum = NULL;
+	Int_t temp_begin, temp_end;
 	TBranch * channelbranch = metatree->GetBranch("ChannelName");
 	TBranch * channellumbranch = metatree->GetBranch("IntLum");
+	TBranch * b_begin = metatree->GetBranch("BeginIndex");
+	TBranch * b_end = metatree->GetBranch("EndIndex");
 	channelbranch->SetAddress(&chnme);
 	channellumbranch->SetAddress(&chlum);
+	b_begin->SetAddress(&temp_begin);
+	b_end->SetAddress(&temp_end);
+
 	channeldata.resize(metatree->GetEntriesFast());
 	for (Int_t i = 0; i < metatree->GetEntriesFast(); ++i) {
 		metatree->GetEntry(i);
 		channeldata[i].name = string(chnme->Data());
 		channeldata[i].luminocity = chlum;
-		cout << channeldata[i].name << ": " << channeldata[i].luminocity << endl;
+		channeldata[i].begin = temp_begin;
+		channeldata[i].end = temp_end;
+
+		cout << channeldata[i].name << ": " << "\t" << channeldata[i].luminocity << "\t" << channeldata[i].begin << "\t" << channeldata[i].end << endl;
 	} 
 	
-	
+	exit(0);
 	// Get variable and type branch names -> split into vectors
 	vector <string> branchnames;
 	vector <string> types;
