@@ -37,6 +37,8 @@ private:
 	std::vector<TTree*> intree;
 	std::vector<TFile*> outfile;
 	std::vector<TTree*> outtree;
+	std::vector<Int_t> beginvec;
+	std::vector<Int_t> endvec;
 	TFile* filecombo;
 	TTree* treecombo;
 	bool bElectronEt;
