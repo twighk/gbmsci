@@ -127,8 +127,8 @@ void skimmer::GoSkim(){
 	for (Int_t i = 0; i < intree.size() ; i++) {
 		cout << "Skimming Channel " << channel[i] << endl;
 		beginvec.push_back(eventcounter);
-		eventcounter += intree[i]->GetEntries();
-		endvec.push_back(eventcounter - 1);
+
+		
 		for (Int_t j = 0; j < intree[i]->GetEntries(); j++) {
 			if (PassCuts(i, j)) {
 				//Preselection
@@ -157,6 +157,7 @@ void skimmer::GoSkim(){
 				if (bElectronMetMt) ElectronMetMt = GetElectronMetMt(i, j, eindex);
 				if (bVisibleMass) VisibleMass = GetVisibleMass(i, j, eindex, tindex);
 
+				eventcounter++;
 				
 				for (Int_t k = 0; k < type.size(); k++) {
 					if (i == k) {type[k] = 1;} else {type[k] = 0;}
@@ -165,6 +166,8 @@ void skimmer::GoSkim(){
 				treecombo->Fill();
 			}
 		}
+		
+		endvec.push_back(eventcounter - 1);
 	}
 
 	//Write resulting ROOT files
