@@ -6,3 +6,23 @@ Epoch: 40 learn=0.574135 test=0.574276
 Epoch: 50 learn=0.567204 test=0.567421
 Epoch: 60 learn=0.563898 test=0.56416
 Epoch: 70 learn=0.561039 test=0.561463
+
+
+Epoch: 0 learn=0.822951 test=0.822716
+Epoch: 10 learn=0.570601 test=0.570646
+Epoch: 20 learn=0.559534 test=0.559647
+Epoch: 30 learn=0.552363 test=0.552443
+Epoch: 40 learn=0.5446 test=0.544751
+Epoch: 50 learn=0.540062 test=0.540383
+Epoch: 60 learn=0.536808 test=0.53715
+Epoch: 70 learn=0.53408 test=0.534461
+Epoch: 80 learn=0.531832 test=0.532287
+Epoch: 90 learn=0.529959 test=0.530377
+Epoch: 100 learn=0.52878 test=0.529185
+Epoch: 110 learn=0.528134 test=0.528609
+Epoch: 120 learn=0.527383 test=0.527891
+Epoch: 130 learn=0.52612 test=0.526537
+Epoch: 140 learn=0.524811 test=0.525176
+Epoch: 150 learn=0.523881 test=0.524248
+Training done.
+
