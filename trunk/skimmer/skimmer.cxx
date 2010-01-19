@@ -120,12 +120,15 @@ void skimmer::GoSkim(){
 		}
 	}
 	
+	
 	//Loop over trees & events
+	Int_t eventcounter = 0;
+	
 	for (Int_t i = 0; i < intree.size() ; i++) {
 		cout << "Skimming Channel " << channel[i] << endl;
+		beginvec.push_back(eventcounter);
 		for (Int_t j = 0; j < intree[i]->GetEntries(); j++) {
 			if (PassCuts(i, j)) {
-
 				//Preselection
 				Int_t eindex;
 				Int_t tindex;
@@ -158,8 +161,10 @@ void skimmer::GoSkim(){
 				}
 				outtree[i]->Fill();
 				treecombo->Fill();
+				eventcounter++;
 			}
 		}
+		endvec.push_back(eventcounter);
 	}
 
 	//Write resulting ROOT files
@@ -449,14 +454,20 @@ void skimmer::WriteCombo(){
 	filecombo->cd();	
 	TString channelname;
 	Double_t lum;
+	Int_t begin, end;
 	TTree* metadata = new TTree("metadata","metadata");
 	metadata->Branch("ChannelName",&channelname,256000,0);
 	metadata->Branch("IntLum",&lum);
+	metadata->Branch("BeginIndex",&begin);
+	metadata->Branch("EndIndex",&end);
+
 
 	
 	for (int i = 0; i < infile.size(); i++) {
 		channelname = (channel[i]).c_str();
 		lum = int_lum[i];
+		begin = beginvec[i];
+		end = endvec[i];
 		metadata->Fill();
 	}
 	
