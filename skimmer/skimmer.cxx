@@ -221,7 +221,6 @@ bool skimmer::DoPreselection(Int_t i, Int_t j, Int_t& _eindex, Int_t& _tindex){
 	vector <int> tauindex;
 	
 	for (int k = 0; k < tauresult.size(); k++) {
-		cout << i << "\t" << j << "\t" << k << "\t" << double2int((*tauprong)[k]) << "\t" << double2int((*tauleadtrk)[k]) << "\t" << double2int((*tauecaliso)[k]) << "\t" << double2int((*tautrackiso)[k]) << "\t" << double2int((*tauantielectron)[k]) << endl; 
 		
 		if (
 			(double2int((*tauprong)[k]) == 1 || double2int((*tauprong)[k]) == 3)
