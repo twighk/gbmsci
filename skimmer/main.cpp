@@ -9,6 +9,7 @@ int main(int argc, char** argv) {
 
 	skimmer a;
 	a.SetRootPath("../root/");
+	a.DoTauCuts();
 	a.AddChannel("AH115","bbAHCutTree", 7852.0);
 	a.AddChannel("AH115bb","bbAHCutTree", 3831.0);
 	a.AddChannel("AH160","bbAHCutTree", 36823.0);

@@ -61,6 +61,7 @@ private:
 	bool bElectronMetDPhi;
 	bool bElectronMetMt;
 	bool bVisibleMass;
+	bool TauCuts;
 	
 public:
 
@@ -87,11 +88,10 @@ public:
 	void AddVarElectronMetDPhi(){bElectronMetDPhi = true; std::cout << "Added Variable ElectronMetDPhi" << std::endl;}
 	void AddVarElectronMetMt(){bElectronMetMt = true; std::cout << "Added Variable ElectronMetMt" << std::endl;}
 	void AddVarVisibleMass(){bVisibleMass = true; std::cout << "Added Variable VisibleMass" << std::endl;}
-
+	void DoTauCuts(){TauCuts = true; std::cout << "Applying Tau Cut Criteria" << std::endl;}
 	void WriteCombo();
 
 	void GoSkim();
-	bool PassCuts(Int_t, Int_t);
 	bool DoPreselection(Int_t, Int_t, Int_t&, Int_t&);
 	Double_t GetElectronEt(Int_t, Int_t, Int_t);
 	Double_t GetTauEt(Int_t, Int_t, Int_t);
