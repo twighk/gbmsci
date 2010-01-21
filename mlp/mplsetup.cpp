@@ -14,12 +14,17 @@
 
 using namespace std;
 
-void mlpsetup(TTree *tree, Int_t ntrain=21){
+struct ChannelMeta {
+	Int_t begin;
+	Int_t end;
+};
+
+void mlpsetup(TTree *tree, Int_t ntrain=101){
 	cout << "ntrain: " << ntrain << endl;
 	if (!gROOT->GetClass("TMultiLayerPerceptron")) {
 		gSystem->Load("libMLP");
 	}
-	
+
 	vector <string> branchnames; //List of branch names (but not types)
 	vector <string> types; // List of type names (type1, type2, etc.)
 	
@@ -44,7 +49,7 @@ void mlpsetup(TTree *tree, Int_t ntrain=21){
 		}
 	} // list branch names
 	
-	outstrm << ":" << branchnames.size() << ":";// Neural net structure
+	outstrm << ":" << branchnames.size() << ":" << branchnames.size() << ":";// Neural net structure
 		
 	
 	for (unsigned int i = 0; i < types.size(); ++i) {
@@ -59,8 +64,8 @@ void mlpsetup(TTree *tree, Int_t ntrain=21){
 	TMultiLayerPerceptron *mlp = 
 	new TMultiLayerPerceptron(outstrm.str().c_str(),
 							  tree,
-							  "Entry$%2",
-							  "(Entry$+1)%2"); // set up neural net
+							  "Entry$%2==0",
+							  "(Entry$+1)%2==0"); // set up neural net
 	
 	mlp->SetLearningMethod(TMultiLayerPerceptron::kBFGS); // choose learning method
 	
@@ -75,9 +80,49 @@ int main(int argc, char** argv){
 // Get Tree for mlp 
 	TFile * f = new TFile("../root/combo.root");
 	TTree * t = (TTree*)f->Get("combotree");
+	TTree* metatree = (TTree *) f->Get("metadata");
+	
+	vector <ChannelMeta> channeldata; // Where each branch begins/ends
+	Int_t temp_begin, temp_end;
+	TBranch * b_begin = metatree->GetBranch("BeginIndex");
+	TBranch * b_end   = metatree->GetBranch("EndIndex");
+	b_begin->SetAddress(&temp_begin);
+	b_end  ->SetAddress(&temp_end);
+	channeldata.resize(metatree->GetEntriesFast());
+	
+	Int_t mineventnum = t->GetEntriesFast();
+	for (Int_t i = 0; i < metatree->GetEntriesFast(); ++i) {
+		metatree->GetEntry(i);
+		channeldata[i].begin = temp_begin;
+		channeldata[i].end = temp_end;
+		
+		if (mineventnum > channeldata[i].end - channeldata[i].begin + 1) {
+			mineventnum = channeldata[i].end - channeldata[i].begin + 1;
+		}
+		cout << channeldata[i].begin << "\t" << channeldata[i].end  << "\t" << channeldata[i].end - channeldata[i].begin + 1 << endl;
+	} 
+	cout << mineventnum << endl;
+	
+	
+	TFile * ftemp = new TFile("../root/tmp.root", "RECREATE");
+	TTree * combotree = (TTree *) t->CloneTree(0);
+	vector <Int_t> entrys;
+	
+	
+	for(unsigned int i = 0 ; i != channeldata.size();++i){
+		for ( int j = 0; j < mineventnum; ++j) {
+			entrys.push_back(channeldata[i].begin +j);
+		}
+	}
+	
+	for (unsigned int i = 0; i < entrys.size(); i++) {
+		t->GetEntry(entrys[i]);
+		combotree->Fill();
+	}
+	ftemp->Write();
 
 //run mlp
-	mlpsetup(t); 
+	mlpsetup(combotree); 
 	
 //wait, so graphs are shown
 	cerr << "Hanging for X11" << endl;
