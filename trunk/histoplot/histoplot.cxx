@@ -2,6 +2,9 @@ using namespace std;
 
 int histoplot(){
 	gROOT->Reset();
+	gROOT->SetStyle("Plain");
+	gROOT->ForceStyle(); 
+	gStyle->SetOptStat(kTRUE);
 	string path = "../root/";
 	cout << "\nPath Set to " << path << endl;
 	vector<string> channels;
@@ -43,19 +46,24 @@ int histoplot(){
 	
 	TH1F* hist1 = (TH1F*) gDirectory->Get("hist1");
 	TH1F* hist2 = (TH1F*) gDirectory->Get("hist2");
+	
+	Double_t scale1 = 1. / hist1->Integral();
+	Double_t scale2 = 1. / hist2->Integral();
+	hist1->Scale(scale1);
+	hist2->Scale(scale2);
 
 	TCanvas* can = new TCanvas("Result","Result");
 	can->cd();
 	
 	Float_t count1, count2;
 	count1 = hist1->GetBinContent(hist1->GetMaximumBin());
-	count2 = hist2->GetBinContent(hist1->GetMaximumBin());
+	count2 = hist2->GetBinContent(hist2->GetMaximumBin());
 	if (count1 >= count2){
 		hist1->Draw();
-		hist2->Draw("same");
+		hist2->Draw("sames");
 	} else {
 		hist2->Draw();
-		hist1->Draw("same");
+		hist1->Draw("sames");
 	}
 
 
