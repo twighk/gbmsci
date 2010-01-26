@@ -23,6 +23,7 @@ private:
 public:
 
 	event(TTree *);
+	std::map<std::string, brptr> * Entry(Int_t);
 
 };
 
