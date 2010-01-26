@@ -20,7 +20,6 @@ event::event(TTree* _tree){
 		temp.pointer = NULL;
 		data[name] = temp;
 		tree->SetBranchAddress(name.c_str(), &(data[name].pointer));
-		cout << i << "\t" << name << "\t" << _classname << endl;
 	}
 	
 }
