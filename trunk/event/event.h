@@ -11,12 +11,18 @@
 #include <cmath>
 #include <sstream>
 #include <TString.h>
+#include "../header/brptr.h"
 
 
 class event{
 
-	private
+private:
+	TTree * tree;
+	std::map<std::string, brptr> data;
+	
+public:
 
+	event(TTree *);
 
 };
 
