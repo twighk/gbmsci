@@ -21,12 +21,10 @@ struct VarHandler {                 // Variable Handler struct
 	}
 };
 
-typedef map<string, VarHandler>					VarHandlerMap;
-typedef map<string, VarHandler>::iterator		VarHandlerMapIt;
-typedef map<string, brptr>						BranchPtrMap;
-typedef map<string, Int_t>						IndexMap;
-
-
+typedef map<string, VarHandler>                 VarHandlerMap;
+typedef map<string, VarHandler>::iterator       VarHandlerMapIt;
+typedef map<string, brptr>                      BranchPtrMap;
+typedef map<string, Int_t>                      IndexMap;
 
 skimmer::skimmer(std::string _rootpath){
     rootpath	= _rootpath;
@@ -60,27 +58,29 @@ void skimmer::GoSkim(){
 	
     //STEP 1:Set up the output variables we are interested in (only one line required!)
     VarHandlerMap outmap;
-    outmap["TauEt"]				= VarHandler( new VarTauEt() ) ;
-    outmap["ElectronEt"]		= VarHandler( new VarElectronEt() ) ;
-    outmap["MetEt"]				= VarHandler( new VarMetEt() ) ;	
-    outmap["ElectronTauDPhi"]	= VarHandler( new VarElectronTauDPhi() ) ;			
-    outmap["ElectronEta"]		= VarHandler( new VarElectronEta() ) ;
-    outmap["TauEta"]			= VarHandler( new VarTauEta() ) ;			
-    outmap["ElectronEcalIso"]	= VarHandler( new VarElectronEcalIso() ) ;		
-    outmap["ElectronHcalIso"]	= VarHandler( new VarElectronHcalIso() ) ;		
-    outmap["ElectronTrackIso"]	= VarHandler( new VarElectronTrackIso() ) ;		
-    outmap["ElectronCharge"]	= VarHandler( new VarElectronCharge() ) ;		
-    outmap["TauCharge"]			= VarHandler( new VarTauCharge() ) ;		
-    outmap["ElecTauChargeProd"]	= VarHandler( new VarElecTauChargeProd() ) ;		
+    outmap["TauEt"]             = VarHandler( new VarTauEt() ) ;
+    outmap["ElectronEt"]        = VarHandler( new VarElectronEt() ) ;
+    outmap["MetEt"]             = VarHandler( new VarMetEt() ) ;	
+    outmap["ElectronTauDPhi"]   = VarHandler( new VarElectronTauDPhi() ) ;			
+    outmap["ElectronEta"]       = VarHandler( new VarElectronEta() ) ;
+    outmap["TauEta"]            = VarHandler( new VarTauEta() ) ;			
+    outmap["ElectronEcalIso"]   = VarHandler( new VarElectronEcalIso() ) ;		
+    outmap["ElectronHcalIso"]   = VarHandler( new VarElectronHcalIso() ) ;		
+    outmap["ElectronTrackIso"]  = VarHandler( new VarElectronTrackIso() ) ;		
+    outmap["ElectronCharge"]    = VarHandler( new VarElectronCharge() ) ;		
+    outmap["TauCharge"]         = VarHandler( new VarTauCharge() ) ;		
+    outmap["ElecTauChargeProd"] = VarHandler( new VarElecTauChargeProd() ) ;		
     //	NB our preselection does tau checks - no point in including these variables for now
     //	outmap["TauProng"]			= VarHandler( new VarTauProng() ) ;		
     //	outmap["TauLeadTrk"]		= VarHandler( new VarTauLeadTrk() ) ;		
     //	outmap["TauEcalIso"]		= VarHandler( new VarTauEcalIso() ) ;		
     //	outmap["TauTrackIso"]		= VarHandler( new VarTauTrackIso() ) ;		
     //	outmap["TauAntiElectron"]	= VarHandler( new VarTauAntiElectron() ) ;		
-    outmap["ElectronMetDPhi"]	= VarHandler( new VarElectronMetDPhi() ) ;		
-    outmap["ElectronMetMt"]		= VarHandler( new VarElectronMetMt() ) ;		
-    outmap["VisibleMass"]		= VarHandler( new VarVisibleMass() ) ;		
+    outmap["ElectronMetDPhi"]   = VarHandler( new VarElectronMetDPhi() ) ;		
+    outmap["ElectronMetMt"]     = VarHandler( new VarElectronMetMt() ) ;		
+    outmap["VisibleMass"]       = VarHandler( new VarVisibleMass() ) ;		
+    outmap["ElectronTauDR"]     = VarHandler( new VarElectronTauDR() ) ;		
+
     
     //STEP 2:Register Output Branches
     vector<Int_t> type (infile.size(), 0);                          //Vector holds type information
