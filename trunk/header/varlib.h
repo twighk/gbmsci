@@ -205,4 +205,42 @@ public:
 		return higgs.M();
 	}
 };
+
+class VarTauPhi : public Var {
+public:
+	VarTauPhi(){};
+	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
+		return (uTLV( (*data)["lv_tau"] , (*indexinfo)["tindex"] ))->Phi();
+	}
+};
+
+class VarElectronPhi : public Var {
+public:
+	VarElectronPhi(){};
+	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
+		return (uTLV( (*data)["lv_electron"] , (*indexinfo)["eindex"] ))->Phi();
+	}
+};
+
+class VarMetPhi : public Var {
+public:
+	VarMetPhi(){};
+	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
+		return (uTLV( (*data)["lv_met"] , 0 ))->Phi();
+	}
+};
+
+class VarElectronTauDR : public Var {
+public:
+	VarElectronTauDR(){};
+	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
+		
+		TLorentzVector* temp_electron	= (uTLV( (*data)["lv_electron"] , (*indexinfo)["eindex"] ));
+		TLorentzVector* temp_tau		= (uTLV( (*data)["lv_tau"] , (*indexinfo)["tindex"] ));
+		return (temp_electron->DeltaR(*temp_tau));
+	}
+};
+
+
+
 #endif
