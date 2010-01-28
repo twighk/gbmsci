@@ -79,6 +79,9 @@ void skimmer::GoSkim(){
     outmap["ElectronMetDPhi"]   = VarHandler( new VarElectronMetDPhi() ) ;		
     outmap["ElectronMetMt"]     = VarHandler( new VarElectronMetMt() ) ;		
     outmap["VisibleMass"]       = VarHandler( new VarVisibleMass() ) ;		
+    outmap["TauPhi"]            = VarHandler( new VarTauPhi() ) ;		
+    outmap["ElectronPhi"]       = VarHandler( new VarElectronPhi() ) ;		
+    outmap["MetPhi"]            = VarHandler( new VarMetPhi() ) ;		
     outmap["ElectronTauDR"]     = VarHandler( new VarElectronTauDR() ) ;		
 
     
