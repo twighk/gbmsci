@@ -7,16 +7,16 @@ using namespace std;
 using namespace dict;
 
 
-struct VarHandler {					// Variable Handler struct
-	Double_t		value;			// The actual value of the variable
-	Var			*	func;			// Pointer to the required variable class
+struct VarHandler {                 // Variable Handler struct
+	Double_t        value;          // The actual value of the variable
+	Var        *    func;           // Pointer to the required variable class
 	
-	VarHandler(Var * _func) {		// Constructor
-		value		=	0;	
-		func		=	_func;
+	VarHandler(Var * _func) {       // Constructor
+		value       =   0;	
+		func        =   _func;
 	}
 	
-	VarHandler() {					//Must implement default constructor if going into a map
+	VarHandler() {                  //Must implement default constructor if going into a map
 		value		=	0;
 		func		=	NULL;
 	}
