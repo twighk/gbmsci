@@ -5,7 +5,9 @@
 #include <TSystem.h>
 #include <TObjArray.h>
 #include <TMultiLayerPerceptron.h>
+#include <TMLPAnalyzer.h>
 #include <TApplication.h>
+#include <TCanvas.h>
 
 #include <iostream>
 #include <vector>
@@ -49,7 +51,7 @@ void mlpsetup(TTree *tree, Int_t ntrain=101){
 		}
 	} // list branch names
 	
-	outstrm << ":" << branchnames.size() << ":" << branchnames.size() << ":";// Neural net structure
+	outstrm << ":"  << branchnames.size() << ":";// Neural net structure
 		
 	
 	for (unsigned int i = 0; i < types.size(); ++i) {
@@ -71,6 +73,25 @@ void mlpsetup(TTree *tree, Int_t ntrain=101){
 	
 	mlp->Train(ntrain, "text,graph,update=10"); // train
 	mlp->Export("mlp","C++"); // save data
+	
+	
+
+	TMLPAnalyzer ana(mlp);
+	// Initialisation
+	ana.GatherInformations();
+	// output to the console
+	ana.CheckNetwork();
+	TCanvas* mlpa_canvas1 = new TCanvas("mlpa_canvas","Network analysis");
+	// shows how each variable influences the network
+	ana.DrawDInputs();
+	TCanvas* mlpa_canvas2 = new TCanvas("mlpa_canvas2","Network analysis");
+	// shows the network structure
+	mlp->Draw();
+	TCanvas* mlpa_canvas3 = new TCanvas("mlpa_canvas3","Network analysis");
+	// draws the resulting network
+	ana.DrawNetwork(0,"type==1","type==0");
+	
+	
 }
 
 int main(int argc, char** argv){

@@ -128,49 +128,7 @@ int main( int argc, char ** argv){
 		sum2[j] = 0;
 	} // set to 0
 	
-//	int event = 0;
-//	for (unsigned int x = 0; x < outs.size(); ++x) {
-//		int num = 0;
-//		int b = false;
-//
-//		for (int i = event/*0*/; i < tree->GetEntries(); ++i) {
-//			tree->GetEntry(i);
-//			//Get output from mlp
-//			for (unsigned int j = 0; j < outs.size(); ++j) {
-//				outs[j] = tester.Value(j,&vars[0]/*pointer to array of leafs*/);
-//				if (outs[j] > 0){ // posible dodgy line
-//					histograms[j].fill( *visibleMass, outs[j]/* * targetlum /channeldata[j].luminocity*/);	
-//				}
-//				
-//				
-//				if(j==x && vtypes[x]){
-//					num ++;
-//					b = true;
-//				} else if (j==x && !vtypes[x]){
-//					b = false;
-//				}
-//				
-//				if (vtypes[j] == 1){
-//					sum[j]  += outs[j];
-//					sum2[j] += outs[j] * outs[j];
-//				} else {
-//					sum[j]  += (1 - outs[j]);
-//					sum2[j] += pow((1 - outs[j]),2);
-//				}
-//			}
-//			
-//			if (b&& num < 10) {
-//				cout <<endl << "Event: " << i << endl;
-//				for (unsigned int j = 0; j < outs.size(); ++j) {
-//					cout<< "type" << j+1 << ": " << outs[j] << " / " << vtypes[j]  << endl;	
-//				}
-//				
-//			} else if(num >= 100){
-//				event = i;
-//				break;
-//			}
-//		}
-//	}
+
 	
 	vector<vector <Histogram * > > perfmat;
 	perfmat.resize(channeldata.size());
@@ -208,47 +166,13 @@ int main( int argc, char ** argv){
 			cout << fixed << setprecision(3) << perfmat[i][j]->getMean() << '\t';
 			if (i == j)
 				cout << "\033[0m"; // terminal default
-			perfmat[i][j]->show();
+			//perfmat[i][j]->show();// To turn on and off mass histograms
 			
 		}
 		cout << endl;
 	}
 	
-	
-	
-//	for (unsigned int j = 0; j < outs.size(); ++j) {
-//		cout << channeldata[j].name << ": " << sum[j] / tree->GetEntries() << " "
-//									   << sum2[j] / tree->GetEntries() - pow(sum[j] / tree->GetEntries(), 2)
-//									   << endl;
-//	} // Print out
-//	
-	
-	
-	
-	
-	/*
-	for(int i = 0; i < tree->GetEntries(); ++i){
-		cout << "Event: " << i << endl;
-		tree->GetEntry(i);
-		for (unsigned int j = 0; j < outs.size(); ++j) {
-			outs[j] = tester.Value(j,&leafs[0]);
-			cout << "type" << j+1 << ": " << outs[j] << " / " << vtypes[j]  << endl;
-		}
-		Double_t sum = 0;
-		for (unsigned int j = 0; j < outs.size(); ++j) {
-			sum += outs[j];
-		}
-		cout << "Sum: " << sum;
-		if (max_element(outs.begin(), outs.end()) - outs.begin() ==
-			max_element(vtypes.begin(), vtypes.end())- vtypes.begin()){
-			cout << " / " << 1; 
-		} else {
-			cout << " / " << 0;
-		}
-		cout<< endl << endl;
-		
-	}
-	*/
+
 	
 	
 	Histostack hstack("Visible mass"); 
@@ -256,7 +180,7 @@ int main( int argc, char ** argv){
 	//Draw histograms
 	for (unsigned int i = 0; i != outs.size(); i++) {
 		hstack.add(histograms[i]);
-		histograms[i].show();
+		histograms[i].show(); 
 	}
 	hstack.draw();
 	
