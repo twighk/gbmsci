@@ -71,9 +71,11 @@ int main( int argc, char ** argv){
 	for (Int_t i = 0; i < lob->GetEntriesFast(); ++i) {
 		TBranch * branch = (TBranch *)lob->At(i);
 		string bname = string(branch -> GetName());
-		if(string(bname).compare(0,4,"type")){
+		if (bname == "weight") {
+			continue;
+		} else if(string(bname).compare(0,4,"type")){
 			branchnames.push_back(bname);
-		}else {
+		} else {
 			types.push_back(bname);
 		}
 
