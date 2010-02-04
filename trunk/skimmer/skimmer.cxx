@@ -87,6 +87,7 @@ void skimmer::GoSkim(){
 //    outmap["ElectronPhi"]       = VarHandler( new VarElectronPhi() ) ;		
 //    outmap["MetPhi"]            = VarHandler( new VarMetPhi() ) ;		
     outmap["ElectronTauDR"]     = VarHandler( new VarElectronTauDR() ) ;		
+    outmap["JetCount"]          = VarHandler( new VarJetCount() ) ;		
 
     
     //STEP 2:Register Output Branches

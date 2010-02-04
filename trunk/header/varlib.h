@@ -241,6 +241,12 @@ public:
 	}
 };
 
-
+class VarJetCount : public Var {
+public:
+	VarJetCount(){};
+	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
+		return (u<TClonesArray>( (*data)["lv_jet"] ))->GetEntriesFast();
+	}
+};
 
 #endif
