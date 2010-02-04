@@ -52,6 +52,10 @@ void skimmer::AddChannel(std::string instring, std::string _tree, Double_t lum){
 	
     outfile.push_back(new TFile((rootpath + instring + "_skim.root").c_str(), "RECREATE"));
     outtree.push_back(new TTree(_tree.c_str(),_tree.c_str()));
+    
+    eventlist.resize(eventlist.size() + 1);
+    
+    weights.push_back(0.);
 }
 
 void skimmer::GoSkim(){
@@ -86,6 +90,7 @@ void skimmer::GoSkim(){
 
     
     //STEP 2:Register Output Branches
+    Double_t theweight = 0.;
     vector<Int_t> type (infile.size(), 0);                          //Vector holds type information
     outtree.push_back(treecombo);                                   //Add the combotree to our outtree vector
     VarHandlerMapIt pos;                                            //Iterator for the outmap, so we can loop through
@@ -96,21 +101,43 @@ void skimmer::GoSkim(){
         for (Int_t k = 0; k < type.size(); k++) {                   //Make necessary number of type branches
             outtree[i]->Branch(("type" + Int2String(k+1)).c_str(), &type[k]);
         }
+        outtree[i]->Branch("weight", &theweight);
     }
 	
-    //STEP 3:Skimming! - Loop over trees & events
+    //STEP 3a: Couting - Work out how many events will pass selection for weight branch
+    for (Int_t i = 0; i < intree.size() ; i++) {                    //Loop through input trees
+        cout << "Counting Channel " << channel[i] << endl;
+        BranchPtrMap * incoming;                                    //Pointer to map of input branch addresses
+        event evt(intree[i]);                                       //Make event handler for current tree
+        IndexMap preselect;                                         //Make preselection indicies map
+		Int_t passcounter = 0;
+        for (Int_t j = 0; j < intree[i]->GetEntries(); j++) {       //Loop through events of current tree
+            incoming = evt.Entry(j);   
+         
+            if (DoPreselection(incoming, preselect)) {              //Check to see if we want to skim this event
+                passcounter++;
+                (eventlist[i]).push_back(j);
+            }
+        }
+        weights[i] = Double_t(passcounter);
+    }
+    
+    //STEP 3b:Skimming! - Loop over trees & events
     Int_t eventcounter = 0;                                         //Keep track of the no. of events we actually skim
     for (Int_t i = 0; i < intree.size() ; i++) {                    //Loop through input trees
+        theweight = 1. / (weights[i]);
         cout << "Skimming Channel " << channel[i] << endl;
         beginvec.push_back(eventcounter);                           //Record index of first skimmed event in tree
         BranchPtrMap * incoming;                                    //Pointer to map of input branch addresses
         event evt(intree[i]);                                       //Make event handler for current tree
         IndexMap preselect;                                         //Make preselection indicies map
 		
-        for (Int_t j = 0; j < intree[i]->GetEntries(); j++) {       //Loop through events of current tree
-            incoming = evt.Entry(j);                                //Get appropriate branch object addresses for current entry
+//        for (Int_t j = 0; j < intree[i]->GetEntries(); j++) {       //Loop through events of current tree
+        for (Int_t j = 0; j < (eventlist[i]).size() ; j++) {
+            
+        incoming = evt.Entry(eventlist[i][j]);                                //Get appropriate branch object addresses for current entry
 			
-            if (DoPreselection(incoming, preselect)) {              //Check to see if we want to skim this event
+            //if (DoPreselection(incoming, preselect)) {              //Check to see if we want to skim this event
                 eventcounter++;
                 //Loop through desired variable functions, filling the outmap double values	
                 VarHandlerMapIt posx;                               //Iterator for the outmap, so we can loop through
@@ -123,7 +150,7 @@ void skimmer::GoSkim(){
                 }
                 outtree[i]->Fill();                                 //Finally we can fill the skimmed tree
                 treecombo->Fill();
-            }
+            //}
 			
         }
         endvec.push_back(eventcounter - 1);                         //Record index of last skimmed event in tree

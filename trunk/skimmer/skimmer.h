@@ -21,6 +21,7 @@ class skimmer{
 private:
     std::string rootpath;
     std::vector<std::string> channel;
+    std::vector<Double_t> weights;
     std::vector<Double_t> int_lum;
     std::vector<TFile*> infile;
     std::vector<TTree*> intree;
@@ -28,6 +29,7 @@ private:
     std::vector<TTree*> outtree;
     std::vector<Int_t> beginvec;
     std::vector<Int_t> endvec;
+    std::vector< std::vector<Int_t> > eventlist;
     TFile* filecombo;
     TTree* treecombo;
     
