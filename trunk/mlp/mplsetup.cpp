@@ -34,7 +34,9 @@ void mlpsetup(TTree *tree, Int_t ntrain=101){
 	for (Int_t i = 0; i < lob->GetEntriesFast(); ++i) {
 		TBranch * branch = (TBranch *)lob->At(i);
 		string bname = string(branch -> GetName());
-		if(string(bname).compare(0,4,"type")){
+		if (string(bname) == "weight") {
+			continue;
+		} else if(string(bname).compare(0,4,"type")){
 			branchnames.push_back(bname);
 		} else {
 			types.push_back(bname);
@@ -65,6 +67,7 @@ void mlpsetup(TTree *tree, Int_t ntrain=101){
 
 	TMultiLayerPerceptron *mlp = 
 	new TMultiLayerPerceptron(outstrm.str().c_str(),
+							  "weight",
 							  tree,
 							  "Entry$%2==0",
 							  "(Entry$+1)%2==0"); // set up neural net
@@ -101,6 +104,7 @@ int main(int argc, char** argv){
 // Get Tree for mlp 
 	TFile * f = new TFile("../root/combo.root");
 	TTree * t = (TTree*)f->Get("combotree");
+/*
 	TTree* metatree = (TTree *) f->Get("metadata");
 	
 	vector <ChannelMeta> channeldata; // Where each branch begins/ends
@@ -141,9 +145,10 @@ int main(int argc, char** argv){
 		combotree->Fill();
 	}
 	ftemp->Write();
-
+*/
+	
 //run mlp
-	mlpsetup(combotree); 
+	mlpsetup(t); 
 	
 //wait, so graphs are shown
 	cerr << "Hanging for X11" << endl;
