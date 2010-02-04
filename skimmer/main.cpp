@@ -10,8 +10,8 @@ int main(int argc, char** argv) {
 	skimmer a("../root/");
 	a.AddChannel("AH115","bbAHCutTree", 7852.0);
 	a.AddChannel("AH115bb","bbAHCutTree", 3831.0);
-	a.AddChannel("AH160","bbAHCutTree", 36823.0);
-	a.AddChannel("AH160bb","bbAHCutTree", 11400.0);
+//	a.AddChannel("AH160","bbAHCutTree", 36823.0);
+//	a.AddChannel("AH160bb","bbAHCutTree", 11400.0);
 ////	a.AddChannel("QCD_BCtoE_Pt20to30","bbAHCutTree", 1);
 ////	a.AddChannel("QCD_BCtoE_Pt30to80","bbAHCutTree", 1);
 ////	a.AddChannel("QCD_BCtoE_Pt80to170","bbAHCutTree", 1);
