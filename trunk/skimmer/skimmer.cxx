@@ -66,8 +66,8 @@ void skimmer::GoSkim(){
     outmap["ElectronEt"]        = VarHandler( new VarElectronEt() ) ;
     outmap["MetEt"]             = VarHandler( new VarMetEt() ) ;	
     outmap["ElectronTauDPhi"]   = VarHandler( new VarElectronTauDPhi() ) ;			
-    outmap["ElectronEta"]       = VarHandler( new VarElectronEta() ) ;
-    outmap["TauEta"]            = VarHandler( new VarTauEta() ) ;			
+//    outmap["ElectronEta"]       = VarHandler( new VarElectronEta() ) ;
+//    outmap["TauEta"]            = VarHandler( new VarTauEta() ) ;	Doesn't make linear combinations!!!		
     outmap["ElectronEcalIso"]   = VarHandler( new VarElectronEcalIso() ) ;		
     outmap["ElectronHcalIso"]   = VarHandler( new VarElectronHcalIso() ) ;		
     outmap["ElectronTrackIso"]  = VarHandler( new VarElectronTrackIso() ) ;		
@@ -83,9 +83,9 @@ void skimmer::GoSkim(){
     outmap["ElectronMetDPhi"]   = VarHandler( new VarElectronMetDPhi() ) ;		
     outmap["ElectronMetMt"]     = VarHandler( new VarElectronMetMt() ) ;		
     outmap["VisibleMass"]       = VarHandler( new VarVisibleMass() ) ;		
-    outmap["TauPhi"]            = VarHandler( new VarTauPhi() ) ;		
-    outmap["ElectronPhi"]       = VarHandler( new VarElectronPhi() ) ;		
-    outmap["MetPhi"]            = VarHandler( new VarMetPhi() ) ;		
+//    outmap["TauPhi"]            = VarHandler( new VarTauPhi() ) ;		
+//    outmap["ElectronPhi"]       = VarHandler( new VarElectronPhi() ) ;		
+//    outmap["MetPhi"]            = VarHandler( new VarMetPhi() ) ;		
     outmap["ElectronTauDR"]     = VarHandler( new VarElectronTauDR() ) ;		
 
     
