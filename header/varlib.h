@@ -249,4 +249,74 @@ public:
 	}
 };
 
+class VarHighBTag : public Var {
+public:
+	VarHighBTag(){};
+	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
+        std::vector<Double_t> * btag = u< std::vector<Double_t> >((*data)["jetBTagTrackCountHighEff"]);
+        return (*btag)[((*indexinfo)["bindex"])];
+	}
+};
+
+class VarCountBTag : public Var {
+public:
+	VarCountBTag(){};
+	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
+        std::vector<Double_t> * btag = u< std::vector<Double_t> >((*data)["jetBTagTrackCountHighEff"]);
+        Int_t count = 0;
+        for (Int_t i = 0; i < (*btag).size(); ++i) {
+            if ( (*btag)[i] > -50. ) count++;
+        }
+        
+        return Double_t(count);
+	}
+};
+
+class VarHighBTagJetEt : public Var {
+public:
+	VarHighBTagJetEt(){};
+	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
+        return (uTLV( (*data)["lv_jet"] , (*indexinfo)["bindex"] ))->Et();
+
+	}
+};
+
+class VarHiggsMass : public Var {
+public:
+	VarHiggsMass(){};
+	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
+		
+		TLorentzVector* temp_electron	= (uTLV( (*data)["lv_electron"] , (*indexinfo)["eindex"] ));
+        TLorentzVector* temp_tau        = (uTLV( (*data)["lv_tau"] , (*indexinfo)["tindex"] ));
+        TLorentzVector* temp_met		= (uTLV( (*data)["lv_met"] , 0 ));
+		
+        Double_t x1 = sin(temp_tau->Theta())*cos(temp_tau->Phi());
+		Double_t x2 = sin(temp_electron->Theta())*cos(temp_electron->Phi());
+		Double_t y1 = sin(temp_tau->Theta())*sin(temp_tau->Phi());
+		Double_t y2 = sin(temp_electron->Theta())*sin(temp_electron->Phi());
+		
+		Double_t t_ET = ((temp_met->Y())*x2 - (temp_met->X())*y2) / (x2*y1 - x1*y2);
+		Double_t t_EL = ((temp_met->Y()) - t_ET*y1) / y2;
+        
+        if (t_ET > 0. && t_EL > 0.) {
+        Double_t higgs_m, higgs_m_2;
+        TLorentzVector c_tau0;
+        TLorentzVector c_tau1;
+        c_tau0.SetE(temp_electron->E() + t_EL);
+        c_tau0.SetVect(temp_electron->Vect() + ((temp_electron->Vect()).Unit() * t_EL));
+        c_tau1.SetE(temp_tau->E() + t_ET);
+        c_tau1.SetVect(temp_tau->Vect() + (temp_tau->Vect().Unit() * t_ET));
+        higgs_m_2 = 2. * c_tau0.E() * c_tau1.E() * (1. - cos(c_tau0.Angle(c_tau1.Vect())));
+        higgs_m = sqrt(higgs_m_2);
+        return higgs_m;	
+        } else {
+            return 0.;
+        }
+
+        
+        
+        }
+};
+
+
 #endif

@@ -71,8 +71,8 @@ void skimmer::GoSkim(){
     outmap["ElectronEcalIso"]   = VarHandler( new VarElectronEcalIso() ) ;		
     outmap["ElectronHcalIso"]   = VarHandler( new VarElectronHcalIso() ) ;		
     outmap["ElectronTrackIso"]  = VarHandler( new VarElectronTrackIso() ) ;		
-    outmap["ElectronCharge"]    = VarHandler( new VarElectronCharge() ) ;		
-    outmap["TauCharge"]         = VarHandler( new VarTauCharge() ) ;		
+//    outmap["ElectronCharge"]    = VarHandler( new VarElectronCharge() ) ;		
+//    outmap["TauCharge"]         = VarHandler( new VarTauCharge() ) ;		
     outmap["ElecTauChargeProd"] = VarHandler( new VarElecTauChargeProd() ) ;		
     //	NB our preselection does tau checks - no point in including these variables for now
     //	outmap["TauProng"]			= VarHandler( new VarTauProng() ) ;		
@@ -87,7 +87,11 @@ void skimmer::GoSkim(){
 //    outmap["ElectronPhi"]       = VarHandler( new VarElectronPhi() ) ;		
 //    outmap["MetPhi"]            = VarHandler( new VarMetPhi() ) ;		
     outmap["ElectronTauDR"]     = VarHandler( new VarElectronTauDR() ) ;		
-    outmap["JetCount"]          = VarHandler( new VarJetCount() ) ;		
+    outmap["JetCount"]          = VarHandler( new VarJetCount() ) ;	//Very good for TTplusjets	
+    outmap["HighBTag"]          = VarHandler( new VarHighBTag() ) ;	
+    outmap["CountBTag"]          = VarHandler( new VarCountBTag() ) ;	
+//    outmap["HighBTagJetEt"]          = VarHandler( new VarHighBTagJetEt() ) ;	//Didn't help very much
+//    outmap["HiggsMass"]          = VarHandler( new VarHiggsMass() ) ;	
 
     
     //STEP 2:Register Output Branches
@@ -121,6 +125,7 @@ void skimmer::GoSkim(){
             }
         }
         weights[i] = Double_t(passcounter);
+        cout << channel[i] << "\t" << weights[i] << endl;
     }
     
     //STEP 3b:Skimming! - Loop over trees & events
@@ -133,12 +138,10 @@ void skimmer::GoSkim(){
         event evt(intree[i]);                                       //Make event handler for current tree
         IndexMap preselect;                                         //Make preselection indicies map
 		
-//        for (Int_t j = 0; j < intree[i]->GetEntries(); j++) {       //Loop through events of current tree
         for (Int_t j = 0; j < (eventlist[i]).size() ; j++) {
             
-        incoming = evt.Entry(eventlist[i][j]);                                //Get appropriate branch object addresses for current entry
-			
-            //if (DoPreselection(incoming, preselect)) {              //Check to see if we want to skim this event
+            incoming = evt.Entry(eventlist[i][j]);                  //Get appropriate branch object addresses for current entry
+            DoPreselection(incoming, preselect);
                 eventcounter++;
                 //Loop through desired variable functions, filling the outmap double values	
                 VarHandlerMapIt posx;                               //Iterator for the outmap, so we can loop through
@@ -151,7 +154,6 @@ void skimmer::GoSkim(){
                 }
                 outtree[i]->Fill();                                 //Finally we can fill the skimmed tree
                 treecombo->Fill();
-            //}
 			
         }
         endvec.push_back(eventcounter - 1);                         //Record index of last skimmed event in tree
@@ -175,16 +177,43 @@ bool skimmer::DoPreselection(BranchPtrMap * d, IndexMap &index){
     vector<Double_t> * tauleadtrk = u< vector<Double_t> >((*d)["tauLeadTrk"]);
     vector<Double_t> * tauecaliso = u< vector<Double_t> >((*d)["tauECALIso"]);
     vector<Double_t> * tautrackiso = u< vector<Double_t> >((*d)["tauTrackIso"]);
-    vector<Double_t> * tauantielectron = u <vector<Double_t> >((*d)["tauElectron"]);
+    vector<Double_t> * tauantielectron = u < vector<Double_t> >((*d)["tauElectron"]);
+    vector<Double_t> * btrackcounthigheff = u< vector<Double_t> > ((*d)["jetBTagTrackCountHighEff"]);
     
 	//Make sure we actually have electrons and taus first
     if (electron->GetEntriesFast() == 0) return false;
     if (tau->GetEntriesFast() == 0) return false; 
+         
+    bool foundbtag = false;
+    Double_t next_btag;
+    Int_t best_btag_index = 0;
+    
+    // Check we have at least one valid b-tag
+    for (int k = 0; k < (*btrackcounthigheff).size(); k++) {
+        if ((*btrackcounthigheff)[k] > -50.) {
+            foundbtag = true;
+        }
+    }
+
+    // Find the highest b-tag index
+    for (int k = 1; k < (*btrackcounthigheff).size(); k++) {
+        next_btag = (*btrackcounthigheff)[k];
+        if (next_btag > (*btrackcounthigheff)[best_btag_index]) {
+            best_btag_index = k;
+        }
+    }
+
+    if (foundbtag == true) {
+        index["bindex"] = best_btag_index;
+    }
+    else return false;
     
     vector <int> tauresult (tau->GetEntriesFast(), 0);
     int resultcount = 0;
     vector <int> tauindex;
-    
+                                                                   
+
+                                                        
     for (int k = 0; k < tauresult.size(); k++) {
         if (
             (double2int((*tauprong)[k]) == 1 || double2int((*tauprong)[k]) == 3)
@@ -236,6 +265,7 @@ bool skimmer::DoPreselection(BranchPtrMap * d, IndexMap &index){
     }
     return true;	
 }
+                                                                   
 
 void skimmer::WriteCombo(){
     filecombo->cd();	
