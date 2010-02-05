@@ -34,7 +34,9 @@ void mlpsetup(TTree *tree, Int_t ntrain=101){
 	for (Int_t i = 0; i < lob->GetEntriesFast(); ++i) {
 		TBranch * branch = (TBranch *)lob->At(i);
 		string bname = string(branch -> GetName());
-		if (string(bname) == "weight") {
+		if (string(bname) == "weight"
+		  ||string(bname) == "IntLum"
+			) {
 			continue;
 		} else if(string(bname).compare(0,4,"type")){
 			branchnames.push_back(bname);
