@@ -22,7 +22,7 @@ const Double_t targetlum = 200.0;
 
 struct ChannelMeta {
 	string name;
-	Double_t luminocity;
+//	Double_t luminocity;
 	Int_t begin;
 	Int_t end;
 };
@@ -44,11 +44,11 @@ int main( int argc, char ** argv){
 	TString* chnme = NULL; Double_t chlum = NULL;
 	Int_t temp_begin, temp_end;
 	TBranch * channelbranch = metatree->GetBranch("ChannelName");
-	TBranch * channellumbranch = metatree->GetBranch("IntLum");
+//	TBranch * channellumbranch = metatree->GetBranch("IntLum");
 	TBranch * b_begin = metatree->GetBranch("BeginIndex");
 	TBranch * b_end = metatree->GetBranch("EndIndex");
 	channelbranch->SetAddress(&chnme);
-	channellumbranch->SetAddress(&chlum);
+	//channellumbranch->SetAddress(&chlum);
 	b_begin->SetAddress(&temp_begin);
 	b_end->SetAddress(&temp_end);
 
@@ -56,11 +56,11 @@ int main( int argc, char ** argv){
 	for (Int_t i = 0; i < metatree->GetEntriesFast(); ++i) {
 		metatree->GetEntry(i);
 		channeldata[i].name = string(chnme->Data());
-		channeldata[i].luminocity = chlum;
+		//channeldata[i].luminocity = chlum;
 		channeldata[i].begin = temp_begin;
 		channeldata[i].end = temp_end;
 
-		cout << channeldata[i].name << ": " << "\t" << channeldata[i].luminocity << "\t" << channeldata[i].begin << "\t" << channeldata[i].end << endl;
+		cout << channeldata[i].name << ": " << "\t" << /*channeldata[i].luminocity <<*/ "\t" << channeldata[i].begin << "\t" << channeldata[i].end << endl;
 	} 
 	
 	// Get variable and type branch names -> split into vectors
