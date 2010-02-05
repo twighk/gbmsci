@@ -318,5 +318,14 @@ public:
         }
 };
 
+class VarIntLum : public Var {
+public:
+	VarIntLum(){};
+	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
+        std::vector<Double_t> * lum = u< std::vector<Double_t> >((*data)["intlum"]);
+        return (*lum)[0];
+	}
+};
+
 
 #endif
