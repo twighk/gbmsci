@@ -22,7 +22,6 @@ private:
     std::string rootpath;
     std::vector<std::string> channel;
     std::vector<Double_t> weights;
-    std::vector<Double_t> int_lum;
     std::vector<TFile*> infile;
     std::vector<TTree*> intree;
     std::vector<TFile*> outfile;
@@ -36,7 +35,7 @@ private:
 public:
     
     skimmer(std::string);
-    void AddChannel(std::string, std::string, Double_t);
+    void AddChannel(std::string, std::string);
     void WriteCombo();
     void GoSkim();
     bool DoPreselection(std::map<std::string, brptr> *, std::map<std::string, Int_t> &);

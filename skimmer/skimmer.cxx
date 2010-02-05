@@ -32,11 +32,10 @@ skimmer::skimmer(std::string _rootpath){
     treecombo	= new TTree("combotree","combotree");
 }
 
-void skimmer::AddChannel(std::string instring, std::string _tree, Double_t lum){
+void skimmer::AddChannel(std::string instring, std::string _tree){
 	
     infile.push_back(new TFile((rootpath + instring + ".root").c_str()));
     channel.push_back(instring);
-    int_lum.push_back(lum);
     if (infile[infile.size() - 1]->IsOpen() == 0){
         cout << "Quitting" << endl;
         exit(1);
@@ -66,32 +65,33 @@ void skimmer::GoSkim(){
     outmap["ElectronEt"]        = VarHandler( new VarElectronEt() ) ;
     outmap["MetEt"]             = VarHandler( new VarMetEt() ) ;	
     outmap["ElectronTauDPhi"]   = VarHandler( new VarElectronTauDPhi() ) ;			
-//    outmap["ElectronEta"]       = VarHandler( new VarElectronEta() ) ;
-//    outmap["TauEta"]            = VarHandler( new VarTauEta() ) ;	Doesn't make linear combinations!!!		
+//  outmap["ElectronEta"]       = VarHandler( new VarElectronEta() ) ;
+//  outmap["TauEta"]            = VarHandler( new VarTauEta() ) ;	Doesn't make linear combinations!!!		
     outmap["ElectronEcalIso"]   = VarHandler( new VarElectronEcalIso() ) ;		
     outmap["ElectronHcalIso"]   = VarHandler( new VarElectronHcalIso() ) ;		
     outmap["ElectronTrackIso"]  = VarHandler( new VarElectronTrackIso() ) ;		
-//    outmap["ElectronCharge"]    = VarHandler( new VarElectronCharge() ) ;		
-//    outmap["TauCharge"]         = VarHandler( new VarTauCharge() ) ;		
+//  outmap["ElectronCharge"]    = VarHandler( new VarElectronCharge() ) ;		
+//  outmap["TauCharge"]         = VarHandler( new VarTauCharge() ) ;		
     outmap["ElecTauChargeProd"] = VarHandler( new VarElecTauChargeProd() ) ;		
-    //	NB our preselection does tau checks - no point in including these variables for now
-    //	outmap["TauProng"]			= VarHandler( new VarTauProng() ) ;		
-    //	outmap["TauLeadTrk"]		= VarHandler( new VarTauLeadTrk() ) ;		
-    //	outmap["TauEcalIso"]		= VarHandler( new VarTauEcalIso() ) ;		
-    //	outmap["TauTrackIso"]		= VarHandler( new VarTauTrackIso() ) ;		
-    //	outmap["TauAntiElectron"]	= VarHandler( new VarTauAntiElectron() ) ;		
+//	NB our preselection does tau checks - no point in including these variables for now
+//	outmap["TauProng"]			= VarHandler( new VarTauProng() ) ;		
+//	outmap["TauLeadTrk"]		= VarHandler( new VarTauLeadTrk() ) ;		
+//	outmap["TauEcalIso"]		= VarHandler( new VarTauEcalIso() ) ;		
+//	outmap["TauTrackIso"]		= VarHandler( new VarTauTrackIso() ) ;		
+//	outmap["TauAntiElectron"]	= VarHandler( new VarTauAntiElectron() ) ;		
     outmap["ElectronMetDPhi"]   = VarHandler( new VarElectronMetDPhi() ) ;		
     outmap["ElectronMetMt"]     = VarHandler( new VarElectronMetMt() ) ;		
     outmap["VisibleMass"]       = VarHandler( new VarVisibleMass() ) ;		
-//    outmap["TauPhi"]            = VarHandler( new VarTauPhi() ) ;		
-//    outmap["ElectronPhi"]       = VarHandler( new VarElectronPhi() ) ;		
-//    outmap["MetPhi"]            = VarHandler( new VarMetPhi() ) ;		
+//  outmap["TauPhi"]            = VarHandler( new VarTauPhi() ) ;		
+//  outmap["ElectronPhi"]       = VarHandler( new VarElectronPhi() ) ;		
+//  outmap["MetPhi"]            = VarHandler( new VarMetPhi() ) ;		
     outmap["ElectronTauDR"]     = VarHandler( new VarElectronTauDR() ) ;		
     outmap["JetCount"]          = VarHandler( new VarJetCount() ) ;	//Very good for TTplusjets	
     outmap["HighBTag"]          = VarHandler( new VarHighBTag() ) ;	
-    outmap["CountBTag"]          = VarHandler( new VarCountBTag() ) ;	
-//    outmap["HighBTagJetEt"]          = VarHandler( new VarHighBTagJetEt() ) ;	//Didn't help very much
-//    outmap["HiggsMass"]          = VarHandler( new VarHiggsMass() ) ;	
+    outmap["CountBTag"]         = VarHandler( new VarCountBTag() ) ;	
+//  outmap["HighBTagJetEt"]     = VarHandler( new VarHighBTagJetEt() ) ;	//Didn't help very much
+//  outmap["HiggsMass"]         = VarHandler( new VarHiggsMass() ) ;	
+    outmap["IntLum"]            = VarHandler( new VarIntLum() ) ;	
 
     
     //STEP 2:Register Output Branches
@@ -168,6 +168,7 @@ void skimmer::GoSkim(){
 }
 
 bool skimmer::DoPreselection(BranchPtrMap * d, IndexMap &index){
+//    cout << "Preselection:\n >0 electrons\n >0 taus\n Highest Et electron\n Highest Et tau with 1/3 tracks, leadtrk, ECALiso, trackiso, antielectron" << endl; 
     
     TClonesArray* electron = u<TClonesArray>((*d)["lv_electron"]);
     TClonesArray* tau = u<TClonesArray>((*d)["lv_tau"]);
@@ -270,17 +271,14 @@ bool skimmer::DoPreselection(BranchPtrMap * d, IndexMap &index){
 void skimmer::WriteCombo(){
     filecombo->cd();	
     TString channelname;
-    Double_t lum;
     Int_t begin, end;
     TTree* metadata = new TTree("metadata","metadata");
     metadata->Branch("ChannelName",&channelname,256000,0);
-    metadata->Branch("IntLum",&lum);
     metadata->Branch("BeginIndex",&begin);
     metadata->Branch("EndIndex",&end);
     
     for (int i = 0; i < infile.size(); i++) {
         channelname = (channel[i]).c_str();
-        lum = int_lum[i];
         begin = beginvec[i];
         end = endvec[i];
         metadata->Fill();
