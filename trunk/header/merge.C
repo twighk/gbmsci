@@ -52,7 +52,7 @@ int merge(){
     for (UInt_t i = 0; i < names.size(); ++i) {
         files.push_back(new TFile( ("../root/oldroot/"+names[i]+".root").c_str() ));
         trees.push_back( (TTree*)files[i]->Get("bbAHCutTree") );
-        outfiles.push_back(new TFile ( ("~/Desktop/"+names[i]+".root").c_str() , "RECREATE"));
+        outfiles.push_back(new TFile ( ("../root/"+names[i]+".root").c_str() , "RECREATE"));
         outtrees.push_back( trees[i]->CloneTree(0) );
         outtrees[i]->Branch("intlum", &(Int_lum[i]));
         for (UInt_t j = 0; j < trees[i]->GetEntriesFast(); ++j) {
