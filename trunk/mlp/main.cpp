@@ -29,11 +29,16 @@ struct ChannelMeta {
 
 
 int main( int argc, char ** argv){
-	cout << "\033[0m" << endl;
 	TApplication theApp("App", &argc, argv); // this must be instantiated only once 
 	
+	string a;
+	if (argc > 1) {
+		a = argv[1];
+	}
+	cout << "\033[0m" << a << endl;
+	
 	// Open File -> Get trees
-	TFile* file = new TFile("../root/combo.root");
+	TFile* file = new TFile(string("../root/combo"+a+".root").c_str());
 	TTree* tree = (TTree *) file->Get("combotree");
 	TTree* metatree = (TTree *) file->Get("metadata");
 	

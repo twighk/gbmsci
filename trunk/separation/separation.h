@@ -10,7 +10,7 @@
 #include <TH1F.h>
 #include <TAxis.h>
 
-#define NUMOFBINS 100
+#define REDTHRESH 0.5
 
 
 Int_t i2d (Double_t x){
@@ -54,27 +54,41 @@ public:
 						  /  histograms[0]->GetNbinsX();
 		
 		Int_t nbins = histograms[0]->GetNbinsX();
-		std::cout << '\t' ;
+		std::cout << "                ";
 		for (int i = 0; i !=histograms.size() ; ++i) { // 0 is underflow 
-			std::cout << histograms[i]->GetTitle() << '\t' ;
+			
+			std::string title = histograms[i]->GetTitle();
+			for (int i = title.length(); i < 15 ; i++) {
+				title += " ";
+			}
+			
+			std::cout << title.c_str() << '\t' ; // print titles row
 		}
-		std::cout << std::endl;
+		std::cout << std::endl; /// newline
+		
+		for (int i = 0; i !=histograms.size() ; ++i){ // Scale all the histograms
+			Double_t inti =  histograms[i]->Integral();
+			histograms[i]->Scale(1.0/inti);
+		}
 		
 		for (int i = 0; i !=histograms.size() ; ++i) {
-			std::cout << histograms[i]->GetTitle() << '\t' ;
+			std::string title = histograms[i]->GetTitle();
+			for (int x = title.length(); x < 15 ; x++) {
+				title += " ";
+			}
+			std::cout << title.c_str() << '\t' ;
 			for (int j = 0; j <= i; ++j) {
-				
 				Double_t separation = 0;
-				Double_t inti =  histograms[i]->Integral();
-				Double_t intj =  histograms[j]->Integral();
-				
 				
 				for (int k = 1; k < nbins + 1; ++k) { // 0 is underflow 
-					Double_t x = (histograms[i]->GetBinContent(k)/inti - histograms[j]->GetBinContent(k)/intj);
+					Double_t x = (histograms[i]->GetBinContent(k) - histograms[j]->GetBinContent(k));
 					separation += fabs(x);
 				}
 				separation /= 2;
-				std::cout << separation << '\t';
+				if (separation > REDTHRESH) std::cout << "\033[0;31m";
+				std::cout.precision(3);
+				std::cout << std::fixed << separation << "           ";
+				if (separation > REDTHRESH) std::cout << "\033[0m";
 			}
 			std::cout << std::endl;
 		}
