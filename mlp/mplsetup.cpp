@@ -111,7 +111,7 @@ int main(int argc, char** argv){
 	cout << a << endl;
 	
 // Get Tree for mlp 
-	TFile * f = new TFile(string("../root/combo" + a +".root"));
+	TFile * f = new TFile(string("../root/combo" + a +".root").c_str());
 	TTree * t = (TTree*)f->Get("combotree");
 /*
 	TTree* metatree = (TTree *) f->Get("metadata");

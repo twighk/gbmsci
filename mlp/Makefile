@@ -33,7 +33,10 @@ clean: cleanish
 cleanish:
 	rm -f *.o
 	
-run: clean mlp
+run115: clean mlp
+	time ./${BIN} 115
+
+run160: clean mlp
 	time ./${BIN}
 
 runsetup115: setup
