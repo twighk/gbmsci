@@ -88,7 +88,7 @@ void skimmer::GoSkim(){
     outmap["ElectronTauDR"]     = VarHandler( new VarElectronTauDR() ) ;		
     outmap["JetCount"]          = VarHandler( new VarJetCount() ) ;	//Very good for TTplusjets	
     outmap["HighBTag"]          = VarHandler( new VarHighBTag() ) ;	
-    outmap["CountBTag"]         = VarHandler( new VarCountBTag() ) ;	
+    outmap["CountValidBTag"]    = VarHandler( new VarCountValidBTag() ) ;	
 //  outmap["HighBTagJetEt"]     = VarHandler( new VarHighBTagJetEt() ) ;	//Didn't help very much
 //  outmap["HiggsMass"]         = VarHandler( new VarHiggsMass() ) ;	
     outmap["IntLum"]            = VarHandler( new VarIntLum() ) ;	
@@ -99,8 +99,12 @@ void skimmer::GoSkim(){
     vector<Int_t> type (infile.size(), 0);                          //Vector holds type information
     outtree.push_back(treecombo);                                   //Add the combotree to our outtree vector
     VarHandlerMapIt pos;                                            //Iterator for the outmap, so we can loop through
+    cout << "\nUsing variables:" << endl;
     for (Int_t i = 0; i < outtree.size() ; i++) {                   //Loop through output trees
         for (pos = outmap.begin(); pos !=outmap.end(); ++pos) {     //Loop through desired variable branches
+            if (i == 0) {
+                cout << " " << (pos->first) << endl;
+            }
             outtree[i]->Branch( (pos->first).c_str(), &((pos->second).value) );
         }
         for (Int_t k = 0; k < type.size(); k++) {                   //Make necessary number of type branches
@@ -110,8 +114,12 @@ void skimmer::GoSkim(){
     }
 	
     //STEP 3a: Couting - Work out how many events will pass selection for weight branch
+    
+    cout << "\nPreselection:\n >0 electrons\n >0 taus\n Highest Et electron\n Highest Et tau with 1/3 tracks, leadtrk, ECALiso, trackiso, antielectron" << endl; 
+    cout << " Highest b-tag Jet (default to -13. if no valid b-tag found)" << endl; 
+    cout << "\nPreselection Counts:"<< endl;
+
     for (Int_t i = 0; i < intree.size() ; i++) {                    //Loop through input trees
-        cout << "Counting Channel " << channel[i] << endl;
         BranchPtrMap * incoming;                                    //Pointer to map of input branch addresses
         event evt(intree[i]);                                       //Make event handler for current tree
         IndexMap preselect;                                         //Make preselection indicies map
@@ -125,14 +133,16 @@ void skimmer::GoSkim(){
             }
         }
         weights[i] = Double_t(passcounter);
-        cout << channel[i] << "\t" << weights[i] << endl;
+        cout << " " << channel[i] << "\n " << weights[i] << "\t / \t" << (intree[i]->GetEntries()) << endl;
     }
     
     //STEP 3b:Skimming! - Loop over trees & events
     Int_t eventcounter = 0;                                         //Keep track of the no. of events we actually skim
+    
+    cout << "\nSkimming Channels " << endl;
     for (Int_t i = 0; i < intree.size() ; i++) {                    //Loop through input trees
         theweight = 1. / (weights[i]);
-        cout << "Skimming Channel " << channel[i] << endl;
+        cout << " " << channel[i] << endl;
         beginvec.push_back(eventcounter);                           //Record index of first skimmed event in tree
         BranchPtrMap * incoming;                                    //Pointer to map of input branch addresses
         event evt(intree[i]);                                       //Make event handler for current tree
@@ -160,15 +170,16 @@ void skimmer::GoSkim(){
     }
     
     //STEP 4:Write resulting ROOT files
+    cout << "\nWriting Skimmed ROOT Files: " << endl;
+
     for (Int_t i = 0; i < outfile.size() ; i++) {
-        cout << "Writing " << (rootpath + channel[i] + "_skim.root") << endl;
+        cout << " " << (rootpath + channel[i] + "_skim.root") << endl;
         outfile[i]->Write();
     }
-    cout << "Skimming Complete!" << endl;
+    cout << "\nSkimming Complete!" << endl;
 }
 
 bool skimmer::DoPreselection(BranchPtrMap * d, IndexMap &index){
-//    cout << "Preselection:\n >0 electrons\n >0 taus\n Highest Et electron\n Highest Et tau with 1/3 tracks, leadtrk, ECALiso, trackiso, antielectron" << endl; 
     
     TClonesArray* electron = u<TClonesArray>((*d)["lv_electron"]);
     TClonesArray* tau = u<TClonesArray>((*d)["lv_tau"]);
@@ -197,24 +208,25 @@ bool skimmer::DoPreselection(BranchPtrMap * d, IndexMap &index){
     }
 
     // Find the highest b-tag index
-    for (int k = 1; k < (*btrackcounthigheff).size(); k++) {
-        next_btag = (*btrackcounthigheff)[k];
-        if (next_btag > (*btrackcounthigheff)[best_btag_index]) {
-            best_btag_index = k;
-        }
-    }
-
+    
     if (foundbtag == true) {
+        for (int k = 1; k < (*btrackcounthigheff).size(); k++) {
+            next_btag = (*btrackcounthigheff)[k];
+            if (next_btag > (*btrackcounthigheff)[best_btag_index]) {
+                best_btag_index = k;
+            }
+        }
         index["bindex"] = best_btag_index;
     }
-    else return false;
+    else {
+        index["bindex"] = -1;
+    }
+    
     
     vector <int> tauresult (tau->GetEntriesFast(), 0);
     int resultcount = 0;
     vector <int> tauindex;
                                                                    
-
-                                                        
     for (int k = 0; k < tauresult.size(); k++) {
         if (
             (double2int((*tauprong)[k]) == 1 || double2int((*tauprong)[k]) == 3)
