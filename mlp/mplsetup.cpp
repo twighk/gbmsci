@@ -103,8 +103,15 @@ int main(int argc, char** argv){
 // Setup X for graph output
 	TApplication theApp("App", &argc, argv); // this must be instantiated only once 
 	
+	string a;
+	if (argc > 1) {
+		a = argv[1];
+	}
+	
+	cout << a << endl;
+	
 // Get Tree for mlp 
-	TFile * f = new TFile("../root/combo.root");
+	TFile * f = new TFile(string("../root/combo" + a +".root"));
 	TTree * t = (TTree*)f->Get("combotree");
 /*
 	TTree* metatree = (TTree *) f->Get("metadata");

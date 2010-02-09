@@ -36,8 +36,11 @@ cleanish:
 run: clean mlp
 	time ./${BIN}
 
-runsetup: setup
-	time ./${BINSETUP}
+runsetup115: setup
+	time ./${BINSETUP} 115
+
+runsetup160: setup
+	time ./${BINSETUP} 160
 	
 time: all
 	time ./${BIN}
