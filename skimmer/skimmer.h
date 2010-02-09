@@ -34,7 +34,7 @@ private:
     
 public:
     
-    skimmer(std::string);
+    skimmer(std::string, std::string);
     void AddChannel(std::string, std::string);
     void WriteCombo();
     void GoSkim();
