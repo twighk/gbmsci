@@ -26,9 +26,9 @@ typedef map<string, VarHandler>::iterator       VarHandlerMapIt;
 typedef map<string, brptr>                      BranchPtrMap;
 typedef map<string, Int_t>                      IndexMap;
 
-skimmer::skimmer(std::string _rootpath){
+skimmer::skimmer(std::string _rootpath, std::string _outname){
     rootpath	= _rootpath;
-    filecombo	= new TFile( (rootpath + "combo.root").c_str(), "RECREATE");
+    filecombo	= new TFile( (rootpath + _outname + ".root").c_str(), "RECREATE");
     treecombo	= new TTree("combotree","combotree");
 }
 

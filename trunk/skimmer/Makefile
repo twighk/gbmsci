@@ -9,11 +9,17 @@ LIBS = ${ROOTLIB}
 FLAGS = 
 
 #it's important to do the linking seperately from the compiling, other wise it doesn't work
-all: skimmer 
-skimmer: main.o skimmer.o
+all: 
+skimmer115: main115.o skimmer.o
 	${GPP} $^ -o ${BIN} ${FLAGS} ${LIBS} ${OPTI}
 	
-main.o: main.cpp skimmer.h
+main115.o: main115.cpp skimmer.h
+	${GPP} -c $< -o $@ ${COMPFLAGS} ${CFLAGS} ${OPTI}
+
+skimmer160: main160.o skimmer.o
+	${GPP} $^ -o ${BIN} ${FLAGS} ${LIBS} ${OPTI}
+	
+main160.o: main160.cpp skimmer.h
 	${GPP} -c $< -o $@ ${COMPFLAGS} ${CFLAGS} ${OPTI}
 
 skimmer.o: skimmer.cxx skimmer.h 
@@ -25,7 +31,10 @@ clean: cleanish
 cleanish:
 	rm -f *.o
 	
-run: clean all
+run115: clean skimmer115
+	./${BIN}
+
+run160: clean skimmer160
 	./${BIN}
 	
 time: all

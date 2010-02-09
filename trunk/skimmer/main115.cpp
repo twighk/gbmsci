@@ -7,7 +7,7 @@ using namespace std;
 
 int main(int argc, char** argv) {
 
-	skimmer a("../root/");
+	skimmer a("../root/","combo115");
 	a.AddChannel("AH115","bbAHCutTree");
 	a.AddChannel("AH115bb","bbAHCutTree");
 //	a.AddChannel("AH160","bbAHCutTree", 36823.0);
