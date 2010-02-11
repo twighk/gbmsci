@@ -1,3 +1,4 @@
+#makefile
 BIN = correlation 
 GPP = g++
 ROOTLIB = `root-config --libs` -lTMVA -lMinuit -lXMLIO -lTreePlayer
