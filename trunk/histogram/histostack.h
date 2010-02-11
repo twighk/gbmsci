@@ -9,7 +9,7 @@
 #include <TStyle.h>
 #include <TLegend.h>
 
-#include "Histogram.h"
+#include "histogram.h"
 
 
 class Histostack {
