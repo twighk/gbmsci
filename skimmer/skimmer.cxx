@@ -62,33 +62,33 @@ void skimmer::GoSkim(){
     //STEP 1:Set up the output variables we are interested in (only one line required!)
     VarHandlerMap outmap;
     outmap["TauEt"]             = VarHandler( new VarTauEt() ) ;
-    outmap["ElectronEt"]        = VarHandler( new VarElectronEt() ) ;
+    outmap["ElecEt"]        = VarHandler( new VarElectronEt() ) ;
     outmap["MetEt"]             = VarHandler( new VarMetEt() ) ;	
-    outmap["ElectronTauDPhi"]   = VarHandler( new VarElectronTauDPhi() ) ;			
+    outmap["ElecTauDPhi"]   = VarHandler( new VarElectronTauDPhi() ) ;			
 //  outmap["ElectronEta"]       = VarHandler( new VarElectronEta() ) ;
 //  outmap["TauEta"]            = VarHandler( new VarTauEta() ) ;	Doesn't make linear combinations!!!		
-    outmap["ElectronEcalIso"]   = VarHandler( new VarElectronEcalIso() ) ;		
-    outmap["ElectronHcalIso"]   = VarHandler( new VarElectronHcalIso() ) ;		
-    outmap["ElectronTrackIso"]  = VarHandler( new VarElectronTrackIso() ) ;		
+    outmap["ElecEcalIso"]   = VarHandler( new VarElectronEcalIso() ) ;		
+    outmap["ElecHcalIso"]   = VarHandler( new VarElectronHcalIso() ) ;		
+    outmap["ElecTrkIso"]  = VarHandler( new VarElectronTrackIso() ) ;		
 //  outmap["ElectronCharge"]    = VarHandler( new VarElectronCharge() ) ;		
 //  outmap["TauCharge"]         = VarHandler( new VarTauCharge() ) ;		
-    outmap["ElecTauChargeProd"] = VarHandler( new VarElecTauChargeProd() ) ;		
+    outmap["ETCharProd"] = VarHandler( new VarElecTauChargeProd() ) ;		
 //	NB our preselection does tau checks - no point in including these variables for now
 //	outmap["TauProng"]			= VarHandler( new VarTauProng() ) ;		
 //	outmap["TauLeadTrk"]		= VarHandler( new VarTauLeadTrk() ) ;		
 //	outmap["TauEcalIso"]		= VarHandler( new VarTauEcalIso() ) ;		
 //	outmap["TauTrackIso"]		= VarHandler( new VarTauTrackIso() ) ;		
 //	outmap["TauAntiElectron"]	= VarHandler( new VarTauAntiElectron() ) ;		
-    outmap["ElectronMetDPhi"]   = VarHandler( new VarElectronMetDPhi() ) ;		
-    outmap["ElectronMetMt"]     = VarHandler( new VarElectronMetMt() ) ;		
+    outmap["ElecMetDPhi"]   = VarHandler( new VarElectronMetDPhi() ) ;		
+    outmap["ElecMetMt"]     = VarHandler( new VarElectronMetMt() ) ;		
     outmap["VisibleMass"]       = VarHandler( new VarVisibleMass() ) ;		
 //  outmap["TauPhi"]            = VarHandler( new VarTauPhi() ) ;		
 //  outmap["ElectronPhi"]       = VarHandler( new VarElectronPhi() ) ;		
 //  outmap["MetPhi"]            = VarHandler( new VarMetPhi() ) ;		
-    outmap["ElectronTauDR"]     = VarHandler( new VarElectronTauDR() ) ;		
+    outmap["ElecTauDR"]     = VarHandler( new VarElectronTauDR() ) ;		
     outmap["JetCount"]          = VarHandler( new VarJetCount() ) ;	//Very good for TTplusjets	
     outmap["HighBTag"]          = VarHandler( new VarHighBTag() ) ;	
-    outmap["CountValidBTag"]    = VarHandler( new VarCountValidBTag() ) ;	
+    outmap["CntBTag"]    = VarHandler( new VarCountValidBTag() ) ;	
 //  outmap["HighBTagJetEt"]     = VarHandler( new VarHighBTagJetEt() ) ;	//Didn't help very much
 //  outmap["HiggsMass"]         = VarHandler( new VarHiggsMass() ) ;	
     outmap["IntLum"]            = VarHandler( new VarIntLum() ) ;	
