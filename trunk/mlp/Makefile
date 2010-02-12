@@ -32,7 +32,7 @@ mlp160.o: mlp115.cxx mlp160.h
 
 setup: mplsetup.o
 	${GPP} $^ -o ${BINSETUP} ${FLAGS} ${LIBS} ${OPTI}
-mplsetup.o: mplsetup.cpp
+mplsetup.o: mplsetup.cpp 
 	${GPP} -c $< -o $@ ${COMPFLAGS} ${CFLAGS} ${OPTI}
 	
 
@@ -49,10 +49,10 @@ run115: clean mlp115
 run160: clean mlp160
 	time ./${BIN}
 
-runsetup115: setup
+runsetup115: clean setup
 	time ./${BINSETUP} 115
 
-runsetup160: setup
+runsetup160: clean setup
 	time ./${BINSETUP} 160
 	
 time: all
