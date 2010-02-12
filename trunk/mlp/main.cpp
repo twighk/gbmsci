@@ -14,7 +14,14 @@
 
 #include "../histogram/histogram.h"
 #include "../histogram/histostack.h"
-#include "mlp.h"
+
+#ifdef MAKE115
+#include "mlp115.h"
+#endif
+
+#ifdef MAKE160
+#include "mlp160.h"
+#endif
 
 using namespace std;
 
@@ -118,7 +125,13 @@ int main( int argc, char ** argv){
 	// get ready for mlp
 	vector <Double_t> outs;
 	outs.resize(types.size());
-	mlp tester;
+#ifdef MAKE115
+mlp115 tester;
+#endif
+	
+#ifdef MAKE160
+mlp160 tester;
+#endif
 	
 	//make histograms
 	vector<Histogram> histograms;
