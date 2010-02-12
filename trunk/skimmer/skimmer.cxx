@@ -30,6 +30,7 @@ skimmer::skimmer(std::string _rootpath, std::string _outname){
     rootpath	= _rootpath;
     filecombo	= new TFile( (rootpath + _outname + ".root").c_str(), "RECREATE");
     treecombo	= new TTree("combotree","combotree");
+	setstats = true;
 }
 
 void skimmer::AddChannel(std::string instring, std::string _tree){
@@ -127,11 +128,12 @@ void skimmer::GoSkim(){
 		Int_t passcounter = 0;
         for (Int_t j = 0; j < intree[i]->GetEntries(); j++) {       //Loop through events of current tree
             incoming = evt.Entry(j);   
-         
             if (DoPreselection(incoming, preselect)) {              //Check to see if we want to skim this event
                 passcounter++;
                 (eventlist[i]).push_back(j);
             }
+			CalcStats(i, incoming, &preselect);
+
         }
         weights[i] = Double_t(passcounter);
         cout << " " << channel[i] << "\n " << weights[i] << "\t / \t" << (intree[i]->GetEntries()) << endl;
@@ -177,6 +179,9 @@ void skimmer::GoSkim(){
         cout << " " << (rootpath + channel[i] + "_skim.root") << endl;
         outfile[i]->Write();
     }
+	
+	cout << "Stats:" << endl;
+	PrintStats();
     cout << "\nSkimming Complete!" << endl;
 }
 
@@ -299,6 +304,44 @@ void skimmer::WriteCombo(){
     
     filecombo->Write();
 }
+
+
+void skimmer::CalcStats(Int_t chn, BranchPtrMap * d, IndexMap * index){
+	if (setstats == true) {
+		stats["MeanMuons|>0Elec"] = vector< vector<Double_t> > (channel.size());
+		setstats = false;
+	}
+	TClonesArray* electron = u<TClonesArray>((*d)["lv_electron"]);
+    TClonesArray* tau = u<TClonesArray>((*d)["lv_tau"]);
+	TClonesArray* muon = u<TClonesArray>((*d)["lv_muon"]);
+	
+	if (electron->GetEntriesFast() > 0) {
+		stats["MeanMuons|>0Elec"][chn].push_back( Double_t(muon->GetEntriesFast()) );
+	}
+
+    TLorentzVector* temp_electron = 0;
+    TLorentzVector* temp_tau = 0;
+	
+	
+}
+
+void skimmer::PrintStats(){
+	map<string, vector< vector<Double_t> > >::iterator posx;                               //Iterator for the outmap, so we can loop through
+	for (posx = stats.begin(); posx !=stats.end(); ++posx) {
+		
+		cout << (posx->first) << endl;
+		for (int i = 0; i < channel.size(); i++) {
+			Double_t sum = 0;
+			for (int j =0; j < (posx->second)[i].size(); j++) {
+				sum += (posx->second)[i][j];
+			}
+			sum = sum / (posx->second)[i].size();
+			cout << channel[i] << "\t\t" << sum << "\t\t/" << (posx->second)[i].size() << endl;
+		}
+	}
+}
+
+
 
 string skimmer::Int2String(Int_t num){
     stringstream out;
