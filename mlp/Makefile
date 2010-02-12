@@ -1,7 +1,7 @@
 BIN = mlp
 BINSETUP = mlpsetup
 GPP = g++ -Wall
-ROOTLIB = `root-config --libs` -lTMVA -lMinuit -lXMLIO -lTreePlayer -lMLP
+ROOTLIB = `root-config --libs` -lMinuit -lXMLIO -lTreePlayer -lMLP
 ROOTFLAG = `root-config --cflags` 
 OPTI = #-fast -ffast-math -mfpmath=sse -funroll-loops #-funsafe-math-optimizations 
 
