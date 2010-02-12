@@ -31,6 +31,8 @@ private:
     std::vector< std::vector<Int_t> > eventlist;
     TFile* filecombo;
     TTree* treecombo;
+	std::map<std::string, std::vector< std::vector<Double_t> > > stats;
+	bool setstats;
     
 public:
     
@@ -40,7 +42,8 @@ public:
     void GoSkim();
     bool DoPreselection(std::map<std::string, brptr> *, std::map<std::string, Int_t> &);
     std::string Int2String(Int_t);
-    
+	void CalcStats(Int_t, std::map<std::string, brptr> *, std::map<std::string, Int_t> *);
+    void PrintStats();
 };
 
 #endif
