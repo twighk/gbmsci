@@ -11,14 +11,24 @@ FLAGS =
 
 #it's important to do the linking seperately from the compiling, other wise it doesn't work
 all: 
-mlp: main.o mlp.o
+mlp115: main115.o mlp115.o
 	${GPP} $^ -o ${BIN} ${FLAGS} ${LIBS} ${OPTI}
 	
-main.o: main.cpp
-	${GPP} -c $< -o $@ ${COMPFLAGS} ${CFLAGS} ${OPTI}
+mlp160: main160.o mlp160.o
+	${GPP} $^ -o ${BIN} ${FLAGS} ${LIBS} ${OPTI}
 
-mlp.o: mlp.cxx mlp.h 
-	${GPP} -c $< -o $@ ${COMPFLAGS} ${CFLAGS} ${OPTI}
+main160.o: main.cpp
+	${GPP} -c $< -o $@ ${COMPFLAGS} ${CFLAGS} ${OPTI} -D MAKE160
+
+main115.o: main.cpp
+	${GPP} -c $< -o $@ ${COMPFLAGS} ${CFLAGS} ${OPTI} -D MAKE115
+
+
+mlp115.o: mlp115.cxx mlp115.h 
+	${GPP} -c $< -o $@ ${COMPFLAGS} ${CFLAGS} ${OPTI} 
+
+mlp160.o: mlp115.cxx mlp160.h 
+	${GPP} -c $< -o $@ ${COMPFLAGS} ${CFLAGS} ${OPTI} 
 
 setup: mplsetup.o
 	${GPP} $^ -o ${BINSETUP} ${FLAGS} ${LIBS} ${OPTI}
@@ -33,10 +43,10 @@ clean: cleanish
 cleanish:
 	rm -f *.o
 	
-run115: clean mlp
+run115: clean mlp115
 	time ./${BIN} 115
 
-run160: clean mlp
+run160: clean mlp160
 	time ./${BIN}
 
 runsetup115: setup
