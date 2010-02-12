@@ -94,6 +94,7 @@ void skimmer::GoSkim(){
 //  outmap["HiggsMass"]         = VarHandler( new VarHiggsMass() ) ;	
     outmap["IntLum"]            = VarHandler( new VarIntLum() ) ;	
     outmap["MeanBTag"]          = VarHandler( new VarMeanBTag() ) ;	
+    outmap["MuonCount"]          = VarHandler( new VarMuonCount() ) ;	
 
     
     //STEP 2:Register Output Branches
@@ -131,8 +132,8 @@ void skimmer::GoSkim(){
             if (DoPreselection(incoming, preselect)) {              //Check to see if we want to skim this event
                 passcounter++;
                 (eventlist[i]).push_back(j);
-            }
-			CalcStats(i, incoming, &preselect);
+				CalcStats(i, incoming, &preselect);
+			}
 
         }
         weights[i] = Double_t(passcounter);
@@ -308,15 +309,15 @@ void skimmer::WriteCombo(){
 
 void skimmer::CalcStats(Int_t chn, BranchPtrMap * d, IndexMap * index){
 	if (setstats == true) {
-		stats["MeanMuons|>0Elec"] = vector< vector<Double_t> > (channel.size());
+		stats["MeanMuons|>0Elec&&>0Tau"] = vector< vector<Double_t> > (channel.size());
 		setstats = false;
 	}
 	TClonesArray* electron = u<TClonesArray>((*d)["lv_electron"]);
     TClonesArray* tau = u<TClonesArray>((*d)["lv_tau"]);
 	TClonesArray* muon = u<TClonesArray>((*d)["lv_muon"]);
 	
-	if (electron->GetEntriesFast() > 0) {
-		stats["MeanMuons|>0Elec"][chn].push_back( Double_t(muon->GetEntriesFast()) );
+	if (electron->GetEntriesFast() > 0 && tau->GetEntriesFast()) {
+		stats["MeanMuons|>0Elec&&>0Tau"][chn].push_back( Double_t(muon->GetEntriesFast()) );
 	}
 
     TLorentzVector* temp_electron = 0;
