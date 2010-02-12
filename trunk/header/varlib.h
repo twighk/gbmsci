@@ -255,7 +255,7 @@ public:
 	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
         std::vector<Double_t> * btag = u< std::vector<Double_t> >((*data)["jetBTagTrackCountHighEff"]);
         if ( (*indexinfo)["bindex"] == -1  ) {
-            return -13.; //Default lowest tab value
+            return 0.; //Default lowest tab value
         } else {
             return (*btag)[((*indexinfo)["bindex"])];
         }
