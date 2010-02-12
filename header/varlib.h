@@ -255,10 +255,25 @@ public:
 	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
         std::vector<Double_t> * btag = u< std::vector<Double_t> >((*data)["jetBTagTrackCountHighEff"]);
         if ( (*indexinfo)["bindex"] == -1  ) {
-            return 0.; //Default lowest tab value
+            return -13.; //Default lowest tab value
         } else {
             return (*btag)[((*indexinfo)["bindex"])];
         }
+	}
+};
+
+class VarMeanBTag : public Var {
+public:
+	VarMeanBTag(){};
+	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
+        std::vector<Double_t> * btag = u< std::vector<Double_t> >((*data)["jetBTagTrackCountHighEff"]);
+		Double_t count = 0.;
+		for (int i = 0; i < (*btag).size(); i++) {
+			if ( (*btag)[i] < -50. ) {count += 13.;} else {count += (*btag)[i];}
+		}
+	
+		return (count / (*btag).size() );
+
 	}
 };
 
