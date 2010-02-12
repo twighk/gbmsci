@@ -92,6 +92,7 @@ void skimmer::GoSkim(){
 //  outmap["HighBTagJetEt"]     = VarHandler( new VarHighBTagJetEt() ) ;	//Didn't help very much
 //  outmap["HiggsMass"]         = VarHandler( new VarHiggsMass() ) ;	
     outmap["IntLum"]            = VarHandler( new VarIntLum() ) ;	
+    outmap["MeanBTag"]          = VarHandler( new VarMeanBTag() ) ;	
 
     
     //STEP 2:Register Output Branches
