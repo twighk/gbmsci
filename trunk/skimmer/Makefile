@@ -1,6 +1,6 @@
 BIN = skimmer
 GPP = g++
-ROOTLIB = `root-config --libs` -lTMVA -lMinuit -lXMLIO -lTreePlayer
+ROOTLIB = `root-config --libs` -lMinuit -lXMLIO -lTreePlayer
 ROOTFLAG = `root-config --cflags` 
 OPTI = #-fast -ffast-math -mfpmath=sse -funroll-loops #-funsafe-math-optimizations 
 
