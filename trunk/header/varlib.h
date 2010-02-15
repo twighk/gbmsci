@@ -354,6 +354,16 @@ public:
 	}
 };
 
+class VarIntTest : public Var {
+public:
+	VarIntTest(){};
+	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
+
+	
+		return Double_t( (*indexinfo)["magic"] );
+		
+	}
+};
 
 
 #endif
