@@ -158,7 +158,7 @@ void skimmer::GoSkim(){
             incoming = evt.Entry(eventlist[i][j]);                  //Get appropriate branch object addresses for current entry
             
 			DoPreselection(incoming, preselect);
-			preselect["magaic"] = i;
+			preselect["magic"] = i;
 			eventcounter++;
                 //Loop through desired variable functions, filling the outmap double values	
 			VarHandlerMapIt posx;                               //Iterator for the outmap, so we can loop through
