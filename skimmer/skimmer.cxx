@@ -30,7 +30,7 @@ skimmer::skimmer(std::string _rootpath, std::string _outname){
     rootpath	= _rootpath;
     filecombo	= new TFile( (rootpath + _outname + ".root").c_str(), "RECREATE");
     treecombo	= new TTree("combotree","combotree");
-	setstats = true;
+	setstats	= true;
 }
 
 void skimmer::AddChannel(std::string instring, std::string _tree){
@@ -95,6 +95,7 @@ void skimmer::GoSkim(){
     outmap["IntLum"]            = VarHandler( new VarIntLum() ) ;	
     outmap["MeanBTag"]          = VarHandler( new VarMeanBTag() ) ;	
     outmap["MuonCount"]          = VarHandler( new VarMuonCount() ) ;	
+    outmap["IntTest"]          = VarHandler( new VarIntTest() ) ;	
 
     
     //STEP 2:Register Output Branches
@@ -155,10 +156,12 @@ void skimmer::GoSkim(){
         for (Int_t j = 0; j < (eventlist[i]).size() ; j++) {
             
             incoming = evt.Entry(eventlist[i][j]);                  //Get appropriate branch object addresses for current entry
-            DoPreselection(incoming, preselect);
-                eventcounter++;
+            
+			DoPreselection(incoming, preselect);
+			preselect["magaic"] = i;
+			eventcounter++;
                 //Loop through desired variable functions, filling the outmap double values	
-                VarHandlerMapIt posx;                               //Iterator for the outmap, so we can loop through
+			VarHandlerMapIt posx;                               //Iterator for the outmap, so we can loop through
                 for (posx = outmap.begin(); posx !=outmap.end(); ++posx) {
                     (posx->second).value = ((posx->second).func)->Get(incoming, &preselect);
                 }
