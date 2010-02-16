@@ -28,19 +28,30 @@ private:
 	TTree *tree; // tree 
 	std::string file; // file suffix .root
 	Int_t ntrain; // number of training epochs (-1)
+	TMultiLayerPerceptron::ELearningMethod method;
 	
 	std::string netstructure; 
 public:
 	
-	MlpSetup(TTree *tree, std::string file,  std::string netstructure ="", Int_t ntrain=101):
+	MlpSetup(TTree *tree, std::string file,  std::string netstructure ="", TMultiLayerPerceptron::ELearningMethod method = TMultiLayerPerceptron::kBFGS , Int_t ntrain=101):
 	tree(tree),
 	file(file),
 	ntrain(ntrain),
-	netstructure(netstructure)
+	netstructure(netstructure),
+	method(method)
 	{
 		
 	}
 	
+	MlpSetup(TTree *tree, std::string file, TMultiLayerPerceptron::ELearningMethod method = TMultiLayerPerceptron::kBFGS, std::string netstructure ="" , Int_t ntrain=101):
+	tree(tree),
+	file(file),
+	ntrain(ntrain),
+	netstructure(netstructure),
+	method(method)
+	{
+		
+	}
 	
 	void runsetup(){
 		std::cout << "ntrain: " << ntrain << std::endl;
@@ -101,7 +112,7 @@ public:
 								  "Entry$%2==0",
 								  "(Entry$+1)%2==0"); // set up neural net
 		
-		mlp->SetLearningMethod(TMultiLayerPerceptron::kBFGS); // choose learning method
+		mlp->SetLearningMethod(method); // choose learning method
 		
 		mlp->Train(ntrain, "text,graph,update=10"); // train
 		mlp->Export(std::string("mlp" +file).c_str(),"C++"); // save data
