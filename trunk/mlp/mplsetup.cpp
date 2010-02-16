@@ -34,7 +34,7 @@ int main(int argc, char** argv){
 
 	
 //run mlp
-	MlpSetup mlp(t, a); 
+	MlpSetup mlp(t, a, TMultiLayerPerceptron::kSteepestDescent); 
 	
 	
 	mlp.runsetup();
