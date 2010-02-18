@@ -15,6 +15,9 @@ public:
 	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo) = 0;
 };
 
+//KINEMATICS
+
+// The Et of the candidate Tau jet
 class VarTauEt : public Var {
 public:
 	VarTauEt(){};
@@ -23,6 +26,7 @@ public:
 	}
 };
 
+//The Et of the candidate electron
 class VarElectronEt : public Var {
 public:
 	VarElectronEt(){};
@@ -31,6 +35,7 @@ public:
 	}
 };
 
+//The missing energy (CaloMET)
 class VarMetEt : public Var {
 public:
 	VarMetEt(){};
@@ -39,6 +44,9 @@ public:
 	}
 };
 
+
+//TOPOLOGY
+//The opening angle between the candidate electron and tau pair in the transverse plane
 class VarElectronTauDPhi : public Var {
 public:
 	VarElectronTauDPhi(){};
@@ -49,6 +57,7 @@ public:
 		return fabs(temp_electron->DeltaPhi(*temp_tau));
 	}
 };
+
 
 class VarTauEta : public Var {
 public:
@@ -175,6 +184,17 @@ public:
 		TLorentzVector* temp_electron	= (uTLV( (*data)["lv_electron"] , (*indexinfo)["eindex"] ));
 		TLorentzVector* temp_met		= (uTLV( (*data)["lv_met"] , 0 ));
 		return fabs(temp_electron->DeltaPhi(*temp_met));
+	}
+};
+
+class VarTauMetDPhi : public Var {
+public:
+	VarTauMetDPhi(){};
+	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
+		
+		TLorentzVector* temp_tau		= (uTLV( (*data)["lv_tau"] , (*indexinfo)["tindex"] ));
+		TLorentzVector* temp_met		= (uTLV( (*data)["lv_met"] , 0 ));
+		return fabs(temp_tau->DeltaPhi(*temp_met));
 	}
 };
 
@@ -351,6 +371,22 @@ public:
 	VarMuonCount(){};
 	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
 		return (u<TClonesArray>( (*data)["lv_muon"] ))->GetEntriesFast();
+	}
+};
+
+class VarTauCount : public Var {
+public:
+	VarTauCount(){};
+	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
+		return (u<TClonesArray>( (*data)["lv_tau"] ))->GetEntriesFast();
+	}
+};
+
+class VarElectronCount : public Var {
+public:
+	VarElectronCount(){};
+	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
+		return (u<TClonesArray>( (*data)["lv_electron"] ))->GetEntriesFast();
 	}
 };
 
