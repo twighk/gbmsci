@@ -26,21 +26,28 @@ int main(int argc, char** argv){
 	if (argc > 1) {
 		higgs_mass = argv[1];
 	}
-	cout << "Neural Network for " << higgs_mass << " Higgs mass" << endl;
+	cout << "Neural Network for Higgs mass: " << higgs_mass << endl;
 	
 // Get Tree for mlp 
 	TFile * file = new TFile(string("../root/combo" + higgs_mass +".root").c_str());
 	TTree * tree = (TTree*)file->Get("combotree");
 	
-	vector<string> test = strvecextractor::ExtractTypes(tree);
-
-	
-	exit(0);
+    MlpSetup mlp(tree, higgs_mass); 
+//	  mlp.SetMethod(TMultiLayerPerceptron::kRibierePolak);
+    mlp.SetEpochs(201);
+//    mlp.SetNormaliseInputs(false);
+//    mlp.SetNormaliseOutputs(true);
+//    mlp.SetAltOutputNodes(false);
+//    mlp.SetUseWeights(false);
+    vector<Int_t> new_struct(1, 8);
+    mlp.SetStructure(new_struct);
+    mlp.TrainNet();
+    exit(0);
 //run mlp
-	MlpSetup mlp(tree, higgs_mass, TMultiLayerPerceptron::kSteepestDescent); 
 	
 	
-	mlp.runsetup();
+	
+//	mlp.RunSetup();
 	
 //wait, so graphs are shown
 	cerr << "Hanging for X11" << endl;
