@@ -17,6 +17,8 @@
 #include <string>
 #include <sstream>
 
+#include "../header/strvecextractor.h"
+
 class MlpSetup {
 private:
 
@@ -31,7 +33,48 @@ private:
 	TMultiLayerPerceptron::ELearningMethod method;
 	
 	std::string netstructure; 
+	
+	/*
+	TTree*									tree;
+	std::string								higgs_mass;
+	TMultiLayerPerceptron::ELearningMethod	method;
+	Int_t									epochs;
+	std::vector<Int_t>						hidden_layers;
+	bool									normalise_inputs;
+	bool									normalise_outputs;
+	bool									alt_output_nodes;
+	bool									use_weights;
+	std::vector<std::string>				input_variables;
+	std::vector<std::string>				types;
+	*/
+	
+	
 public:
+	
+	
+	/*
+	MlpSetup(TTree * _tree, std::string _higgs_mass){
+		tree						= _tree;
+		higgs_mass					= _higgs_mass;
+		
+		method						= TMultiLayerPerceptron::kBFGS;
+		epochs						= 101;
+		normalise_inputs			= true;
+		normalise_outputs			= false;
+		alt_output_nodes			= true;
+		use_weights					= true;
+		
+		input_variables				= strvecextractor::ExtractInputVariables(tree);
+		types						= strvecextractor::ExtractTypes(tree);
+		
+		std::vector<Int_t> temp;
+		temp.push_back(input_variables.size());
+		hidden_layers				= temp;
+		
+	}
+	*/
+	
+	
 	
 	MlpSetup(TTree *tree, std::string file,  std::string netstructure ="", TMultiLayerPerceptron::ELearningMethod method = TMultiLayerPerceptron::kBFGS , Int_t ntrain=101):
 	tree(tree),

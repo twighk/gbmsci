@@ -20,21 +20,24 @@ using namespace std;
 int main(int argc, char** argv){
 // Setup X for graph output
 	TApplication theApp("App", &argc, argv); // this must be instantiated only once 
-	
-	string a;
+
+// Determine if this will be a 115 or 160 neural net
+	string higgs_mass;
 	if (argc > 1) {
-		a = argv[1];
+		higgs_mass = argv[1];
 	}
-	
-	cout << a << endl;
+	cout << "Neural Network for " << higgs_mass << " Higgs mass" << endl;
 	
 // Get Tree for mlp 
-	TFile * f = new TFile(string("../root/combo" + a +".root").c_str());
-	TTree * t = (TTree*)f->Get("combotree");
+	TFile * file = new TFile(string("../root/combo" + higgs_mass +".root").c_str());
+	TTree * tree = (TTree*)file->Get("combotree");
+	
+	vector<string> test = strvecextractor::ExtractTypes(tree);
 
 	
+	exit(0);
 //run mlp
-	MlpSetup mlp(t, a, TMultiLayerPerceptron::kSteepestDescent); 
+	MlpSetup mlp(tree, higgs_mass, TMultiLayerPerceptron::kSteepestDescent); 
 	
 	
 	mlp.runsetup();
