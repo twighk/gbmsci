@@ -25,8 +25,8 @@
 
 using namespace std;
 
-const Double_t targetlum = 200.0;
-
+const Double_t targetlum = 200.0; //Integrated luminosity that we can normalise channels to
+u
 struct ChannelMeta {
 	string name;
 //	Double_t luminocity;
