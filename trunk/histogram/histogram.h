@@ -30,7 +30,7 @@ public:
 		mycount = count;
 		std::ostringstream str (std::ostringstream::out);
 		str << "histh" << count++ ; 
-		hist = new TH1F(str.str().c_str(), Title,100, begin, end);
+		hist = new TH1F(str.str().c_str(), Title, binnum, begin, end);
 		hist->SetFillColor(mycount+1);
 		gROOT->SetStyle("Plain");
 		gROOT->ForceStyle(); 
