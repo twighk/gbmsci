@@ -34,7 +34,7 @@ int main(int argc, char** argv){
 	
     MlpSetup mlp(tree, higgs_mass); 
 //	  mlp.SetMethod(TMultiLayerPerceptron::kRibierePolak);
-    mlp.SetEpochs(201);
+    mlp.SetEpochs(50/*201*/);
 //    mlp.SetNormaliseInputs(false);
 //    mlp.SetNormaliseOutputs(true);
 //    mlp.SetAltOutputNodes(false);
@@ -42,6 +42,9 @@ int main(int argc, char** argv){
     vector<Int_t> new_struct(1, 8);
     mlp.SetStructure(new_struct);
     mlp.TrainNet();
+
+	cout << "Error Test: "  << mlp.GetErrorTest()  << endl
+		 << "Error Train: " << mlp.GetErrorTrain() << endl;
 //run mlp
 	
 	

@@ -214,12 +214,24 @@ public:
         std::cout << network->GetTau() << "\t" << network->GetReset() << std::endl;
         
 		network->Train(epochs, "text,graph,update=10"); // train
-//		mlp->Export(std::string("mlp" +file).c_str(),"C++"); // save data
+		network->Export(std::string("mlp" + higgs_mass).c_str(),"C++"); // save data
         
-        
-		
 	}
 	
+	void Export(std::string filename) {
+		network->Export(std::string("mlp" + filename).c_str(),"C++"); // save data
+	}
+	
+	Double_t GetErrorTrain(){
+		return 	TMath::Sqrt(network->GetError(TMultiLayerPerceptron::kTraining) / ceil(tree->GetEntries() / 2.0));
+		
+	}
+	Double_t GetErrorTest(){
+		return 	TMath::Sqrt(network->GetError(TMultiLayerPerceptron::kTest) / floor(tree->GetEntries() / 2.0));
+	}
+	
+};
+
 //	MlpSetup(TTree *tree, std::string file,  std::string netstructure ="", TMultiLayerPerceptron::ELearningMethod method = TMultiLayerPerceptron::kBFGS , Int_t ntrain=101):
 //	tree(tree),
 //	file(file),
@@ -239,10 +251,10 @@ public:
 //	{
 //		
 //	}
-	
-	
-    
-  //  void RunSetup(){
+
+
+
+//  void RunSetup(){
 //		std::cout << "ntrain: " << ntrain << std::endl;
 //		
 //		std::vector <std::string> branchnames; //List of branch names (but not types)
@@ -325,10 +337,6 @@ public:
 //		
 //		
 //	}
-	
-};
-
-
 
 
 
