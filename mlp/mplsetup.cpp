@@ -42,7 +42,6 @@ int main(int argc, char** argv){
     vector<Int_t> new_struct(1, 8);
     mlp.SetStructure(new_struct);
     mlp.TrainNet();
-    exit(0);
 //run mlp
 	
 	
