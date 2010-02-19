@@ -166,7 +166,8 @@ mlp160 tester;
 
 	for (unsigned int i = 0; i != channeldata.size();++i){
 		for (int j = channeldata[i].begin; j != channeldata[i].end + 1; ++j) {
-			tree->GetEntry(j);			for (unsigned int k = 0; k < outs.size(); ++k) {
+			tree->GetEntry(j);	
+			for (unsigned int k = 0; k < outs.size(); ++k) {
 				outs[k] = tester.Value(k,&vars[0]);
 				perfmat[i][k]->fill(outs[k], 1);
 //				if (*visibleMass >100 && *visibleMass < 110){
