@@ -15,15 +15,14 @@ using namespace std;
 int main(int argc, char** argv){
 	cout << "Hello OpenML!\n";
 	omp_set_num_threads(OMP_NUM_THREADS); 
-
+	
 	ostringstream outstrm(ostringstream::out);	
 	
-	#pragma omp parallel for shared(outstrm) ordered
+#pragma omp parallel for shared(outstrm) ordered
 	for (long i = 0; i < 90; ++i){
-		
 		string pipeout = cmdpipe("date");
 		
-		#pragma omp ordered
+#pragma omp ordered
 		outstrm << i << " "<< omp_get_thread_num() + 1 << ' ' << pipeout << endl;
 		cout    << i << " "<< omp_get_thread_num() + 1 << ' ' << pipeout << endl;
 	}
@@ -35,7 +34,7 @@ int main(int argc, char** argv){
 
 string cmdpipe (string cmd){
 	ostringstream cmdout(ostringstream::out);
-	FILE *cmdfd = popen (cmd.c_str(), "r+");
+	FILE *cmdfd = popen (cmd.c_str(), "r");
 	
 	for (char c = fgetc(cmdfd); c != EOF; c = fgetc(cmdfd)) {
 		cmdout << c;
