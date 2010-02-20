@@ -1,12 +1,14 @@
 BIN = mlp
 BINSETUP = mlpsetup
+BINOPENMP = mlpopenmp
+
 GPP = g++ -Wall
 ROOTLIB = `root-config --libs` -lMinuit -lXMLIO -lTreePlayer -lMLP
 ROOTFLAG = `root-config --cflags` 
 OPTI = #-fast -ffast-math -mfpmath=sse -funroll-loops #-funsafe-math-optimizations 
 
-CFLAGS = ${ROOTFLAG}
-LIBS = ${ROOTLIB}
+CFLAGS = ${ROOTFLAG} -fopenmp
+LIBS = ${ROOTLIB} -fopenmp
 FLAGS = 
 
 #it's important to do the linking seperately from the compiling, other wise it doesn't work
@@ -34,6 +36,11 @@ setup: mplsetup.o
 	${GPP} $^ -o ${BINSETUP} ${FLAGS} ${LIBS} ${OPTI}
 mplsetup.o: mplsetup.cpp 
 	${GPP} -c $< -o $@ ${COMPFLAGS} ${CFLAGS} ${OPTI}
+
+openmp: openmp.o
+	${GPP} $^ -o ${BINOPENMP} ${FLAGS} ${LIBS} ${OPTI}
+openmp.o: openmp.cpp 
+	${GPP} -c $< -o $@ ${COMPFLAGS} ${CFLAGS} ${OPTI}
 	
 
 clean: cleanish 
@@ -54,6 +61,9 @@ runsetup115: clean setup
 
 runsetup160: clean setup
 	time ./${BINSETUP} 160
+
+runsetup115openmp: clean setup openmp
+	time ./${BINOPENMP} 115
 	
 time: all
 	time ./${BIN}
