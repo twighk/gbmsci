@@ -36,6 +36,7 @@ private:
 	
 	TTree*									tree;
 	std::string								higgs_mass;
+	std::string								exportsuffix;
 	TMultiLayerPerceptron::ELearningMethod	method;
 	UInt_t									epochs;
 	std::vector<Int_t>						hidden_layers;
@@ -43,6 +44,7 @@ private:
 	bool									normalise_outputs;
 	bool									alt_output_nodes;
 	bool									use_weights;
+	bool									textoutput;
 	std::vector<std::string>				input_variables;
 	std::vector<std::string>				types;
     TMultiLayerPerceptron*                  network;
@@ -75,6 +77,8 @@ public:
 		std::vector<Int_t> temp;
 		temp.push_back(input_variables.size());
 		hidden_layers				= temp;
+		exportsuffix				= std::string("");
+		textoutput					= true;
 		
 	}
 
@@ -90,6 +94,10 @@ public:
     
     void SetEpochs(UInt_t _epochs) {
         epochs = _epochs;    
+    } 
+	
+	void SetExportSuffix(std::string _exportsuffix) {
+        exportsuffix = _exportsuffix;    
     } 
     
     void SetNormaliseInputs(bool _normalise_inputs) {
@@ -107,6 +115,10 @@ public:
     void SetUseWeights(bool _use_weights) {
         use_weights = _use_weights;    
     } 
+	
+	void SetTextOutput( bool b){
+		textoutput = b;
+	}
     
     
     std::string GetMethodString() {
@@ -213,8 +225,14 @@ public:
         network->SetTau(2.0);
         std::cout << network->GetTau() << "\t" << network->GetReset() << std::endl;
         
-		network->Train(epochs, "text,graph,update=10"); // train
-		network->Export(std::string("mlp" + higgs_mass).c_str(),"C++"); // save data
+		
+		std::ostringstream traintext(std::ostringstream::out);
+		if( textoutput == true){
+			traintext << "text,";
+		}
+		traintext << "graph,update=10";
+		network->Train(epochs, traintext.str().c_str()); // train
+		network->Export(std::string("mlp" + higgs_mass + exportsuffix).c_str(),"C++"); // save data
         
 	}
 	

@@ -16,11 +16,23 @@ int main(int argc, char** argv){
 	cout << "Hello OpenML!\n";
 	omp_set_num_threads(OMP_NUM_THREADS); 
 	
+	ostringstream cmd;
+	cmd << "./mlpsetup ";
+	if (argc > 1) {
+		cmd << argv[1] << " ";
+	} else {
+		cerr << "takes higgs mass as argument" << endl;
+		exit(-1);
+	}
+
+	
 	ostringstream outstrm(ostringstream::out);	
 	
-#pragma omp parallel for shared(outstrm) ordered
+#pragma omp parallel for shared(outstrm, cmd)  ordered
 	for (long i = 0; i < 90; ++i){
-		string pipeout = cmdpipe("date");
+		ostringstream cmdnum;
+		cmdnum << cmd.str() << i;
+		string pipeout = cmdpipe(cmdnum.str());
 		
 #pragma omp ordered
 		outstrm << i << " "<< omp_get_thread_num() + 1 << ' ' << pipeout << endl;
