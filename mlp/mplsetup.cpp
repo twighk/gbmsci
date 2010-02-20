@@ -39,20 +39,27 @@ int main(int argc, char** argv){
 //    mlp.SetNormaliseOutputs(true);
 //    mlp.SetAltOutputNodes(false);
 //    mlp.SetUseWeights(false);
+	
+	if (argc > 2) { // for automation
+		mlp.SetExportSuffix(string(argv[2]));
+		mlp.SetTextOutput(false);
+	}
+	
     vector<Int_t> new_struct(1, 8);
     mlp.SetStructure(new_struct);
     mlp.TrainNet();
 
-	cout << "Error Test: "  << mlp.GetErrorTest()  << endl
+	cout << "Error Test: "  << mlp.GetErrorTest()  << '\t'
 		 << "Error Train: " << mlp.GetErrorTrain() << endl;
 //run mlp
 	
 	
 	
 //	mlp.RunSetup();
-	
-//wait, so graphs are shown
-	cerr << "Hanging for X11" << endl;
-	theApp.Run();
+	if (argc < 2) { // for automation continuation
+		//wait, so graphs are shown
+		cerr << "Hanging for X11" << endl;
+		theApp.Run();
+	}
 	return 0;
 }
