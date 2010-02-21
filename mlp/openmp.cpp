@@ -20,9 +20,6 @@ int main(int argc, char** argv){
 	cmd << "./mlpsetup ";
 	if (argc > 1) {
 		cmd << argv[1] << " ";
-	} else {
-		cerr << "takes higgs mass as argument" << endl;
-		exit(-1);
 	}
 
 	
@@ -30,6 +27,11 @@ int main(int argc, char** argv){
 	
 #pragma omp parallel for shared(outstrm, cmd) schedule(runtime) ordered 
 	for (long i = 0; i < 24; ++i){
+		ostringstream sleep;
+		sleep << "sleep " << (i % OMP_NUM_THREADS) << ".2 ; date;"; // randomize in tmpl based on secs
+		cout << 
+				cmdpipe(sleep.str().c_str());
+		
 		ostringstream cmdnum;
 		cmdnum << cmd.str() << i;
 		string pipeout = cmdpipe(cmdnum.str());
