@@ -28,8 +28,8 @@ int main(int argc, char** argv){
 	
 	ostringstream outstrm(ostringstream::out);	
 	
-#pragma omp parallel for shared(outstrm, cmd)  ordered nowait
-	for (long i = 0; i < 90; ++i){
+#pragma omp parallel for shared(outstrm, cmd) schedule(runtime) ordered 
+	for (long i = 0; i < 24; ++i){
 		ostringstream cmdnum;
 		cmdnum << cmd.str() << i;
 		string pipeout = cmdpipe(cmdnum.str());

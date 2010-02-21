@@ -46,10 +46,10 @@ openmp.o: openmp.cpp
 clean: cleanish 
 	rm -f ${BIN}
 	rm -f ${SETUPBIN}
-	rm mlp115*.h
-	rm mlp115*.cxx
-	rm mlp160*.h
-	rm mlp160*.cxx
+	rm -f mlp115*.h
+	rm -f mlp115*.cxx
+	rm -f mlp160*.h
+	rm -f mlp160*.cxx
 	
 cleanish:
 	rm -f *.o
