@@ -226,7 +226,7 @@ public:
         std::cout << network->GetTau() << "\t" << network->GetReset() << std::endl;
         
 		
-		std::ostringstream traintext(std::ostringstream::out);
+		std::ostringstream traintext(std::ostringstream::out); // string for training
 		if( textoutput == true){
 			traintext << "text,";
 		}
