@@ -16,8 +16,18 @@
 #include <vector>
 #include <string>
 #include <sstream>
+#include <ostream>
+#include <fstream>
 
 #include "../header/strvecextractor.h"
+
+/***************************************************
+ * WARNING This line will prevent use of std::cout *
+ * #define cout (*coutp)                           *
+ * it IS defined below (in scope)                  *
+ * it is undefined at the end of this file         *
+ ***************************************************/
+
 
 class MlpSetup {
 private:
@@ -48,6 +58,7 @@ private:
 	std::vector<std::string>				input_variables;
 	std::vector<std::string>				types;
     TMultiLayerPerceptron*                  network;
+	ostream*								coutp;
     
     std::string Int2String(Int_t num){
         std::stringstream out;
@@ -79,8 +90,16 @@ public:
 		hidden_layers				= temp;
 		exportsuffix				= std::string("");
 		textoutput					= true;
+		coutp						= &std::cout;
 		
 	}
+
+	
+	/***************************************************/
+	/* WARNING This line will prevent use of std::cout */
+					#define cout (*coutp)
+	/* see notes above.                                */
+	/***************************************************/
 
     
     void SetMethod(TMultiLayerPerceptron::ELearningMethod _method) {
@@ -118,6 +137,11 @@ public:
 	
 	void SetTextOutput( bool b){
 		textoutput = b;
+		if (b == false) {
+			// send all the output to the great bitbucket in the sky
+			coutp = new fstream ("/dev/null",fstream::out); 
+		}
+		
 	}
     
     
@@ -149,28 +173,28 @@ public:
     }
     
     void PrintDetails() {
-        std::cout << "Input Nodes (" << input_variables.size() << "):" << std::endl;
+        cout << "Input Nodes (" << input_variables.size() << "):" << std::endl;
         for (unsigned int i = 0; i < input_variables.size(); ++i) {
-            std::cout << "  " << input_variables[i] << std::endl;
+            cout << "  " << input_variables[i] << std::endl;
         }
         
-        std::cout << "Output Nodes (" << types.size() << "):" << std::endl;
+        cout << "Output Nodes (" << types.size() << "):" << std::endl;
         for (unsigned int i = 0; i < types.size(); ++i) {
-            std::cout << "  " << types[i] << std::endl;
+            cout << "  " << types[i] << std::endl;
         }
         
-        std::cout << "Hidden Layer Structure:   :";
+        cout << "Hidden Layer Structure:   :";
         for (unsigned int i = 0; i < hidden_layers.size(); ++i) {
-            std::cout << hidden_layers[i] << ":";
+            cout << hidden_layers[i] << ":";
         }
-        std::cout << std::endl;
+		cout << std::endl;
         
-        std::cout << "Learning Method:          " << GetMethodString() << std::endl;
-        std::cout << "Epochs:                   " << epochs << std::endl;
-        std::cout << "Normalised Inputs:        " << normalise_inputs << std::endl;
-        std::cout << "Normalised Outputs:       " << normalise_outputs << std::endl;
-        std::cout << "Alternative Output Nodes: " << alt_output_nodes << std::endl;
-        std::cout << "Use Weights Branch:       " << use_weights << std::endl;
+        cout << "Learning Method:          " << GetMethodString() << std::endl;
+        cout << "Epochs:                   " << epochs << std::endl;
+        cout << "Normalised Inputs:        " << normalise_inputs << std::endl;
+        cout << "Normalised Outputs:       " << normalise_outputs << std::endl;
+        cout << "Alternative Output Nodes: " << alt_output_nodes << std::endl;
+        cout << "Use Weights Branch:       " << use_weights << std::endl;
     }
     
     void TrainNet(){
@@ -207,7 +231,7 @@ public:
 
         
         
-        std::cout << struct_argument << std::endl;
+        cout << struct_argument << std::endl;
         
 
         network = new TMultiLayerPerceptron(struct_argument.c_str(),
@@ -223,7 +247,7 @@ public:
         
         network->SetReset(50);
         network->SetTau(2.0);
-        std::cout << network->GetTau() << "\t" << network->GetReset() << std::endl;
+        cout << network->GetTau() << "\t" << network->GetReset() << std::endl;
         
 		
 		std::ostringstream traintext(std::ostringstream::out); // string for training
@@ -357,5 +381,5 @@ public:
 //	}
 
 
-
+#undef cout
 #endif
