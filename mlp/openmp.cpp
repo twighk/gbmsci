@@ -28,7 +28,7 @@ int main(int argc, char** argv){
 	
 	ostringstream outstrm(ostringstream::out);	
 	
-#pragma omp parallel for shared(outstrm, cmd)  ordered
+#pragma omp parallel for shared(outstrm, cmd)  ordered nowait
 	for (long i = 0; i < 90; ++i){
 		ostringstream cmdnum;
 		cmdnum << cmd.str() << i;
