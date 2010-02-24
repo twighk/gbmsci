@@ -1,6 +1,7 @@
 BIN = mlp
 BINSETUP = mlpsetup
 BINOPENMP = mlpopenmp
+BINPARSE = parse
 
 GPP = g++ -Wall
 ROOTLIB = `root-config --libs` -lMinuit -lXMLIO -lTreePlayer -lMLP
@@ -42,6 +43,11 @@ openmp: openmp.o
 openmp.o: openmp.cpp 
 	${GPP} -c $< -o $@ ${COMPFLAGS} ${CFLAGS} ${OPTI}
 	
+parser: parse.o
+	${GPP} $^ -o ${BINPARSE} ${FLAGS} ${LIBS} ${OPTI}
+parse.o: parse.cpp 
+	${GPP} -c $< -o $@ ${COMPFLAGS} ${CFLAGS} ${OPTI}
+	
 
 clean: cleanish 
 	rm -f ${BIN}
@@ -53,6 +59,9 @@ clean: cleanish
 	
 cleanish:
 	rm -f *.o
+cleanparse:
+	rm -f parse.o
+	rm -f ${BINPARSE}
 	
 run115: clean mlp115
 	time ./${BIN} 115
@@ -68,6 +77,9 @@ runsetup160: clean setup
 
 runsetup115openmp: clean setup openmp
 	time ./${BINOPENMP} 115
+	
+runparse: cleanparse parser
+	./${BINPARSE}
 	
 time: all
 	time ./${BIN}
