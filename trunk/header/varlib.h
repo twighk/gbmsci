@@ -394,12 +394,20 @@ class VarIntTest : public Var {
 public:
 	VarIntTest(){};
 	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
+		return double ((*indexinfo)["magic"]);
 
-	
-		return Double_t( (*indexinfo)["magic"] );
-		
 	}
 };
 
+class VarIntTest2 : public Var {
+public:
+	VarIntTest2(){};
+	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
+		
+		
+		if ( (*indexinfo)["magic"] == 0 ) return 0.8;
+		if ( (*indexinfo)["magic"] == 1 ) return 0.2;		
+	}
+};
 
 #endif

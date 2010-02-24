@@ -40,18 +40,18 @@ int main(int argc, char** argv){
     MlpSetup mlp(tree, higgs_mass); 
 	
 //	  mlp.SetMethod(TMultiLayerPerceptron::kRibierePolak);
-    mlp.SetEpochs(50/*201*/);
+    mlp.SetEpochs(200/*201*/);
 //    mlp.SetNormaliseInputs(false);
 //    mlp.SetNormaliseOutputs(true);
 //    mlp.SetAltOutputNodes(false);
-//    mlp.SetUseWeights(false);
+    mlp.SetUseWeights(false);
 	
 	if (argc > 2) { // for automation
 		mlp.SetExportSuffix(string(argv[2]));
 		mlp.SetTextOutputOff();
 	}
 	
-    vector<Int_t> new_struct(1, 8);
+    vector<Int_t> new_struct(1, 10);
     mlp.SetStructure(new_struct);
     mlp.TrainNet();
 
