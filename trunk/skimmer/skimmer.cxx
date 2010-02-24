@@ -154,7 +154,7 @@ void skimmer::GoSkim(){
         event evt(intree[i]);                                       //Make event handler for current tree
         IndexMap preselect;                                         //Make preselection indicies map
 		
-        for (Int_t j = 0; j < (eventlist[i]).size() ; j++) {
+        for (Int_t j = 0; j < 100 /*(eventlist[i]).size()*/ ; j++) {
             
             incoming = evt.Entry(eventlist[i][j]);                  //Get appropriate branch object addresses for current entry
             
