@@ -42,7 +42,7 @@ int main(int argc, char** argv){
 	
 	if (argc > 2) { // for automation
 		mlp.SetExportSuffix(string(argv[2]));
-		mlp.SetTextOutput(false);
+		mlp.SetTextOutputOff();
 	}
 	
     vector<Int_t> new_struct(1, 8);
