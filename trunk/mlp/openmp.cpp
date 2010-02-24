@@ -33,7 +33,7 @@ int main(int argc, char** argv){
 				cmdpipe(sleep.str().c_str());
 		
 		ostringstream cmdnum;
-		cmdnum << cmd.str() << i;
+		cmdnum << cmd.str() <<"_"<< i;
 		string pipeout = cmdpipe(cmdnum.str());
 		
 #pragma omp ordered
