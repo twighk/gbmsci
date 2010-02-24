@@ -59,6 +59,10 @@ private:
 	std::vector<std::string>				types;
     TMultiLayerPerceptron*                  network;
 	ostream*								coutp;
+	
+	
+	Double_t serrtest,serrtrain,eerrtest,eerrtrain;
+	
     
     std::string Int2String(Int_t num){
         std::stringstream out;
@@ -253,9 +257,32 @@ public:
 			traintext << "text,";
 		}
 		traintext << "graph,update=10";
+		
+		serrtest  = GetErrorTest();
+		serrtrain = GetErrorTrain();
+		
 		network->Train(epochs, traintext.str().c_str()); // train
 		network->Export(std::string("mlp" + higgs_mass + exportsuffix).c_str(),"C++"); // save data
         
+		eerrtest  = GetErrorTest();
+		eerrtrain = GetErrorTrain();
+		
+	}
+	
+	Double_t Getserrtest(){
+		return serrtest;
+	}
+	
+	Double_t Geteerrtest(){
+		return eerrtest;
+	}
+	
+	Double_t Getserrtrain(){
+		return serrtrain;
+	}
+	
+	Double_t Geteerrtrain(){
+		return eerrtrain;
 	}
 	
 	void Export(std::string filename) {

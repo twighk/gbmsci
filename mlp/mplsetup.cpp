@@ -13,11 +13,16 @@
 #include <vector>
 #include <string>
 #include <sstream>
+#include <fstream>
 
 #include "mlpsetup.h"
 using namespace std;
 
 int main(int argc, char** argv){
+	
+//	ofstream null("/dev/null");
+//	cerr.rdbuf(null.rdbuf());
+	
 // Setup X for graph output
 	TApplication theApp("App", &argc, argv); // this must be instantiated only once 
 
@@ -26,13 +31,14 @@ int main(int argc, char** argv){
 	if (argc > 1) {
 		higgs_mass = argv[1];
 	}
-	cout << "Neural Network for Higgs mass: " << higgs_mass << endl;
+	//cout << "Neural Network for Higgs mass: " << higgs_mass << endl;
 	
 // Get Tree for mlp 
 	TFile * file = new TFile(string("../root/combo" + higgs_mass +".root").c_str());
 	TTree * tree = (TTree*)file->Get("combotree");
 	
     MlpSetup mlp(tree, higgs_mass); 
+	
 //	  mlp.SetMethod(TMultiLayerPerceptron::kRibierePolak);
     mlp.SetEpochs(50/*201*/);
 //    mlp.SetNormaliseInputs(false);
@@ -49,9 +55,12 @@ int main(int argc, char** argv){
     mlp.SetStructure(new_struct);
     mlp.TrainNet();
 
-	cout << "Error Test: "  << mlp.GetErrorTest()  << '\t'
-		 << "Error Train: " << mlp.GetErrorTrain() << endl;
-//run mlp
+
+	cout << mlp.Getserrtest() <<'\t'
+		<< mlp.Getserrtrain() <<'\t'
+		<< mlp.Geteerrtest() <<'\t'
+		<< mlp.Geteerrtrain();
+	
 	
 	
 	

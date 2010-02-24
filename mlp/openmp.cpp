@@ -3,8 +3,9 @@
 #include <cstdlib>
 #include <sstream>
 #include <string>
+#include <fstream>
 
-#define OMP_NUM_THREADS 8
+#define OMP_NUM_THREADS 2
 
 
 std::string cmdpipe (std::string);
@@ -28,7 +29,7 @@ int main(int argc, char** argv){
 #pragma omp parallel for shared(outstrm, cmd) schedule(runtime) ordered 
 	for (long i = 0; i < 24; ++i){
 		ostringstream sleep;
-		sleep << "sleep " << (i % OMP_NUM_THREADS) << ".2 ; date;"; // randomize in tmpl based on secs
+		sleep << "sleep " << (i % OMP_NUM_THREADS) << ".2 ;"; //<<"date;"; // randomize in tmpl based on secs
 		cout << 
 				cmdpipe(sleep.str().c_str());
 		
@@ -37,9 +38,12 @@ int main(int argc, char** argv){
 		string pipeout = cmdpipe(cmdnum.str());
 		
 #pragma omp ordered
-		outstrm << i << " "<< omp_get_thread_num() + 1 << ' ' << pipeout << endl;
-		cout    << i << " "<< omp_get_thread_num() + 1 << ' ' << pipeout << endl;
+		outstrm << pipeout << endl;
+		cout    << pipeout << endl;
 	}
+	
+	ofstream file("out.csv");
+	file << outstrm.str();
 	
 	//cout << outstrm.str();
 	return 0;
