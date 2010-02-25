@@ -2,6 +2,8 @@
 #include <map>
 #include "double2int.h"
 #include "../header/varlib.h"
+#include <TRandom2.h>
+
 
 using namespace std;
 using namespace dict;
@@ -98,6 +100,8 @@ void skimmer::GoSkim(){
 	
     outmap["IntTest"]			= VarHandler( new VarIntTest() ) ;	
 
+    Double_t rndnum;
+    TRandom2 rndgen(1);
     
     //STEP 2:Register Output Branches
     Double_t theweight = 0.;
@@ -116,6 +120,7 @@ void skimmer::GoSkim(){
             outtree[i]->Branch(("type" + Int2String(k+1)).c_str(), &type[k]);
         }
         outtree[i]->Branch("weight", &theweight);
+        outtree[i]->Branch("RndTest", &rndnum);
     }
 	
     //STEP 3a: Couting - Work out how many events will pass selection for weight branch
@@ -145,6 +150,8 @@ void skimmer::GoSkim(){
     //STEP 3b:Skimming! - Loop over trees & events
     Int_t eventcounter = 0;                                         //Keep track of the no. of events we actually skim
     
+    
+    //Random Stuff Here
     cout << "\nSkimming Channels " << endl;
     for (Int_t i = 0; i < intree.size() ; i++) {                    //Loop through input trees
         theweight = 1. / (weights[i]);
@@ -156,6 +163,7 @@ void skimmer::GoSkim(){
 		
         for (Int_t j = 0; j < 200 /*(eventlist[i]).size()*/ ; j++) {
             
+            rndnum = rndgen.Rndm();
             incoming = evt.Entry(eventlist[i][j]);                  //Get appropriate branch object addresses for current entry
             
 			DoPreselection(incoming, preselect);
