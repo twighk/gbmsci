@@ -62,8 +62,8 @@ public:
             hista->Draw();
             histb->Draw("sames");
         } else {
-            hista->Draw();
-            histb->Draw("sames");
+            histb->Draw();
+            hista->Draw("sames");
         }
         legend->Draw();
         
