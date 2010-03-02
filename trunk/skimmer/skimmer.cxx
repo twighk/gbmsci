@@ -98,11 +98,15 @@ void skimmer::GoSkim(){
 //    outmap["MeanBTag"]          = VarHandler( new VarMeanBTag() ) ;	
 //    outmap["MuonCount"]         = VarHandler( new VarMuonCount() ) ;
 	
-    outmap["IntTest"]			= VarHandler( new VarIntTest() ) ;	
+//    outmap["IntTest"]			= VarHandler( new VarIntTest() ) ;	
+//    outmap["IntTest2"]			= VarHandler( new VarIntTest() ) ;	
 
     Double_t rndnum;
-    TRandom2 rndgen(1);
-    
+	Double_t rndnum2;
+
+    TRandom2 rndgen(345);
+	TRandom2 rndgen2(12);
+
     //STEP 2:Register Output Branches
     Double_t theweight = 0.;
     vector<Int_t> type (infile.size(), 0);                          //Vector holds type information
@@ -121,6 +125,8 @@ void skimmer::GoSkim(){
         }
         outtree[i]->Branch("weight", &theweight);
         outtree[i]->Branch("RndTest", &rndnum);
+		outtree[i]->Branch("RndTest2", &rndnum2);
+
     }
 	
     //STEP 3a: Couting - Work out how many events will pass selection for weight branch
@@ -163,8 +169,9 @@ void skimmer::GoSkim(){
 		
         for (Int_t j = 0; j < 200 /*(eventlist[i]).size()*/ ; j++) {
             
-            rndnum = rndgen.Rndm();
-            incoming = evt.Entry(eventlist[i][j]);                  //Get appropriate branch object addresses for current entry
+            rndnum2 = rndgen2.Rndm();
+            rndnum = Double_t(i) + rndgen.Gaus(0.0 , 0.1);
+			incoming = evt.Entry(eventlist[i][j]);                  //Get appropriate branch object addresses for current entry
             
 			DoPreselection(incoming, preselect);
 			preselect["magic"] = i;

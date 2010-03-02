@@ -39,7 +39,7 @@ int main(int argc, char** argv){
 	
     MlpSetup mlp(tree, higgs_mass); 
 	
-//    mlp.SetMethod(TMultiLayerPerceptron::kSteepestDescent);
+//    mlp.SetMethod(TMultiLayerPerceptron::kFletcherReeves);
     mlp.SetEpochs(200/*201*/);
 //    mlp.SetNormaliseInputs(false);
 //    mlp.SetNormaliseOutputs(true);
