@@ -138,10 +138,15 @@ int main(int argc, char ** argv){
 		++z;
 	}
 /*****************************/
-	const int num = 10;
+	const int num = 0;
 	const int hist1num = 0;
-	const int hist2num = 1;
+	const int hist2num = 8;
 /*****************************/
+    
+    if (num >= branches.size()){
+        cerr << "Histogram number must be less than " << branches.size() << endl;
+        exit(-1);
+    }
 	
 	gROOT->SetStyle("Plain");
 	TH1F *hist1 = branchhists[num][hist1num];

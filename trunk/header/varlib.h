@@ -102,23 +102,23 @@ public:
 	}
 };
 
-class VarElectronCharge : public Var {
-public:
-	VarElectronCharge(){};
-	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
-		std::vector<Double_t> * electron = u< std::vector<Double_t> >((*data)["electronCharge"]);
-		return (*electron)[((*indexinfo)["eindex"])];
-	}
-};
+//class VarElectronCharge : public Var {
+//public:
+//	VarElectronCharge(){};
+//	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
+//		std::vector<Double_t> * electron = u< std::vector<Double_t> >((*data)["electronCharge"]);
+//		return (*electron)[((*indexinfo)["eindex"])];
+//	}
+//};
 
-class VarTauCharge : public Var {
-public:
-	VarTauCharge(){};
-	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
-		std::vector<Double_t> * tau = u< std::vector<Double_t> >((*data)["tauCharge"]);
-		return (*tau)[((*indexinfo)["tindex"])];
-	}
-};
+//class VarTauCharge : public Var {
+//public:
+//	VarTauCharge(){};
+//	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
+//		std::vector<Double_t> * tau = u< std::vector<Double_t> >((*data)["tauCharge"]);
+//		return (*tau)[((*indexinfo)["tindex"])];
+//	}
+//};
 
 class VarElecTauChargeProd : public Var {
 public:
@@ -131,50 +131,50 @@ public:
 	}
 };
 
-class VarTauProng : public Var {
-public:
-	VarTauProng(){};
-	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
-		std::vector<Double_t> * tau = u< std::vector<Double_t> >((*data)["tauTracks"]);
-		return (*tau)[((*indexinfo)["tindex"])];
-	}
-};
-
-class VarTauLeadTrk : public Var {
-public:
-	VarTauLeadTrk(){};
-	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
-		std::vector<Double_t> * tau = u< std::vector<Double_t> >((*data)["tauLeadTrk"]);
-		return (*tau)[((*indexinfo)["tindex"])];
-	}
-};
-
-class VarTauEcalIso : public Var {
-public:
-	VarTauEcalIso(){};
-	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
-		std::vector<Double_t> * tau = u< std::vector<Double_t> >((*data)["tauECALIso"]);
-		return (*tau)[((*indexinfo)["tindex"])];
-	}
-};
-
-class VarTauTrackIso : public Var {
-public:
-	VarTauTrackIso(){};
-	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
-		std::vector<Double_t> * tau = u< std::vector<Double_t> >((*data)["tauTrackIso"]);
-		return (*tau)[((*indexinfo)["tindex"])];
-	}
-};
-
-class VarTauAntiElectron : public Var {
-public:
-	VarTauAntiElectron(){};
-	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
-		std::vector<Double_t> * tau = u< std::vector<Double_t> >((*data)["tauElectron"]);
-		return (*tau)[((*indexinfo)["tindex"])];
-	}
-};
+//class VarTauProng : public Var {
+//public:
+//	VarTauProng(){};
+//	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
+//		std::vector<Double_t> * tau = u< std::vector<Double_t> >((*data)["tauTracks"]);
+//		return (*tau)[((*indexinfo)["tindex"])];
+//	}
+//};
+//
+//class VarTauLeadTrk : public Var {
+//public:
+//	VarTauLeadTrk(){};
+//	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
+//		std::vector<Double_t> * tau = u< std::vector<Double_t> >((*data)["tauLeadTrk"]);
+//		return (*tau)[((*indexinfo)["tindex"])];
+//	}
+//};
+//
+//class VarTauEcalIso : public Var {
+//public:
+//	VarTauEcalIso(){};
+//	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
+//		std::vector<Double_t> * tau = u< std::vector<Double_t> >((*data)["tauECALIso"]);
+//		return (*tau)[((*indexinfo)["tindex"])];
+//	}
+//};
+//
+//class VarTauTrackIso : public Var {
+//public:
+//	VarTauTrackIso(){};
+//	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
+//		std::vector<Double_t> * tau = u< std::vector<Double_t> >((*data)["tauTrackIso"]);
+//		return (*tau)[((*indexinfo)["tindex"])];
+//	}
+//};
+//
+//class VarTauAntiElectron : public Var {
+//public:
+//	VarTauAntiElectron(){};
+//	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
+//		std::vector<Double_t> * tau = u< std::vector<Double_t> >((*data)["tauElectron"]);
+//		return (*tau)[((*indexinfo)["tindex"])];
+//	}
+//};
 
 class VarElectronMetDPhi : public Var {
 public:
@@ -226,29 +226,29 @@ public:
 	}
 };
 
-class VarTauPhi : public Var {
-public:
-	VarTauPhi(){};
-	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
-		return (uTLV( (*data)["lv_tau"] , (*indexinfo)["tindex"] ))->Phi();
-	}
-};
-
-class VarElectronPhi : public Var {
-public:
-	VarElectronPhi(){};
-	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
-		return (uTLV( (*data)["lv_electron"] , (*indexinfo)["eindex"] ))->Phi();
-	}
-};
-
-class VarMetPhi : public Var {
-public:
-	VarMetPhi(){};
-	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
-		return (uTLV( (*data)["lv_met"] , 0 ))->Phi();
-	}
-};
+//class VarTauPhi : public Var {
+//public:
+//	VarTauPhi(){};
+//	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
+//		return (uTLV( (*data)["lv_tau"] , (*indexinfo)["tindex"] ))->Phi();
+//	}
+//};
+//
+//class VarElectronPhi : public Var {
+//public:
+//	VarElectronPhi(){};
+//	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
+//		return (uTLV( (*data)["lv_electron"] , (*indexinfo)["eindex"] ))->Phi();
+//	}
+//};
+//
+//class VarMetPhi : public Var {
+//public:
+//	VarMetPhi(){};
+//	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
+//		return (uTLV( (*data)["lv_met"] , 0 ))->Phi();
+//	}
+//};
 
 class VarElectronTauDR : public Var {
 public:
@@ -261,6 +261,7 @@ public:
 	}
 };
 
+//Not good at the moment?  Lots of soft Jets.
 class VarJetCount : public Var {
 public:
 	VarJetCount(){};
@@ -297,6 +298,7 @@ public:
 	}
 };
 
+//What makes a valid b-tag?
 class VarCountValidBTag : public Var {
 public:
 	VarCountValidBTag(){};
@@ -311,6 +313,8 @@ public:
 	}
 };
 
+
+//DO NOT USE - bindex could be -1
 class VarHighBTagJetEt : public Var {
 public:
 	VarHighBTagJetEt(){};
@@ -320,42 +324,42 @@ public:
 	}
 };
 
-class VarHiggsMass : public Var {
-public:
-	VarHiggsMass(){};
-	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
-		
-		TLorentzVector* temp_electron	= (uTLV( (*data)["lv_electron"] , (*indexinfo)["eindex"] ));
-        TLorentzVector* temp_tau        = (uTLV( (*data)["lv_tau"] , (*indexinfo)["tindex"] ));
-        TLorentzVector* temp_met		= (uTLV( (*data)["lv_met"] , 0 ));
-		
-        Double_t x1 = sin(temp_tau->Theta())*cos(temp_tau->Phi());
-		Double_t x2 = sin(temp_electron->Theta())*cos(temp_electron->Phi());
-		Double_t y1 = sin(temp_tau->Theta())*sin(temp_tau->Phi());
-		Double_t y2 = sin(temp_electron->Theta())*sin(temp_electron->Phi());
-		
-		Double_t t_ET = ((temp_met->Y())*x2 - (temp_met->X())*y2) / (x2*y1 - x1*y2);
-		Double_t t_EL = ((temp_met->Y()) - t_ET*y1) / y2;
-        
-        if (t_ET > 0. && t_EL > 0.) {
-        Double_t higgs_m, higgs_m_2;
-        TLorentzVector c_tau0;
-        TLorentzVector c_tau1;
-        c_tau0.SetE(temp_electron->E() + t_EL);
-        c_tau0.SetVect(temp_electron->Vect() + ((temp_electron->Vect()).Unit() * t_EL));
-        c_tau1.SetE(temp_tau->E() + t_ET);
-        c_tau1.SetVect(temp_tau->Vect() + (temp_tau->Vect().Unit() * t_ET));
-        higgs_m_2 = 2. * c_tau0.E() * c_tau1.E() * (1. - cos(c_tau0.Angle(c_tau1.Vect())));
-        higgs_m = sqrt(higgs_m_2);
-        return higgs_m;	
-        } else {
-            return 0.;
-        }
-
-        
-        
-        }
-};
+//class VarHiggsMass : public Var {
+//public:
+//	VarHiggsMass(){};
+//	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
+//		
+//		TLorentzVector* temp_electron	= (uTLV( (*data)["lv_electron"] , (*indexinfo)["eindex"] ));
+//        TLorentzVector* temp_tau        = (uTLV( (*data)["lv_tau"] , (*indexinfo)["tindex"] ));
+//        TLorentzVector* temp_met		= (uTLV( (*data)["lv_met"] , 0 ));
+//		
+//        Double_t x1 = sin(temp_tau->Theta())*cos(temp_tau->Phi());
+//		Double_t x2 = sin(temp_electron->Theta())*cos(temp_electron->Phi());
+//		Double_t y1 = sin(temp_tau->Theta())*sin(temp_tau->Phi());
+//		Double_t y2 = sin(temp_electron->Theta())*sin(temp_electron->Phi());
+//		
+//		Double_t t_ET = ((temp_met->Y())*x2 - (temp_met->X())*y2) / (x2*y1 - x1*y2);
+//		Double_t t_EL = ((temp_met->Y()) - t_ET*y1) / y2;
+//        
+//        if (t_ET > 0. && t_EL > 0.) {
+//        Double_t higgs_m, higgs_m_2;
+//        TLorentzVector c_tau0;
+//        TLorentzVector c_tau1;
+//        c_tau0.SetE(temp_electron->E() + t_EL);
+//        c_tau0.SetVect(temp_electron->Vect() + ((temp_electron->Vect()).Unit() * t_EL));
+//        c_tau1.SetE(temp_tau->E() + t_ET);
+//        c_tau1.SetVect(temp_tau->Vect() + (temp_tau->Vect().Unit() * t_ET));
+//        higgs_m_2 = 2. * c_tau0.E() * c_tau1.E() * (1. - cos(c_tau0.Angle(c_tau1.Vect())));
+//        higgs_m = sqrt(higgs_m_2);
+//        return higgs_m;	
+//        } else {
+//            return 0.;
+//        }
+//
+//        
+//        
+//        }
+//};
 
 class VarIntLum : public Var {
 public:

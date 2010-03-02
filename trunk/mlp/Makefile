@@ -52,6 +52,8 @@ parse.o: parse.cpp
 clean: cleanish 
 	rm -f ${BIN}
 	rm -f ${SETUPBIN}
+
+cleancxxh:
 	rm -f mlp115*.h
 	rm -f mlp115*.cxx
 	rm -f mlp160*.h
@@ -75,7 +77,7 @@ runsetup115: clean setup
 runsetup160: clean setup
 	time ./${BINSETUP} 160
 
-runsetup115openmp: clean setup openmp
+runsetup115openmp: clean cleancxxh setup openmp
 	time ./${BINOPENMP} 115
 	
 runparse: cleanparse parser
