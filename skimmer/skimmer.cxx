@@ -125,7 +125,7 @@ void skimmer::GoSkim(){
         }
         outtree[i]->Branch("weight", &theweight);
         outtree[i]->Branch("RndTest", &rndnum);
-		outtree[i]->Branch("RndTest2", &rndnum2);
+		//outtree[i]->Branch("RndTest2", &rndnum2);
 
     }
 	
@@ -274,9 +274,13 @@ bool skimmer::DoPreselection(BranchPtrMap * d, IndexMap &index){
         index["tindex"] = tauindex[0];
     }
     if (resultcount >  1) {
+        cout << "Hello! ";
         Double_t next_t_et;
         Int_t best_t_index = tauindex[0];
+        cout << (dynamic_cast<TLorentzVector*>(tau->At(tauindex[0])))->Et() << " ";
         for (int m = 1; m < tauindex.size(); m++) {
+            cout << (dynamic_cast<TLorentzVector*>(tau->At(tauindex[m])))->Et() << " ";
+
             temp_tau = (dynamic_cast<TLorentzVector*>(tau->At(tauindex[m])));
             next_t_et = temp_tau->Et();
             
@@ -284,6 +288,7 @@ bool skimmer::DoPreselection(BranchPtrMap * d, IndexMap &index){
                 best_t_index = tauindex[m];
             }
         }
+        cout << endl;
         index["tindex"] = best_t_index;
     }
     

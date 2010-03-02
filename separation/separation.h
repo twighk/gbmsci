@@ -15,9 +15,9 @@
 
 Int_t i2d (Double_t x){
 	if(x - std::floor(x)  < 0.5){
-		return std::floor(x);
+		return (int) std::floor(x);
 	} else {
-		return std::floor(x) + 1;
+		return (int) std::floor(x) + 1;
 	}
 
 }
@@ -50,12 +50,12 @@ public:
 		check();
 		
 
-		Double_t binwidth = (histograms[0]->GetXaxis()->GetXmax() - histograms[0]->GetXaxis()->GetXmin())
-						  /  histograms[0]->GetNbinsX();
+//		Double_t binwidth = (histograms[0]->GetXaxis()->GetXmax() - histograms[0]->GetXaxis()->GetXmin())
+//						  /  histograms[0]->GetNbinsX();
 		
 		Int_t nbins = histograms[0]->GetNbinsX();
 		std::cout << "                ";
-		for (int i = 0; i !=histograms.size() ; ++i) { // 0 is underflow 
+		for (unsigned int i = 0; i !=histograms.size() ; ++i) { // 0 is underflow 
 			
 			std::string title = histograms[i]->GetTitle();
 			for (int i = title.length(); i < 15 ; i++) {
@@ -66,18 +66,18 @@ public:
 		}
 		std::cout << std::endl; /// newline
 		
-		for (int i = 0; i !=histograms.size() ; ++i){ // Scale all the histograms
+		for (unsigned int i = 0; i !=histograms.size() ; ++i){ // Scale all the histograms
 			Double_t inti =  histograms[i]->Integral();
 			histograms[i]->Scale(1.0/inti);
 		}
 		
-		for (int i = 0; i !=histograms.size() ; ++i) {
+		for (unsigned int i = 0; i !=histograms.size() ; ++i) {
 			std::string title = histograms[i]->GetTitle();
 			for (int x = title.length(); x < 15 ; x++) {
 				title += " ";
 			}
 			std::cout << title.c_str() << '\t' ;
-			for (int j = 0; j <= i; ++j) {
+			for (unsigned int j = 0; j <= i; ++j) {
 				Double_t separation = 0;
 				
 				for (int k = 1; k < nbins + 1; ++k) { // 0 is underflow 

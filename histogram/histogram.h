@@ -26,7 +26,7 @@ public:
 		gROOT->ForceStyle(); 
 		gStyle->SetOptStat(kTRUE);
 	}
-	Histogram(const char * Title,int binnum, int begin, int end){
+	Histogram(const char * Title,int binnum, Double_t begin, Double_t end){
 		mycount = count;
 		std::ostringstream str (std::ostringstream::out);
 		str << "histh" << count++ ; 

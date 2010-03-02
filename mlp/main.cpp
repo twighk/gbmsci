@@ -26,7 +26,7 @@
 using namespace std;
 
 const Double_t targetlum = 200.0; //Integrated luminosity that we can normalise channels to
-u
+
 struct ChannelMeta {
 	string name;
 //	Double_t luminocity;
@@ -53,7 +53,7 @@ int main( int argc, char ** argv){
 	// Get Channel names 
 	vector <ChannelMeta> channeldata;
 	
-	TString* chnme = NULL; Double_t chlum = NULL;
+	TString* chnme = NULL; Double_t chlum = 0;
 	Int_t temp_begin, temp_end;
 	TBranch * channelbranch = metatree->GetBranch("ChannelName");
 //	TBranch * channellumbranch = metatree->GetBranch("IntLum");
