@@ -6,7 +6,7 @@
 #include <Rtypes.h>
 
 Int_t double2int(Double_t f ){
-	Int_t i = floor(f); 
+	Int_t i = (int)f; 
 	
 	if ( (f-i) >= 0.5 ) {
 		i++;

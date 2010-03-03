@@ -64,48 +64,49 @@ void skimmer::GoSkim(){
 	
     //STEP 1:Set up the output variables we are interested in (only one line required!)
     VarHandlerMap outmap;
-//    outmap["TauEt"]             = VarHandler( new VarTauEt() ) ;
-//    outmap["ElecEt"]			= VarHandler( new VarElectronEt() ) ;
-//    outmap["MetEt"]             = VarHandler( new VarMetEt() ) ;	
-//    outmap["ElecTauDPhi"]		= VarHandler( new VarElectronTauDPhi() ) ;			
-//  outmap["ElectronEta"]       = VarHandler( new VarElectronEta() ) ;
-//  outmap["TauEta"]            = VarHandler( new VarTauEta() ) ;	Doesn't make linear combinations!!!		
-//    outmap["ElecEcalIso"]		= VarHandler( new VarElectronEcalIso() ) ;		
-//    outmap["ElecHcalIso"]		= VarHandler( new VarElectronHcalIso() ) ;		
-//    outmap["ElecTrkIso"]		= VarHandler( new VarElectronTrackIso() ) ;		
-//  outmap["ElectronCharge"]    = VarHandler( new VarElectronCharge() ) ;		
-//  outmap["TauCharge"]         = VarHandler( new VarTauCharge() ) ;		
-//    outmap["ETCharProd"]		= VarHandler( new VarElecTauChargeProd() ) ;		
-//	NB our preselection does tau checks - no point in including these variables for now
-//	outmap["TauProng"]			= VarHandler( new VarTauProng() ) ;		
+    outmap["TauEt"]             = VarHandler( new VarTauEt() ) ;
+    outmap["ElecEt"]			= VarHandler( new VarElectronEt() ) ;
+    outmap["MetEt"]             = VarHandler( new VarMetEt() ) ;	
+    outmap["ElecTauDPhi"]		= VarHandler( new VarElectronTauDPhi() ) ;			
+    outmap["ElectronEta"]       = VarHandler( new VarElectronEta() ) ;
+    outmap["TauEta"]            = VarHandler( new VarTauEta() ) ;	//Doesn't make linear combinations!!!		
+    outmap["ElecEcalIso"]		= VarHandler( new VarElectronEcalIso() ) ;		
+    outmap["ElecHcalIso"]		= VarHandler( new VarElectronHcalIso() ) ;		
+    outmap["ElecTrkIso"]		= VarHandler( new VarElectronTrackIso() ) ;		
+//    outmap["ElectronCharge"]    = VarHandler( new VarElectronCharge() ) ;		
+//    outmap["TauCharge"]         = VarHandler( new VarTauCharge() ) ;		
+    outmap["ETCharProd"]		= VarHandler( new VarElecTauChargeProd() ) ;		
+//    outmap["TauProng"]			= VarHandler( new VarTauProng() ) ;		
 //	outmap["TauLeadTrk"]		= VarHandler( new VarTauLeadTrk() ) ;		
 //	outmap["TauEcalIso"]		= VarHandler( new VarTauEcalIso() ) ;		
 //	outmap["TauTrackIso"]		= VarHandler( new VarTauTrackIso() ) ;		
 //	outmap["TauAntiElectron"]	= VarHandler( new VarTauAntiElectron() ) ;		
-//    outmap["ElecMetDPhi"]		= VarHandler( new VarElectronMetDPhi() ) ;		
-//    outmap["ElecMetMt"]			= VarHandler( new VarElectronMetMt() ) ;		
-//    outmap["VisibleMass"]       = VarHandler( new VarVisibleMass() ) ;		
-//  outmap["TauPhi"]            = VarHandler( new VarTauPhi() ) ;		
-//  outmap["ElectronPhi"]       = VarHandler( new VarElectronPhi() ) ;		
-//  outmap["MetPhi"]            = VarHandler( new VarMetPhi() ) ;		
-//    outmap["ElecTauDR"]			= VarHandler( new VarElectronTauDR() ) ;		
-//    outmap["JetCount"]          = VarHandler( new VarJetCount() ) ;	//Very good for TTplusjets	
-//    outmap["HighBTag"]          = VarHandler( new VarHighBTag() ) ;	
-//    outmap["CntBTag"]			= VarHandler( new VarCountValidBTag() ) ;	
-//  outmap["HighBTagJetEt"]     = VarHandler( new VarHighBTagJetEt() ) ;	//Didn't help very much
-//  outmap["HiggsMass"]         = VarHandler( new VarHiggsMass() ) ;	
+    outmap["ElecMetDPhi"]		= VarHandler( new VarElectronMetDPhi() ) ;
+    outmap["TauMetDPhi"]		= VarHandler( new VarTauMetDPhi() ) ;
+
+    outmap["ElecMetMt"]			= VarHandler( new VarElectronMetMt() ) ;		
+    outmap["VisibleMass"]       = VarHandler( new VarVisibleMass() ) ;		
+//    outmap["TauPhi"]            = VarHandler( new VarTauPhi() ) ;		
+//    outmap["ElectronPhi"]       = VarHandler( new VarElectronPhi() ) ;		
+//    outmap["MetPhi"]            = VarHandler( new VarMetPhi() ) ;		
+    outmap["ElecTauDR"]			= VarHandler( new VarElectronTauDR() ) ;		
+    outmap["JetCount"]          = VarHandler( new VarJetCount() ) ;	//Very good for TTplusjets	
+    outmap["HighBTag"]          = VarHandler( new VarHighBTag() ) ;	
+    outmap["CntBTag"]			= VarHandler( new VarCountValidBTag() ) ;	
+//    outmap["HighBTagJetEt"]     = VarHandler( new VarHighBTagJetEt() ) ;	//Didn't help very much
+//    outmap["HiggsMass"]         = VarHandler( new VarHiggsMass() ) ;	
     outmap["IntLum"]            = VarHandler( new VarIntLum() ) ;	
-//    outmap["MeanBTag"]          = VarHandler( new VarMeanBTag() ) ;	
-//    outmap["MuonCount"]         = VarHandler( new VarMuonCount() ) ;
+    outmap["MeanBTag"]          = VarHandler( new VarMeanBTag() ) ;	
+    outmap["MuonCount"]         = VarHandler( new VarMuonCount() ) ;
 	
 //    outmap["IntTest"]			= VarHandler( new VarIntTest() ) ;	
 //    outmap["IntTest2"]			= VarHandler( new VarIntTest() ) ;	
-
-    Double_t rndnum;
-	Double_t rndnum2;
-
-    TRandom2 rndgen(345);
-	TRandom2 rndgen2(12);
+//    
+//    Double_t rndnum;
+//    Double_t rndnum2;
+//
+//    TRandom2 rndgen(345);
+//	TRandom2 rndgen2(12);
 
     //STEP 2:Register Output Branches
     Double_t theweight = 0.;
@@ -113,18 +114,18 @@ void skimmer::GoSkim(){
     outtree.push_back(treecombo);                                   //Add the combotree to our outtree vector
     VarHandlerMapIt pos;                                            //Iterator for the outmap, so we can loop through
     cout << "\nUsing variables:" << endl;
-    for (Int_t i = 0; i < outtree.size() ; i++) {                   //Loop through output trees
+    for (UInt_t i = 0; i < outtree.size() ; i++) {                   //Loop through output trees
         for (pos = outmap.begin(); pos !=outmap.end(); ++pos) {     //Loop through desired variable branches
             if (i == 0) {
                 cout << " " << (pos->first) << endl;
             }
             outtree[i]->Branch( (pos->first).c_str(), &((pos->second).value) );
         }
-        for (Int_t k = 0; k < type.size(); k++) {                   //Make necessary number of type branches
+        for (UInt_t k = 0; k < type.size(); k++) {                   //Make necessary number of type branches
             outtree[i]->Branch(("type" + Int2String(k+1)).c_str(), &type[k]);
         }
         outtree[i]->Branch("weight", &theweight);
-        outtree[i]->Branch("RndTest", &rndnum);
+//        outtree[i]->Branch("RndTest", &rndnum);
 		//outtree[i]->Branch("RndTest2", &rndnum2);
 
     }
@@ -135,7 +136,7 @@ void skimmer::GoSkim(){
     cout << " Highest b-tag Jet (default to -13. if no valid b-tag found)" << endl; 
     cout << "\nPreselection Counts:"<< endl;
 
-    for (Int_t i = 0; i < intree.size() ; i++) {                    //Loop through input trees
+    for (UInt_t i = 0; i < intree.size() ; i++) {                    //Loop through input trees
         BranchPtrMap * incoming;                                    //Pointer to map of input branch addresses
         event evt(intree[i]);                                       //Make event handler for current tree
         IndexMap preselect;                                         //Make preselection indicies map
@@ -159,7 +160,7 @@ void skimmer::GoSkim(){
     
     //Random Stuff Here
     cout << "\nSkimming Channels " << endl;
-    for (Int_t i = 0; i < intree.size() ; i++) {                    //Loop through input trees
+    for (UInt_t i = 0; i < intree.size() ; i++) {                    //Loop through input trees
         theweight = 1. / (weights[i]);
         cout << " " << channel[i] << endl;
         beginvec.push_back(eventcounter);                           //Record index of first skimmed event in tree
@@ -167,10 +168,10 @@ void skimmer::GoSkim(){
         event evt(intree[i]);                                       //Make event handler for current tree
         IndexMap preselect;                                         //Make preselection indicies map
 		
-        for (Int_t j = 0; j < 200 /*(eventlist[i]).size()*/ ; j++) {
+        for (Int_t j = 0; j < (eventlist[i]).size() ; j++) {
             
-            rndnum2 = rndgen2.Rndm();
-            rndnum = Double_t(i) + rndgen.Gaus(0.0 , 0.1);
+ //           rndnum2 = rndgen2.Rndm();
+//            rndnum = Double_t(i) + rndgen.Gaus(0.0 , 0.1);
 			incoming = evt.Entry(eventlist[i][j]);                  //Get appropriate branch object addresses for current entry
             
 			DoPreselection(incoming, preselect);
@@ -182,7 +183,7 @@ void skimmer::GoSkim(){
                     (posx->second).value = ((posx->second).func)->Get(incoming, &preselect);
                 }
                 //Loop through type variables, writing a '1' for the correct type we're on
-                for (Int_t k = 0; k < type.size(); k++) {
+                for (UInt_t k = 0; k < type.size(); k++) {
                     if (i == k) {type[k] = 1;} else {type[k] = 0;}
                 }
                 outtree[i]->Fill();                                 //Finally we can fill the skimmed tree
@@ -195,7 +196,7 @@ void skimmer::GoSkim(){
     //STEP 4:Write resulting ROOT files
     cout << "\nWriting Skimmed ROOT Files: " << endl;
 
-    for (Int_t i = 0; i < outfile.size() ; i++) {
+    for (UInt_t i = 0; i < outfile.size() ; i++) {
         cout << " " << (rootpath + channel[i] + "_skim.root") << endl;
         outfile[i]->Write();
     }
@@ -227,7 +228,7 @@ bool skimmer::DoPreselection(BranchPtrMap * d, IndexMap &index){
     Int_t best_btag_index = 0;
     
     // Check we have at least one valid b-tag
-    for (int k = 0; k < (*btrackcounthigheff).size(); k++) {
+    for (unsigned int k = 0; k < (*btrackcounthigheff).size(); k++) {
         if ((*btrackcounthigheff)[k] > -50.) {
             foundbtag = true;
         }
@@ -236,7 +237,7 @@ bool skimmer::DoPreselection(BranchPtrMap * d, IndexMap &index){
     // Find the highest b-tag index
     
     if (foundbtag == true) {
-        for (int k = 1; k < (*btrackcounthigheff).size(); k++) {
+        for (unsigned int k = 1; k < (*btrackcounthigheff).size(); k++) {
             next_btag = (*btrackcounthigheff)[k];
             if (next_btag > (*btrackcounthigheff)[best_btag_index]) {
                 best_btag_index = k;
@@ -253,7 +254,7 @@ bool skimmer::DoPreselection(BranchPtrMap * d, IndexMap &index){
     int resultcount = 0;
     vector <int> tauindex;
                                                                    
-    for (int k = 0; k < tauresult.size(); k++) {
+    for (unsigned int k = 0; k < tauresult.size(); k++) {
         if (
             (double2int((*tauprong)[k]) == 1 || double2int((*tauprong)[k]) == 3)
             &&	(double2int((*tauleadtrk)[k]) == 1)
@@ -274,21 +275,15 @@ bool skimmer::DoPreselection(BranchPtrMap * d, IndexMap &index){
         index["tindex"] = tauindex[0];
     }
     if (resultcount >  1) {
-        cout << "Hello! ";
         Double_t next_t_et;
         Int_t best_t_index = tauindex[0];
-        cout << (dynamic_cast<TLorentzVector*>(tau->At(tauindex[0])))->Et() << " ";
-        for (int m = 1; m < tauindex.size(); m++) {
-            cout << (dynamic_cast<TLorentzVector*>(tau->At(tauindex[m])))->Et() << " ";
-
+        for (unsigned int m = 1; m < tauindex.size(); m++) {
             temp_tau = (dynamic_cast<TLorentzVector*>(tau->At(tauindex[m])));
             next_t_et = temp_tau->Et();
-            
             if (next_t_et > (dynamic_cast<TLorentzVector*>(tau->At(best_t_index)))->Et()) {
                 best_t_index = tauindex[m];
             }
         }
-        cout << endl;
         index["tindex"] = best_t_index;
     }
     
@@ -320,7 +315,7 @@ void skimmer::WriteCombo(){
     metadata->Branch("BeginIndex",&begin);
     metadata->Branch("EndIndex",&end);
     
-    for (int i = 0; i < infile.size(); i++) {
+    for (unsigned int i = 0; i < infile.size(); i++) {
         channelname = (channel[i]).c_str();
         begin = beginvec[i];
         end = endvec[i];
@@ -344,8 +339,8 @@ void skimmer::CalcStats(Int_t chn, BranchPtrMap * d, IndexMap * index){
 		stats["MeanMuons|>0Elec&&>0Tau"][chn].push_back( Double_t(muon->GetEntriesFast()) );
 	}
 
-    TLorentzVector* temp_electron = 0;
-    TLorentzVector* temp_tau = 0;
+//    TLorentzVector* temp_electron = 0;
+//    TLorentzVector* temp_tau = 0;
 	
 	
 }
@@ -355,9 +350,9 @@ void skimmer::PrintStats(){
 	for (posx = stats.begin(); posx !=stats.end(); ++posx) {
 		
 		cout << (posx->first) << endl;
-		for (int i = 0; i < channel.size(); i++) {
+		for (unsigned int i = 0; i < channel.size(); i++) {
 			Double_t sum = 0;
-			for (int j =0; j < (posx->second)[i].size(); j++) {
+			for (unsigned int j =0; j < (posx->second)[i].size(); j++) {
 				sum += (posx->second)[i][j];
 			}
 			sum = sum / (posx->second)[i].size();

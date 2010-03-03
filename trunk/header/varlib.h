@@ -13,6 +13,7 @@ using namespace dict;
 class Var {
 public:
 	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo) = 0;
+    virtual ~Var(){;}
 };
 
 //KINEMATICS
@@ -289,7 +290,7 @@ public:
 	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
         std::vector<Double_t> * btag = u< std::vector<Double_t> >((*data)["jetBTagTrackCountHighEff"]);
 		Double_t count = 0.;
-		for (int i = 0; i < (*btag).size(); i++) {
+		for (unsigned int i = 0; i < (*btag).size(); i++) {
 			if ( (*btag)[i] < -50. ) {count += 13.;} else {count += (*btag)[i];}
 		}
 	
@@ -305,7 +306,7 @@ public:
 	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
         std::vector<Double_t> * btag = u< std::vector<Double_t> >((*data)["jetBTagTrackCountHighEff"]);
         Int_t count = 0;
-        for (Int_t i = 0; i < (*btag).size(); ++i) {
+        for (UInt_t i = 0; i < (*btag).size(); ++i) {
             if ( (*btag)[i] > -50. ) count++;
         }
         

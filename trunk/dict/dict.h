@@ -21,7 +21,7 @@ namespace dict {
 		return (static_cast<T*>(object.pointer));
 	}
 	
-	static TLorentzVector * uTLV(brptr object, Int_t index){
+	static inline TLorentzVector * uTLV(brptr object, Int_t index){
 		return dynamic_cast<TLorentzVector*>((static_cast<TClonesArray*>(object.pointer))->At(index));
 		
 	}
