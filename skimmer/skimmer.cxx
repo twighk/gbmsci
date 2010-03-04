@@ -98,7 +98,7 @@ void skimmer::GoSkim(){
     outmap["IntLum"]            = VarHandler( new VarIntLum() ) ;	
     outmap["MeanBTag"]          = VarHandler( new VarMeanBTag() ) ;	
     outmap["MuonCount"]         = VarHandler( new VarMuonCount() ) ;
-	
+//    outmap["ElectronTauMt"]         = VarHandler( new VarElectronTauMt() ) ;
 //    outmap["IntTest"]			= VarHandler( new VarIntTest() ) ;	
 //    outmap["IntTest2"]			= VarHandler( new VarIntTest() ) ;	
 //    
@@ -132,7 +132,7 @@ void skimmer::GoSkim(){
 	
     //STEP 3a: Couting - Work out how many events will pass selection for weight branch
     
-    cout << "\nPreselection:\n >0 electrons\n >0 taus\n Highest Et electron\n Highest Et tau with 1/3 tracks, leadtrk, ECALiso, trackiso, antielectron" << endl; 
+    cout << "\nPreselection:\n >0 electrons\n >0 taus\n Highest Et electron\n 1 Tau with 1/3 tracks, leadtrk, ECALiso, trackiso, antielectron" << endl; 
     cout << " Highest b-tag Jet (default to -13. if no valid b-tag found)" << endl; 
     cout << "\nPreselection Counts:"<< endl;
 
@@ -201,8 +201,8 @@ void skimmer::GoSkim(){
         outfile[i]->Write();
     }
 	
-	cout << "Stats:" << endl;
-	PrintStats();
+//	cout << "Stats:" << endl;
+//	PrintStats();
     cout << "\nSkimming Complete!" << endl;
 }
 
@@ -210,6 +210,8 @@ bool skimmer::DoPreselection(BranchPtrMap * d, IndexMap &index){
     
     TClonesArray* electron = u<TClonesArray>((*d)["lv_electron"]);
     TClonesArray* tau = u<TClonesArray>((*d)["lv_tau"]);
+    TClonesArray* met = u<TClonesArray>((*d)["lv_met"]);
+    TLorentzVector* temp_met = (TLorentzVector*)met->At(0);
     TLorentzVector* temp_electron = 0;
     TLorentzVector* temp_tau = 0;
     vector<Double_t> * tauprong = u< vector<Double_t> >((*d)["tauTracks"]);
@@ -222,6 +224,9 @@ bool skimmer::DoPreselection(BranchPtrMap * d, IndexMap &index){
 	//Make sure we actually have electrons and taus first
     if (electron->GetEntriesFast() == 0) return false;
     if (tau->GetEntriesFast() == 0) return false; 
+    if (temp_met->Et() > 500.) {
+        return false;
+    }
          
     bool foundbtag = false;
     Double_t next_btag;
@@ -273,19 +278,26 @@ bool skimmer::DoPreselection(BranchPtrMap * d, IndexMap &index){
     }
     if (resultcount == 1) {
         index["tindex"] = tauindex[0];
+        temp_tau = (dynamic_cast<TLorentzVector*>(tau->At(tauindex[0])));
+        if (temp_tau->Et() > 500.) {
+            return false;
+        }
+
     }
     if (resultcount >  1) {
-        Double_t next_t_et;
-        Int_t best_t_index = tauindex[0];
-        for (unsigned int m = 1; m < tauindex.size(); m++) {
-            temp_tau = (dynamic_cast<TLorentzVector*>(tau->At(tauindex[m])));
-            next_t_et = temp_tau->Et();
-            if (next_t_et > (dynamic_cast<TLorentzVector*>(tau->At(best_t_index)))->Et()) {
-                best_t_index = tauindex[m];
-            }
-        }
-        index["tindex"] = best_t_index;
+        return false;   //Only a small number of events with two good taus
+//        Double_t next_t_et;
+//        Int_t best_t_index = tauindex[0];
+//        for (unsigned int m = 1; m < tauindex.size(); m++) {
+//            temp_tau = (dynamic_cast<TLorentzVector*>(tau->At(tauindex[m])));
+//            next_t_et = temp_tau->Et();
+//            if (next_t_et > (dynamic_cast<TLorentzVector*>(tau->At(best_t_index)))->Et()) {
+//                best_t_index = tauindex[m];
+//            }
+//        }
+//        index["tindex"] = best_t_index;
     }
+ 
     
     Double_t next_e_et;
     Int_t best_e_index = 0;

@@ -16,6 +16,7 @@ private:
     std::string title;
     std::string xaxis;
     std::string yaxis;
+    static int cnumber;
     
 public:
     TwoHist(){
@@ -34,7 +35,10 @@ public:
         gROOT->SetStyle("Plain");
 		gROOT->ForceStyle(); 
 		gStyle->SetOptStat(kTRUE);
-        TCanvas * canvas = new TCanvas("output","output");
+        
+        std::ostringstream ostr(std::ostringstream::out);
+        ostr << "TwohistC" << cnumber++;
+        TCanvas * canvas = new TCanvas(ostr.str().c_str(),"output");
         
         hista->SetFillColor(6);
         hista->SetFillStyle(3002);
@@ -80,4 +84,7 @@ public:
 
 
 };
+
+int TwoHist::cnumber = 0;
+
 #endif

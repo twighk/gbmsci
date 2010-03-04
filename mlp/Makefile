@@ -30,7 +30,7 @@ main115.o: main.cpp
 mlp115.o: mlp115.cxx mlp115.h 
 	${GPP} -c $< -o $@ ${COMPFLAGS} ${CFLAGS} ${OPTI} 
 
-mlp160.o: mlp115.cxx mlp160.h 
+mlp160.o: mlp160.cxx mlp160.h 
 	${GPP} -c $< -o $@ ${COMPFLAGS} ${CFLAGS} ${OPTI} 
 
 setup: mplsetup.o
@@ -69,7 +69,7 @@ run115: clean mlp115
 	time ./${BIN} 115
 
 run160: clean mlp160
-	time ./${BIN}
+	time ./${BIN} 160
 
 runsetup115: clean setup
 	time ./${BINSETUP} 115

@@ -14,6 +14,7 @@
 
 #include "../histogram/histogram.h"
 #include "../histogram/histostack.h"
+#include "../header/twohist.h"
 
 #ifdef MAKE115
 #include "mlp115.h"
@@ -78,6 +79,7 @@ int main( int argc, char ** argv){
 	// Get variable and type branch names -> split into vectors
 	vector <string> branchnames;
 	vector <string> types;
+    Double_t lumins = 0;
 	
 	TObjArray* lob = tree->GetListOfBranches();
 	for (Int_t i = 0; i < lob->GetEntriesFast(); ++i) {
@@ -108,6 +110,8 @@ int main( int argc, char ** argv){
 			visibleMass = &vars[i];
 		}
 	}
+    tree->SetBranchAddress("IntLum", &lumins);
+    
 	
 	
 	// Set up types => vars
@@ -135,10 +139,16 @@ mlp160 tester;
 	
 	//make histograms
 	vector<Histogram> histograms;
+    vector<TH1F*>   ahist;
+    vector<TH1F*>   bhist;
+
 	for (unsigned int i = 0; i != outs.size(); i++) {
 		histograms.push_back(
 							 Histogram(channeldata[i].name.c_str())
 							 );
+        ahist.push_back(new TH1F( (channeldata[i].name + "a").c_str(), (channeldata[i].name + "a").c_str(), 200, 0, 200));
+        bhist.push_back(new TH1F( (channeldata[i].name + "b").c_str(), (channeldata[i].name + "b").c_str(), 200, 0, 200));
+
 	}
 	
 	vector <Double_t> sum;
@@ -165,16 +175,20 @@ mlp160 tester;
 
 
 	for (unsigned int i = 0; i != channeldata.size();++i){
+        
 		for (int j = channeldata[i].begin; j != channeldata[i].end + 1; ++j) {
 			tree->GetEntry(j);	
+            ahist[i]->Fill( *visibleMass );
 			for (unsigned int k = 0; k < outs.size(); ++k) {
 				outs[k] = tester.Value(k,&vars[0]);
-				perfmat[i][k]->fill(outs[k], 1);
+				perfmat[i][k]->fill(outs[k] * (targetlum / lumins), 1);
 //				if (*visibleMass >100 && *visibleMass < 110){
 //					cout << *visibleMass << endl;
 //				}
 				if (outs[k] > 0){ 
-					histograms[k].fill( *visibleMass, outs[k]/* * targetlum /channeldata[j].luminocity*/);	
+					histograms[k].fill( *visibleMass, outs[k]/* * targetlum /channeldata[j].luminocity*/);
+                    bhist[k]->Fill( *visibleMass, outs[k] );
+
 				}
 			}
 		}
@@ -186,7 +200,7 @@ mlp160 tester;
 			if (i == j)
 				cout << "\033[0;31m"; // terminal red
 			
-			cout << fixed << setprecision(3) << perfmat[i][j]->getMean() << '\t';
+			cout << fixed << setprecision(3) << (perfmat[i][j]->getMean() * tree->GetEntriesFast()) << '\t';
 			if (i == j)
 				cout << "\033[0m"; // terminal default
 			//perfmat[i][j]->show();// To turn on and off mass histograms
@@ -196,20 +210,21 @@ mlp160 tester;
 	}
 	
 
-	
-	
+	vector<TwoHist> twohists;
+	twohists.resize(outs.size());
 	Histostack hstack("Visible mass"); 
 
 	//Draw histograms
 	for (unsigned int i = 0; i != outs.size(); i++) {
 		hstack.add(histograms[i]);
-		histograms[i].show(); 
+        twohists[i] = TwoHist(ahist[i], bhist[i]);
+//		histograms[i].show(); 
+        twohists[i].Plot();
+
 	}
 	hstack.draw();
 	
-	
-	
-	
+
 	cerr << "Hanging for X11" << endl;
 	theApp.Run();
 	return 0;

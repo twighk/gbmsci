@@ -247,9 +247,9 @@ public:
         
         network->SetLearningMethod(method); // choose learning method
         
-        network->SetReset(50);
-        network->SetTau(2.0);
-        cout << network->GetTau() << "\t" << network->GetReset() << std::endl;
+//        network->SetReset(50);
+//        network->SetTau(2.0);
+        cout << "Tau: " << network->GetTau() << "\t" << "Reset: " << network->GetReset() << std::endl;
         
 		
 		std::ostringstream traintext(std::ostringstream::out); // string for training
@@ -266,6 +266,12 @@ public:
         
 		eerrtest  = GetErrorTest();
 		eerrtrain = GetErrorTrain();
+        
+        TMLPAnalyzer ana(network);
+        ana.GatherInformations();
+        ana.CheckNetwork();
+        TCanvas* mlpa_canvas1 = new TCanvas("mlpa_canvas","Network analysis");
+        ana.DrawDInputs();
 		
 	}
 	
