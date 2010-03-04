@@ -39,8 +39,8 @@ int main(int argc, char** argv){
 	
     MlpSetup mlp(tree, higgs_mass); 
 	
-//    mlp.SetMethod(TMultiLayerPerceptron::kFletcherReeves);
-    mlp.SetEpochs(200/*201*/);
+    mlp.SetMethod(TMultiLayerPerceptron::kFletcherReeves);
+    mlp.SetEpochs(100/*201*/);
 //    mlp.SetNormaliseInputs(false);
 //    mlp.SetNormaliseOutputs(true);
 //    mlp.SetAltOutputNodes(false);
@@ -51,21 +51,22 @@ int main(int argc, char** argv){
 		mlp.SetTextOutputOff();
 	}
 	
-    vector<Int_t> new_struct(1, 30);
+    vector<Int_t> new_struct(1, 10);
     mlp.SetStructure(new_struct);
     mlp.TrainNet();
 
-
-	cout << mlp.Getserrtest() <<'\t'
-		<< mlp.Getserrtrain() <<'\t'
-		<< mlp.Geteerrtest() <<'\t'
-		<< mlp.Geteerrtrain();
+//
+//	cout << mlp.Getserrtest() <<'\t'
+//		<< mlp.Getserrtrain() <<'\t'
+//		<< mlp.Geteerrtest() <<'\t'
+//		<< mlp.Geteerrtrain() << endl;
 	
-	
-	
+    //Just ouput error fractions
+    cout << (mlp.Geteerrtest() / mlp.Getserrtest()) <<'\t'
+    <<  (mlp.Geteerrtrain() / mlp.Getserrtrain()) <<'\t'<< endl;
 	
 //	mlp.RunSetup();
-	if (argc < 2) { // for automation continuation
+	if (argc <= 2) { // for automation continuation
 		//wait, so graphs are shown
 		cerr << "Hanging for X11" << endl;
 		theApp.Run();

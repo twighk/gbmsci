@@ -138,9 +138,9 @@ int main(int argc, char ** argv){
 		++z;
 	}
 /*****************************/
-	const int num = 11;
+	const int num = 0;
 	const int hist1num = 5;
-	const int hist2num = 8;
+	const int hist2num = 2;
 /*****************************/
     
     if (num >= branches.size()){

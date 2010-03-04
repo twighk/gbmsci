@@ -214,6 +214,21 @@ public:
 	}
 };
 
+class VarElectronTauMt : public Var {
+public:
+	VarElectronTauMt(){};
+	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
+		
+		TLorentzVector* temp_electron	= (uTLV( (*data)["lv_electron"] , (*indexinfo)["eindex"] ));
+		TLorentzVector* temp_tau		= (uTLV( (*data)["lv_tau"] , (*indexinfo)["tindex"] ));
+		Double_t mt = sqrt(  pow(temp_electron->Et() + sqrt(temp_tau->Px() * temp_tau->Px() + temp_tau->Py() * temp_tau->Py()),2)
+						   - pow(temp_electron->Px() + temp_tau->Px(),2) 
+						   - pow(temp_electron->Py() + temp_tau->Py(),2) 
+                           );
+		return mt;
+	}
+};
+
 class VarVisibleMass : public Var {
 public:
 	VarVisibleMass(){};
@@ -307,7 +322,7 @@ public:
         std::vector<Double_t> * btag = u< std::vector<Double_t> >((*data)["jetBTagTrackCountHighEff"]);
         Int_t count = 0;
         for (UInt_t i = 0; i < (*btag).size(); ++i) {
-            if ( (*btag)[i] > -50. ) count++;
+            if ( (*btag)[i] > 3.5 ) count++;
         }
         
         return Double_t(count);
