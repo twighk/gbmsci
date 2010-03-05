@@ -3,7 +3,8 @@
 #include "double2int.h"
 #include "../header/varlib.h"
 #include <TRandom2.h>
-
+#include "../dict/dict.h"
+#include "../header/brptr.h"
 
 using namespace std;
 using namespace dict;
@@ -35,8 +36,10 @@ skimmer::skimmer(std::string _rootpath, std::string _outname){
 	setstats	= true;
 }
 
-void skimmer::AddChannel(std::string instring, std::string _tree){
+void skimmer::AddChannel(std::string instring, std::string _tree, Double_t _precount){
 	
+    precutcount.push_back(_precount);
+    
     infile.push_back(new TFile((rootpath + instring + ".root").c_str()));
     channel.push_back(instring);
     if (infile[infile.size() - 1]->IsOpen() == 0){
@@ -161,7 +164,6 @@ void skimmer::GoSkim(){
     //Random Stuff Here
     cout << "\nSkimming Channels " << endl;
     for (UInt_t i = 0; i < intree.size() ; i++) {                    //Loop through input trees
-        theweight = 1. / (weights[i]);
         cout << " " << channel[i] << endl;
         beginvec.push_back(eventcounter);                           //Record index of first skimmed event in tree
         BranchPtrMap * incoming;                                    //Pointer to map of input branch addresses
@@ -169,11 +171,13 @@ void skimmer::GoSkim(){
         IndexMap preselect;                                         //Make preselection indicies map
 		
         for (Int_t j = 0; j < (eventlist[i]).size() ; j++) {
-            
+        
+//            theweight = 1. / (weights[i]);
  //           rndnum2 = rndgen2.Rndm();
 //            rndnum = Double_t(i) + rndgen.Gaus(0.0 , 0.1);
 			incoming = evt.Entry(eventlist[i][j]);                  //Get appropriate branch object addresses for current entry
-            
+            theweight = (*(u< vector<Double_t> >((*incoming)["intlum"])))[0] / precutcount[i];
+
 			DoPreselection(incoming, preselect);
 			preselect["magic"] = i;
 			eventcounter++;

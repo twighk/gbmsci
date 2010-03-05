@@ -28,6 +28,8 @@ private:
     std::vector<TTree*> outtree;
     std::vector<Int_t> beginvec;
     std::vector<Int_t> endvec;
+    std::vector<Double_t> precutcount;
+
     std::vector< std::vector<Int_t> > eventlist;
     TFile* filecombo;
     TTree* treecombo;
@@ -37,7 +39,7 @@ private:
 public:
     
     skimmer(std::string, std::string);
-    void AddChannel(std::string, std::string);
+    void AddChannel(std::string, std::string, Double_t);
     void WriteCombo();
     void GoSkim();
     bool DoPreselection(std::map<std::string, brptr> *, std::map<std::string, Int_t> &);
