@@ -68,8 +68,8 @@ void skimmer::GoSkim(){
     outmap["ElecEt"]			= VarHandler( new VarElectronEt() ) ;
     outmap["MetEt"]             = VarHandler( new VarMetEt() ) ;	
     outmap["ElecTauDPhi"]		= VarHandler( new VarElectronTauDPhi() ) ;			
-    outmap["ElectronEta"]       = VarHandler( new VarElectronEta() ) ;
-    outmap["TauEta"]            = VarHandler( new VarTauEta() ) ;	//Doesn't make linear combinations!!!		
+//    outmap["ElectronEta"]       = VarHandler( new VarElectronEta() ) ;
+//    outmap["TauEta"]            = VarHandler( new VarTauEta() ) ;	//Doesn't make linear combinations!!!		
     outmap["ElecEcalIso"]		= VarHandler( new VarElectronEcalIso() ) ;		
     outmap["ElecHcalIso"]		= VarHandler( new VarElectronHcalIso() ) ;		
     outmap["ElecTrkIso"]		= VarHandler( new VarElectronTrackIso() ) ;		
@@ -97,7 +97,7 @@ void skimmer::GoSkim(){
 //    outmap["HiggsMass"]         = VarHandler( new VarHiggsMass() ) ;	
     outmap["IntLum"]            = VarHandler( new VarIntLum() ) ;	
     outmap["MeanBTag"]          = VarHandler( new VarMeanBTag() ) ;	
-    outmap["MuonCount"]         = VarHandler( new VarMuonCount() ) ;
+//    outmap["MuonCount"]         = VarHandler( new VarMuonCount() ) ;
 //    outmap["ElectronTauMt"]         = VarHandler( new VarElectronTauMt() ) ;
 //    outmap["IntTest"]			= VarHandler( new VarIntTest() ) ;	
 //    outmap["IntTest2"]			= VarHandler( new VarIntTest() ) ;	

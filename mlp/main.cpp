@@ -181,7 +181,7 @@ mlp160 tester;
             ahist[i]->Fill( *visibleMass );
 			for (unsigned int k = 0; k < outs.size(); ++k) {
 				outs[k] = tester.Value(k,&vars[0]);
-				perfmat[i][k]->fill(outs[k] * (targetlum / lumins), 1);
+				perfmat[i][k]->fill(outs[k] /** (targetlum / lumins)*/, 1);
 //				if (*visibleMass >100 && *visibleMass < 110){
 //					cout << *visibleMass << endl;
 //				}
@@ -200,7 +200,7 @@ mlp160 tester;
 			if (i == j)
 				cout << "\033[0;31m"; // terminal red
 			
-			cout << fixed << setprecision(3) << (perfmat[i][j]->getMean() * tree->GetEntriesFast()) << '\t';
+			cout << fixed << setprecision(3) << perfmat[i][j]->getMean() /* tree->GetEntriesFast())*/ << '\t';
 			if (i == j)
 				cout << "\033[0m"; // terminal default
 			//perfmat[i][j]->show();// To turn on and off mass histograms
