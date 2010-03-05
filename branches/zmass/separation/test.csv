@@ -1,0 +1,12 @@
+rm -f *.o
+rm -f separation
+g++ -c main.cpp -o main.o  `root-config --cflags`  
+g++ main.o -o separation  `root-config --libs` -lTMVA -lMinuit -lXMLIO -lTreePlayer 
+./separation
+hello
+	g1	g2	g3	g4	g5	
+g1	0	
+g2	0.0343151	0	
+g3	0.9825	0.981854	0	
+g4	0.9816	0.982027	1	0	
+g5	0.9597	0.958138	1	0.91972	0	

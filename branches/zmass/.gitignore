@@ -1,0 +1,16 @@
+#.gitignore, Files not to commit
+#Mac Files
+.DS_Store
+
+#thomas Files
+Log.html
+
+
+#Root files
+*.root
+
+
+#Tempary Files
+*.o
+*.d
+*.so
