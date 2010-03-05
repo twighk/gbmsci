@@ -47,7 +47,7 @@ int main(int argc, char** argv){
 		}
 	}
     
-    TwoHist hists(train, test, "Error @ 200 epochs for BFGS with 9 nodes + PS-GAUS +R","Fractional Error","Entries");
+    TwoHist hists(train, test, "Error @ 200 epochs for BFGS with 8 nodes + R","Fractional Error","Entries");
     hists.Plot();
     
     cerr << "Hanging for X11" << endl;
