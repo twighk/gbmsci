@@ -43,7 +43,7 @@ int main(int argc, char** argv){
     mlp.SetEpochs(50/*201*/);
 //    mlp.SetNormaliseInputs(false);
 //    mlp.SetNormaliseOutputs(true);
-    mlp.SetAltOutputNodes(false);
+//    mlp.SetAltOutputNodes(false);
 //    mlp.SetUseWeights(false);
 	
 	if (argc > 2) { // for automation
