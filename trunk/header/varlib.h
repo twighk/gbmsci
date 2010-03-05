@@ -242,19 +242,6 @@ public:
 	}
 };
 
-class VarAltVisibleMass : public Var {
-public:
-	VarVisibleMass(){};
-	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
-		
-		TLorentzVector* temp_electron	= (uTLV( (*data)["lv_electron"] , (*indexinfo)["eindex"] ));
-		TLorentzVector* temp_tau		= (uTLV( (*data)["lv_tau"] , (*indexinfo)["tindex"] ));
-		TLorentzVector higgs;
-		higgs = (*temp_electron) + (*temp_tau);
-		return higgs.M();
-	}
-};
-
 //class VarTauPhi : public Var {
 //public:
 //	VarTauPhi(){};
