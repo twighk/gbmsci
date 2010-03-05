@@ -16,7 +16,7 @@ int main(int argc, char** argv) {
 	a.AddChannel("WplusJets","bbAHCutTree");
 	a.AddChannel("Zbb","bbAHCutTree");
 	a.AddChannel("Zcc","bbAHCutTree");
-//	a.AddChannel("ZplusJets","bbAHCutTree");
+	a.AddChannel("ZplusJets","bbAHCutTree");
 
 	a.GoSkim();
 	a.WriteCombo();
