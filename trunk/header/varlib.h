@@ -27,12 +27,28 @@ public:
 	}
 };
 
+class VarTauM2 : public Var {
+public:
+	VarTauM2(){};
+	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
+		return (uTLV( (*data)["lv_tau"] , (*indexinfo)["tindex"] ))->M2();
+	}
+};
+
 //The Et of the candidate electron
 class VarElectronEt : public Var {
 public:
 	VarElectronEt(){};
 	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
 		return (uTLV( (*data)["lv_electron"] , (*indexinfo)["eindex"] ))->Et();
+	}
+};
+
+class VarElecTauEtDiff : public Var {
+public:
+	VarElecTauEtDiff(){};
+	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
+		return fabs( ( (uTLV( (*data)["lv_electron"] , (*indexinfo)["eindex"] ))->Et() ) - ( (uTLV( (*data)["lv_tau"] , (*indexinfo)["tindex"] ))->Et() ) );
 	}
 };
 
