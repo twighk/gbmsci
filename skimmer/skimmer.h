@@ -39,7 +39,7 @@ private:
 public:
     
     skimmer(std::string, std::string);
-    void AddChannel(std::string, std::string, Double_t);
+    void AddChannel(std::string, std::string);
     void WriteCombo();
     void GoSkim();
     bool DoPreselection(std::map<std::string, brptr> *, std::map<std::string, Int_t> &);
