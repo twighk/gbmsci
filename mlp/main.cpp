@@ -146,8 +146,8 @@ mlp160 tester;
 		histograms.push_back(
 							 Histogram(channeldata[i].name.c_str())
 							 );
-        ahist.push_back(new TH1F( (channeldata[i].name + "a").c_str(), (channeldata[i].name + "a").c_str(), 200, 0, 200));
-        bhist.push_back(new TH1F( (channeldata[i].name + "b").c_str(), (channeldata[i].name + "b").c_str(), 200, 0, 200));
+        ahist.push_back(new TH1F( (channeldata[i].name + "a").c_str(), (channeldata[i].name + "a").c_str(), 100, 0, 200));
+        bhist.push_back(new TH1F( (channeldata[i].name + "b").c_str(), (channeldata[i].name + "b").c_str(), 100, 0, 200));
 
 	}
 	
@@ -178,7 +178,7 @@ mlp160 tester;
         
 		for (int j = channeldata[i].begin; j != channeldata[i].end + 1; ++j) {
 			tree->GetEntry(j);	
-            ahist[i]->Fill( *visibleMass );
+            ahist[i]->Fill( (*visibleMass),  (targetlum / lumins) );
 			for (unsigned int k = 0; k < outs.size(); ++k) {
 				outs[k] = tester.Value(k,&vars[0]);
 				perfmat[i][k]->fill(outs[k] /** (targetlum / lumins)*/, 1);
@@ -187,7 +187,7 @@ mlp160 tester;
 //				}
 				if (outs[k] > 0){ 
 					histograms[k].fill( *visibleMass, outs[k]/* * targetlum /channeldata[j].luminocity*/);
-                    bhist[k]->Fill( *visibleMass, outs[k] );
+                    bhist[k]->Fill( *visibleMass, (outs[k]) * (targetlum / lumins) );
 
 				}
 			}
