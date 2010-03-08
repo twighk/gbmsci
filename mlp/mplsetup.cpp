@@ -51,7 +51,7 @@ int main(int argc, char** argv){
 		mlp.SetTextOutputOff();
 	}
 	
-    vector<Int_t> new_struct(1, 10);
+    vector<Int_t> new_struct(1, 20);
     mlp.SetStructure(new_struct);
     mlp.TrainNet();
 

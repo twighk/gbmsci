@@ -44,6 +44,80 @@ public:
 	}
 };
 
+    class VarSumElecTauEt : public Var {
+    public:
+        VarSumElecTauEt(){};
+        virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
+            return ((uTLV( (*data)["lv_electron"] , (*indexinfo)["eindex"] ))->Et()) + ((uTLV( (*data)["lv_tau"] , (*indexinfo)["tindex"] ))->Et());
+        }
+    };
+
+    class VarLeptonCount : public Var {
+    public:
+        VarLeptonCount(){};
+        virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
+            return ((u<TClonesArray>( (*data)["lv_muon"] ))->GetEntriesFast()) + ((u<TClonesArray>( (*data)["lv_electron"] ))->GetEntriesFast());
+        }
+    };
+
+    class VarJetCountEtCut : public Var {
+    public:
+        VarJetCountEtCut(){};
+        virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
+            TClonesArray * jets = (u<TClonesArray>( (*data)["lv_jet"] ));
+            UInt_t count = 0;
+            for (Int_t i = 0; i < jets->GetEntriesFast(); ++i) {
+                if ( ((TLorentzVector*)jets->At(i))->Et() > 20.   ) {
+                    count++;
+                }
+            }
+            return Double_t(count);
+        }
+    };
+
+    class VarJetCountEtaCut : public Var {
+    public:
+        VarJetCountEtaCut(){};
+        virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
+            TClonesArray * jets = (u<TClonesArray>( (*data)["lv_jet"] ));
+            UInt_t count = 0;
+            for (Int_t i = 0; i < jets->GetEntriesFast(); ++i) {
+                if ( fabs(((TLorentzVector*)jets->At(i))->Eta()) < 4.5   ) {
+                    count++;
+                }
+            }
+            return Double_t(count);
+        }
+    };
+
+    class VarSumJetEt : public Var {
+    public:
+        VarSumJetEt(){};
+        virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
+            TClonesArray * jets = (u<TClonesArray>( (*data)["lv_jet"] ));
+            Double_t count = 0.;
+            for (Int_t i = 0; i < jets->GetEntriesFast(); ++i) {
+                count += (((TLorentzVector*)jets->At(i))->Et());
+            }
+            return count;
+        }
+    };
+    
+    class VarSumBtagHighEff : public Var {
+    public:
+        VarSumBtagHighEff(){};
+        virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
+            std::vector<Double_t> * btag = u< std::vector<Double_t> >((*data)["jetBTagTrackCountHighEff"]);
+            Double_t count = 0.;
+            for (unsigned int i = 0; i < (*btag).size(); i++) {
+                if ( (*btag)[i] > -50. ) {count += (*btag)[i];}
+            }
+            
+            return (count);
+        }
+    };
+
+
 class VarElecTauEtDiff : public Var {
 public:
 	VarElecTauEtDiff(){};
@@ -255,6 +329,19 @@ public:
 		TLorentzVector higgs;
 		higgs = (*temp_electron) + (*temp_tau);
 		return higgs.M();
+	}
+};
+
+class VarVisibleMassDev90 : public Var {
+public:
+	VarVisibleMassDev90(){};
+	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
+		
+		TLorentzVector* temp_electron	= (uTLV( (*data)["lv_electron"] , (*indexinfo)["eindex"] ));
+		TLorentzVector* temp_tau		= (uTLV( (*data)["lv_tau"] , (*indexinfo)["tindex"] ));
+		TLorentzVector higgs;
+		higgs = (*temp_electron) + (*temp_tau);
+		return fabs(90. - higgs.M());
 	}
 };
 
