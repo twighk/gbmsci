@@ -105,8 +105,14 @@ void skimmer::GoSkim(){
     outmap["TauM2"]             = VarHandler( new VarTauM2() ) ;
     outmap["ElecTauEtDiff"]     = VarHandler( new VarElecTauEtDiff() ) ;
 
-    
-    
+    outmap["SumElecTauEt"]      = VarHandler( new VarSumElecTauEt() ) ;
+    outmap["LeptonCount"]       = VarHandler( new VarLeptonCount() ) ;
+    outmap["JetCountEtCut"]     = VarHandler( new VarJetCountEtCut() ) ;
+    outmap["JetCountEtaCut"]    = VarHandler( new VarJetCountEtaCut() ) ;
+    outmap["SumJetEt"]          = VarHandler( new VarSumJetEt() ) ;
+    outmap["SumBtagHighEff"]    = VarHandler( new VarSumBtagHighEff() ) ;
+    outmap["VisibleMassDev90"]    = VarHandler( new VarVisibleMassDev90() ) ;
+
 //    Double_t rndnum;
 //    Double_t rndnum2;
 //
@@ -171,14 +177,14 @@ void skimmer::GoSkim(){
         BranchPtrMap * incoming;                                    //Pointer to map of input branch addresses
         event evt(intree[i]);                                       //Make event handler for current tree
         IndexMap preselect;                                         //Make preselection indicies map
-		theweight = 1. / (weights[i]);
+//		theweight = 1. / (weights[i]);
 
-        for (Int_t j = 0; j < (eventlist[i]).size() ; j++) {
+        for (UInt_t j = 0; j < (eventlist[i]).size() ; j++) {
         
  //           rndnum2 = rndgen2.Rndm();
 //            rndnum = Double_t(i) + rndgen.Gaus(0.0 , 0.1);
 			incoming = evt.Entry(eventlist[i][j]);                  //Get appropriate branch object addresses for current entry
-
+          theweight = 1. / (*(u< vector<Double_t> >((*incoming)["intlum"])))[0];
 			DoPreselection(incoming, preselect);
 			preselect["magic"] = i;
 			eventcounter++;
