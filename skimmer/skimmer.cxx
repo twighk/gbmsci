@@ -177,14 +177,14 @@ void skimmer::GoSkim(){
         BranchPtrMap * incoming;                                    //Pointer to map of input branch addresses
         event evt(intree[i]);                                       //Make event handler for current tree
         IndexMap preselect;                                         //Make preselection indicies map
-//		theweight = 1. / (weights[i]);
+		theweight = 1. / (weights[i]);
 
         for (UInt_t j = 0; j < (eventlist[i]).size() ; j++) {
         
  //           rndnum2 = rndgen2.Rndm();
 //            rndnum = Double_t(i) + rndgen.Gaus(0.0 , 0.1);
 			incoming = evt.Entry(eventlist[i][j]);                  //Get appropriate branch object addresses for current entry
-          theweight = 1. / (*(u< vector<Double_t> >((*incoming)["intlum"])))[0];
+//          theweight = 1. / (*(u< vector<Double_t> >((*incoming)["intlum"])))[0];
 			DoPreselection(incoming, preselect);
 			preselect["magic"] = i;
 			eventcounter++;
