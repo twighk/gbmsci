@@ -29,6 +29,8 @@ int main(int argc, char ** argv){
 	vector < string > branches;
 	names.push_back("AH115");
 	names.push_back("AH115bb");
+	names.push_back("AH160");
+	names.push_back("AH160bb");
 	names.push_back("WplusJets");
 	names.push_back("QCD_BCtoE");
 	names.push_back("QCD_EMenriched");

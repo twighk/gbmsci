@@ -54,7 +54,8 @@ public:
 //						  /  histograms[0]->GetNbinsX();
 		
 		Int_t nbins = histograms[0]->GetNbinsX();
-		std::cout << "                ";
+//		std::cout << "                ";
+		std::cout << "&";
 		for (unsigned int i = 0; i !=histograms.size() ; ++i) { // 0 is underflow 
 			
 			std::string title = histograms[i]->GetTitle();
@@ -62,8 +63,11 @@ public:
 				title += " ";
 			}
 			
-			std::cout << title.c_str() << '\t' ; // print titles row
+//			std::cout << title.c_str() << '\t' ; // print titles row
+			std::cout << i ;
+			if (i != histograms.size()-1 ) std::cout << "&";
 		}
+		std::cout << "\\\\" << std::endl << "\\hline" ; /// newline
 		std::cout << std::endl; /// newline
 		
 		for (unsigned int i = 0; i !=histograms.size() ; ++i){ // Scale all the histograms
@@ -76,8 +80,9 @@ public:
 			for (int x = title.length(); x < 15 ; x++) {
 				title += " ";
 			}
-			std::cout << title.c_str() << '\t' ;
-			for (unsigned int j = 0; j <= i; ++j) {
+//			std::cout << title.c_str() << '\t' ;
+			std::cout << i << "&\t" ;
+			for (unsigned int j = 0; j !=histograms.size() /*<= i*/; ++j) {
 				Double_t separation = 0;
 				
 				for (int k = 1; k < nbins + 1; ++k) { // 0 is underflow 
@@ -85,13 +90,27 @@ public:
 					separation += fabs(x);
 				}
 				separation /= 2;
-				if (separation > REDTHRESH) std::cout << "\033[0;31m";
+				
+				if (separation > REDTHRESH) std::cout << "\033[0;31m \\textcolor{red}{";
+				if (i == j) std::cout << "\\textcolor{grey}{";
 				std::cout.precision(3);
-				std::cout << std::fixed << separation << "           ";
-				if (separation > REDTHRESH) std::cout << "\033[0m";
+
+				
+				std::cout << std::fixed << separation;//<< "           ";
+				if (separation > REDTHRESH) std::cout << "}\033[0m";
+				if (i == j) std::cout << "}";
+				if (j != histograms.size()-1 ) std::cout << "&";
+				std::cout << "\t";
 			}
-			std::cout << std::endl;
+			std::cout << "\\\\"<<std::endl;
 		}
 	}
 };
 #endif
+
+
+
+
+
+
+
