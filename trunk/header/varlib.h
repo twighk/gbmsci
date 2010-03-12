@@ -75,20 +75,20 @@ public:
         }
     };
 
-    class VarJetCountEtaCut : public Var {
-    public:
-        VarJetCountEtaCut(){};
-        virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
-            TClonesArray * jets = (u<TClonesArray>( (*data)["lv_jet"] ));
-            UInt_t count = 0;
-            for (Int_t i = 0; i < jets->GetEntriesFast(); ++i) {
-                if ( fabs(((TLorentzVector*)jets->At(i))->Eta()) < 4.5   ) {
-                    count++;
-                }
-            }
-            return Double_t(count);
-        }
-    };
+//    class VarJetCountEtaCut : public Var {
+//    public:
+//        VarJetCountEtaCut(){};
+//        virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
+//            TClonesArray * jets = (u<TClonesArray>( (*data)["lv_jet"] ));
+//            UInt_t count = 0;
+//            for (Int_t i = 0; i < jets->GetEntriesFast(); ++i) {
+//                if ( fabs(((TLorentzVector*)jets->At(i))->Eta()) < 4.5   ) {
+//                    count++;
+//                }
+//            }
+//            return Double_t(count);
+//        }
+//    };
 
     class VarSumJetEt : public Var {
     public:
@@ -118,13 +118,13 @@ public:
     };
 
 
-class VarElecTauEtDiff : public Var {
-public:
-	VarElecTauEtDiff(){};
-	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
-		return fabs( ( (uTLV( (*data)["lv_electron"] , (*indexinfo)["eindex"] ))->Et() ) - ( (uTLV( (*data)["lv_tau"] , (*indexinfo)["tindex"] ))->Et() ) );
-	}
-};
+//class VarElecTauEtDiff : public Var {
+//public:
+//	VarElecTauEtDiff(){};
+//	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
+//		return fabs( ( (uTLV( (*data)["lv_electron"] , (*indexinfo)["eindex"] ))->Et() ) - ( (uTLV( (*data)["lv_tau"] , (*indexinfo)["tindex"] ))->Et() ) );
+//	}
+//};
 
 //The missing energy (CaloMET)
 class VarMetEt : public Var {
@@ -154,7 +154,7 @@ class VarTauEta : public Var {
 public:
 	VarTauEta(){};
 	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
-		return (uTLV( (*data)["lv_tau"] , (*indexinfo)["tindex"] ))->Eta();
+		return fabs((uTLV( (*data)["lv_tau"] , (*indexinfo)["tindex"] ))->Eta());
 	}
 };
 
@@ -162,7 +162,7 @@ class VarElectronEta : public Var {
 public:
 	VarElectronEta(){};
 	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
-		return (uTLV( (*data)["lv_electron"] , (*indexinfo)["eindex"] ))->Eta();
+		return fabs((uTLV( (*data)["lv_electron"] , (*indexinfo)["eindex"] ))->Eta());
 	}
 };
 
@@ -408,11 +408,12 @@ public:
 	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
         std::vector<Double_t> * btag = u< std::vector<Double_t> >((*data)["jetBTagTrackCountHighEff"]);
 		Double_t count = 0.;
+        Int_t number = 0;
 		for (unsigned int i = 0; i < (*btag).size(); i++) {
-			if ( (*btag)[i] < -50. ) {count += -13.;} else {count += (*btag)[i];}
+			if ( (*btag)[i] > -50.){count += (*btag)[i]; number++;}
 		}
 	
-		return (count / (*btag).size() );
+		return (count / number );
 
 	}
 };

@@ -65,53 +65,53 @@ void skimmer::GoSkim(){
 	
     //STEP 1:Set up the output variables we are interested in (only one line required!)
     VarHandlerMap outmap;
-    outmap["TauEt"]             = VarHandler( new VarTauEt() ) ;
-    outmap["ElecEt"]			= VarHandler( new VarElectronEt() ) ;
-    outmap["MetEt"]             = VarHandler( new VarMetEt() ) ;	
-    outmap["ElecTauDPhi"]		= VarHandler( new VarElectronTauDPhi() ) ;			
-    outmap["ElectronEta"]       = VarHandler( new VarElectronEta() ) ;
-    outmap["TauEta"]            = VarHandler( new VarTauEta() ) ;	//Doesn't make linear combinations!!!		
+    
+    outmap["CountBTag"]			= VarHandler( new VarCountValidBTag() ) ;	
     outmap["ElecEcalIso"]		= VarHandler( new VarElectronEcalIso() ) ;		
+    outmap["ElecEt"]			= VarHandler( new VarElectronEt() ) ;
     outmap["ElecHcalIso"]		= VarHandler( new VarElectronHcalIso() ) ;		
-    outmap["ElecTrkIso"]		= VarHandler( new VarElectronTrackIso() ) ;		
-//    outmap["ElectronCharge"]    = VarHandler( new VarElectronCharge() ) ;		
-//    outmap["TauCharge"]         = VarHandler( new VarTauCharge() ) ;		
-    outmap["ETCharProd"]		= VarHandler( new VarElecTauChargeProd() ) ;		
-//    outmap["TauProng"]			= VarHandler( new VarTauProng() ) ;		
-//	outmap["TauLeadTrk"]		= VarHandler( new VarTauLeadTrk() ) ;		
-//	outmap["TauEcalIso"]		= VarHandler( new VarTauEcalIso() ) ;		
-//	outmap["TauTrackIso"]		= VarHandler( new VarTauTrackIso() ) ;		
-//	outmap["TauAntiElectron"]	= VarHandler( new VarTauAntiElectron() ) ;		
     outmap["ElecMetDPhi"]		= VarHandler( new VarElectronMetDPhi() ) ;
-    outmap["TauMetDPhi"]		= VarHandler( new VarTauMetDPhi() ) ;
-
     outmap["ElecMetMt"]			= VarHandler( new VarElectronMetMt() ) ;		
-    outmap["VisibleMass"]       = VarHandler( new VarVisibleMass() ) ;		
-//    outmap["TauPhi"]            = VarHandler( new VarTauPhi() ) ;		
-//    outmap["ElectronPhi"]       = VarHandler( new VarElectronPhi() ) ;		
-//    outmap["MetPhi"]            = VarHandler( new VarMetPhi() ) ;		
+    outmap["ElecTauDPhi"]		= VarHandler( new VarElectronTauDPhi() ) ;			
     outmap["ElecTauDR"]			= VarHandler( new VarElectronTauDR() ) ;		
-    outmap["JetCount"]          = VarHandler( new VarJetCount() ) ;	//Very good for TTplusjets	
+    outmap["ElecTrkIso"]		= VarHandler( new VarElectronTrackIso() ) ;	
+    outmap["ElectronEta"]       = VarHandler( new VarElectronEta() ) ;
+    outmap["ElectronTauMt"]     = VarHandler( new VarElectronTauMt() ) ;
+    outmap["ETCharProd"]		= VarHandler( new VarElecTauChargeProd() ) ;		
     outmap["HighBTag"]          = VarHandler( new VarHighBTag() ) ;	
-    outmap["CntBTag"]			= VarHandler( new VarCountValidBTag() ) ;	
-//    outmap["HighBTagJetEt"]     = VarHandler( new VarHighBTagJetEt() ) ;	//Didn't help very much
-//    outmap["HiggsMass"]         = VarHandler( new VarHiggsMass() ) ;	
-    outmap["IntLum"]            = VarHandler( new VarIntLum() ) ;	
-    outmap["MeanBTag"]          = VarHandler( new VarMeanBTag() ) ;	
-    outmap["MuonCount"]         = VarHandler( new VarMuonCount() ) ;
-    outmap["ElectronTauMt"]         = VarHandler( new VarElectronTauMt() ) ;
-//    outmap["IntTest"]			= VarHandler( new VarIntTest() ) ;	
-//    outmap["IntTest2"]			= VarHandler( new VarIntTest() ) ;	
-    outmap["TauM2"]             = VarHandler( new VarTauM2() ) ;
-    outmap["ElecTauEtDiff"]     = VarHandler( new VarElecTauEtDiff() ) ;
-
-    outmap["SumElecTauEt"]      = VarHandler( new VarSumElecTauEt() ) ;
-    outmap["LeptonCount"]       = VarHandler( new VarLeptonCount() ) ;
+    outmap["JetCount"]          = VarHandler( new VarJetCount() ) ;	//Very good for TTplusjets	
     outmap["JetCountEtCut"]     = VarHandler( new VarJetCountEtCut() ) ;
-    outmap["JetCountEtaCut"]    = VarHandler( new VarJetCountEtaCut() ) ;
-    outmap["SumJetEt"]          = VarHandler( new VarSumJetEt() ) ;
+    outmap["LeptonCount"]       = VarHandler( new VarLeptonCount() ) ;
+    outmap["MeanBTag"]          = VarHandler( new VarMeanBTag() ) ;	
+    outmap["MetEt"]             = VarHandler( new VarMetEt() ) ;	
+    outmap["MuonCount"]         = VarHandler( new VarMuonCount() ) ;
     outmap["SumBtagHighEff"]    = VarHandler( new VarSumBtagHighEff() ) ;
-    outmap["VisibleMassDev90"]    = VarHandler( new VarVisibleMassDev90() ) ;
+    outmap["SumElecTauEt"]      = VarHandler( new VarSumElecTauEt() ) ;
+    outmap["SumJetEt"]          = VarHandler( new VarSumJetEt() ) ;
+    outmap["TauEt"]             = VarHandler( new VarTauEt() ) ;
+    outmap["TauEta"]            = VarHandler( new VarTauEta() ) ;	//Doesn't make linear combinations!!!		
+    outmap["TauM2"]             = VarHandler( new VarTauM2() ) ;
+    outmap["TauMetDPhi"]		= VarHandler( new VarTauMetDPhi() ) ;
+    outmap["VisibleMass"]       = VarHandler( new VarVisibleMass() ) ;	
+    outmap["VisibleMassDev90"]  = VarHandler( new VarVisibleMassDev90() ) ;
+    outmap["IntLum"]            = VarHandler( new VarIntLum() ) ;	
+    
+//    outmap["ElectronCharge"]  = VarHandler( new VarElectronCharge() ) ;		
+//    outmap["TauCharge"]       = VarHandler( new VarTauCharge() ) ;		
+//    outmap["TauProng"]		= VarHandler( new VarTauProng() ) ;		
+//    outmap["TauLeadTrk"]		= VarHandler( new VarTauLeadTrk() ) ;		
+//	  outmap["TauEcalIso"]		= VarHandler( new VarTauEcalIso() ) ;		
+//	  outmap["TauTrackIso"]		= VarHandler( new VarTauTrackIso() ) ;		
+//	  outmap["TauAntiElectron"]	= VarHandler( new VarTauAntiElectron() ) ;		
+//    outmap["JetCountEtaCut"]  = VarHandler( new VarJetCountEtaCut() ) ;
+//    outmap["TauPhi"]          = VarHandler( new VarTauPhi() ) ;		
+//    outmap["ElectronPhi"]     = VarHandler( new VarElectronPhi() ) ;		
+//    outmap["MetPhi"]          = VarHandler( new VarMetPhi() ) ;		
+//    outmap["HighBTagJetEt"]   = VarHandler( new VarHighBTagJetEt() ) ;	//Didn't help very much
+//    outmap["HiggsMass"]       = VarHandler( new VarHiggsMass() ) ;	
+//    outmap["IntTest"]			= VarHandler( new VarIntTest() ) ;	
+//    outmap["IntTest2"]        = VarHandler( new VarIntTest() ) ;	
+//    outmap["ElecTauEtDiff"]   = VarHandler( new VarElecTauEtDiff() ) ;
 
 //    Double_t rndnum;
 //    Double_t rndnum2;
