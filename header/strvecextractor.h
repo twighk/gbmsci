@@ -22,7 +22,7 @@ namespace strvecextractor {
 		for (Int_t i = 0; i < branchlist->GetEntriesFast(); ++i) {
 			TBranch * branch = (TBranch*)branchlist->At(i);
 			std::string bname = std::string(branch->GetName());
-			if (std::string(bname) == "weight" || std::string(bname) == "IntLum") {
+			if (std::string(bname) == "weight" || std::string(bname) == "IntLum" || std::string(bname) == "HighBTag") { //Append extra variables to ignore here
 				continue;
 			} else if(std::string(bname).compare(0,4,"type")){
 				result.push_back(bname);
