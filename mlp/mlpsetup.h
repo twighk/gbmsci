@@ -267,12 +267,12 @@ public:
 		eerrtest  = GetErrorTest();
 		eerrtrain = GetErrorTrain();
         
-        TMLPAnalyzer ana(network);
-        ana.GatherInformations();
-        ana.CheckNetwork();
-        TCanvas* mlpa_canvas1 = new TCanvas("mlpa_canvas","Network analysis");
-        ana.DrawDInputs();
-		
+ //       TMLPAnalyzer ana(network);
+//        ana.GatherInformations();
+//        ana.CheckNetwork();
+//        TCanvas* mlpa_canvas1 = new TCanvas("mlpa_canvas","Network analysis");
+//        ana.DrawDInputs();
+//		
 	}
 	
 	Double_t Getserrtest(){
