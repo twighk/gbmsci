@@ -39,7 +39,7 @@ int main(int argc, char** argv){
 	
     MlpSetup mlp(tree, higgs_mass); 
 	
-//    mlp.SetMethod(TMultiLayerPerceptron::kFletcherReeves);
+    mlp.SetMethod(TMultiLayerPerceptron::kRibierePolak);
     mlp.SetEpochs(100/*201*/);
 //    mlp.SetNormaliseInputs(false);
 //    mlp.SetNormaliseOutputs(true);
@@ -66,10 +66,10 @@ int main(int argc, char** argv){
     <<  (mlp.Geteerrtrain() / mlp.Getserrtrain()) <<'\t'<< endl;
 	
 //	mlp.RunSetup();
-	if (argc <= 2) { // for automation continuation
-		//wait, so graphs are shown
-		cerr << "Hanging for X11" << endl;
-		theApp.Run();
-	}
+//	if (argc <= 2) { // for automation continuation
+//		//wait, so graphs are shown
+//		cerr << "Hanging for X11" << endl;
+//		theApp.Run();
+//	}
 	return 0;
 }
