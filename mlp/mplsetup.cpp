@@ -39,8 +39,8 @@ int main(int argc, char** argv){
 	
     MlpSetup mlp(tree, higgs_mass); 
 	
-    mlp.SetMethod(TMultiLayerPerceptron::kRibierePolak);
-    mlp.SetEpochs(100/*201*/);
+//    mlp.SetMethod(TMultiLayerPerceptron::kBatch);
+    mlp.SetEpochs(201);
 //    mlp.SetNormaliseInputs(false);
 //    mlp.SetNormaliseOutputs(true);
 //    mlp.SetAltOutputNodes(false);

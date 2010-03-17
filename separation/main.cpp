@@ -126,7 +126,7 @@ int main(int argc, char ** argv){
 			}
 		}
 	}
-	
+
 	 cout << "\n\n"; 
 	
 	vector <Separation * > seps;
@@ -151,8 +151,12 @@ int main(int argc, char ** argv){
     }
 	
 	gROOT->SetStyle("Plain");
-	TH1F *hist1 = branchhists[num][hist1num];
-	TH1F *hist2 = branchhists[num][hist2num];
+	
+	TH1F *hist1 = new TH1F();
+	TH1F *hist2 = new TH1F();
+	
+	*hist1 = *(branchhists[num][hist1num]);
+	*hist2 = *(branchhists[num][hist2num]);
 	
 	ostringstream histtitle;
 	histtitle << branches[num] << ": " << names[hist1num]<< " vs. "<< names[hist2num];
