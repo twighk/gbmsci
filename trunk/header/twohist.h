@@ -54,8 +54,8 @@ public:
         histb->SetTitle(title.c_str());
         hista->SetXTitle(xaxis.c_str());
         histb->SetXTitle(xaxis.c_str());
-//        hista->SetXTitle("test");
-//        histb->SetXTitle("test");
+        hista->SetXTitle("Visible Mass [GeV/c^{2}]");
+        histb->SetXTitle("Visible Mass [GeV/c^{2}]");
         hista->SetYTitle(yaxis.c_str());
         histb->SetYTitle(yaxis.c_str());
 

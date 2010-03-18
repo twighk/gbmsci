@@ -146,8 +146,8 @@ mlp160 tester;
 		histograms.push_back(
 							 Histogram(channeldata[i].name.c_str())
 							 );
-        ahist.push_back(new TH1F( (channeldata[i].name + "a").c_str(), (channeldata[i].name + "a").c_str(), 100, 0, 200));
-        bhist.push_back(new TH1F( (channeldata[i].name + "b").c_str(), (channeldata[i].name + "b").c_str(), 100, 0, 200));
+        ahist.push_back(new TH1F( (channeldata[i].name + "Actual").c_str(), (channeldata[i].name + " Actual").c_str(), 100, 0, 200));
+        bhist.push_back(new TH1F( (channeldata[i].name + "Output").c_str(), (channeldata[i].name + " Output").c_str(), 100, 0, 200));
 
 	}
 	
@@ -173,7 +173,6 @@ mlp160 tester;
 		}
 	}
 
-
 	for (unsigned int i = 0; i != channeldata.size();++i){
         
 		for (int j = channeldata[i].begin; j != channeldata[i].end + 1; ++j) {
@@ -185,53 +184,57 @@ mlp160 tester;
 //				if (*visibleMass >100 && *visibleMass < 110){
 //					cout << *visibleMass << endl;
 //				}
-				if (outs[k] > 0){ 
-					histograms[k].fill( *visibleMass, outs[k]/* * targetlum /channeldata[j].luminocity*/);
-                    bhist[k]->Fill( *visibleMass, (outs[k]) * lumins /** (targetlum / (lumins))*/);
+                
 
-				}
+//				if (outs[k] > 0){ 
+//                    cout << outs[k] << endl;
+					histograms[k].fill( *visibleMass, outs[k]/* * targetlum /channeldata[j].luminocity*/);
+                    bhist[k]->Fill( *visibleMass, (outs[k]) * lumins /*(targetlum / (lumins))*/);
+
+//				}
 			}
 		}
 	}
     
     
-    for (Double_t cutval = 0; cutval < 1.; cutval+=0.1) {
-  
-    Double_t signal_count = 0.;
-    Double_t backgr_count = 0.;
-    for (unsigned int i = 0; i != channeldata.size();++i){
-        
-		for (int j = channeldata[i].begin; j != channeldata[i].end + 1; ++j) {
-			tree->GetEntry(j);
-//            const Double_t cutval = 0.4; /* 0-2 */
-            Double_t cutsum = 0;
-            Double_t eventval = 0;
-			for (unsigned int k = 0; k < 2; ++k) {
-                outs[k] = tester.Value(k,&vars[0]);
-                cutsum += outs[k];
-                eventval += ((targetlum / lumins) * outs[k]);
-                
-            }
-            if (cutsum >= cutval) {
-                if (i < 2) {
-                    signal_count += eventval;
-                    
-                } else {
-                    backgr_count += eventval;
-                }
-            }
-
-        }
-    }
-        
-    cout << "CutVal: " << cutval << endl;
-    cout << "Signal Count: " << signal_count << endl;
-    cout << "Backgr Count: " << backgr_count << endl;
-
-    cout << "S/ROOT(B): " << ( signal_count / sqrt(backgr_count) ) << endl;
-    cout << "S/ROOT(S+B): " << ( signal_count / sqrt(backgr_count + signal_count) ) << endl;
-    }
-	
+    
+//    for (Double_t cutval = 0; cutval < 1.; cutval+=0.1) {
+//  
+//    Double_t signal_count = 0.;
+//    Double_t backgr_count = 0.;
+//    for (unsigned int i = 0; i != channeldata.size();++i){
+//        
+//		for (int j = channeldata[i].begin; j != channeldata[i].end + 1; ++j) {
+//			tree->GetEntry(j);
+////            const Double_t cutval = 0.4; /* 0-2 */
+//            Double_t cutsum = 0;
+//            Double_t eventval = 0;
+//			for (unsigned int k = 0; k < 2; ++k) {
+//                outs[k] = tester.Value(k,&vars[0]);
+//                cutsum += outs[k];
+//                eventval += ((targetlum / lumins) * outs[k]);
+//                
+//            }
+//            if (cutsum >= cutval) {
+//                if (i < 2) {
+//                    signal_count += eventval;
+//                    
+//                } else {
+//                    backgr_count += eventval;
+//                }
+//            }
+//
+//        }
+//    }
+//        
+//    cout << "CutVal: " << cutval << endl;
+//    cout << "Signal Count: " << signal_count << endl;
+//    cout << "Backgr Count: " << backgr_count << endl;
+//
+//    cout << "S/ROOT(B): " << ( signal_count / sqrt(backgr_count) ) << endl;
+//    cout << "S/ROOT(S+B): " << ( signal_count / sqrt(backgr_count + signal_count) ) << endl;
+//    }
+//	
 	cout << endl << "Matrix of means:" << endl;
 	for (unsigned int i = 0; i != channeldata.size();++i){
 		for (unsigned int j = 0; j != channeldata.size();++j){

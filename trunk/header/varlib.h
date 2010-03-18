@@ -408,12 +408,11 @@ public:
 	virtual Double_t Get(std::map<std::string, brptr> * data, std::map<std::string, Int_t> * indexinfo){
         std::vector<Double_t> * btag = u< std::vector<Double_t> >((*data)["jetBTagTrackCountHighEff"]);
 		Double_t count = 0.;
-        Int_t number = 0;
 		for (unsigned int i = 0; i < (*btag).size(); i++) {
-			if ( (*btag)[i] > -50.){count += (*btag)[i]; number++;}
+			if ( (*btag)[i] < -50. ) {count += -13.;} else {count += (*btag)[i];}
 		}
-	
-		return (count / number );
+        
+		return (count / (*btag).size() );
 
 	}
 };
