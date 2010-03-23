@@ -191,6 +191,9 @@ int main(int argc, char ** argv){
 //	list.push_back(xyz(11,5,3));
 //	list.push_back(xyz(11,3,6));
 //	list.push_back(xyz(11,3,5));
+    list.push_back(xyz(12,7,0));
+    list.push_back(xyz(12,1,0));
+
 //	list.push_back(xyz(26,5,10));
 //	list.push_back(xyz(26,5,3));
 //	list.push_back(xyz(26,3,6));
@@ -207,7 +210,7 @@ int main(int argc, char ** argv){
 //	list.push_back(xyz(23,1,0));
 //	list.push_back(xyz(23,8,2));
 //	list.push_back(xyz(23,8,5));
-	list.push_back(xyz(24,10,7));
+//	list.push_back(xyz(24,10,7));
 	
 	
 	for (unsigned int i = 0; i != list.size(); ++i) {
