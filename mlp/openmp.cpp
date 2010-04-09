@@ -5,7 +5,7 @@
 #include <string>
 #include <fstream>
 
-#define OMP_NUM_THREADS 8
+#define OMP_NUM_THREADS 2
 
 
 std::string cmdpipe (std::string);
@@ -27,7 +27,7 @@ int main(int argc, char** argv){
 	ostringstream outstrm(ostringstream::out);	
 	
 #pragma omp parallel for shared(outstrm, cmd) schedule(runtime) ordered 
-	for (long i = 0; i < 24; ++i){
+	for (long i = 0; i < 5; ++i){
 		ostringstream sleep;
 		sleep << "sleep " << ((i % OMP_NUM_THREADS) * 2) << ".2 ;" <<"date;"; // randomize in tmpl based on secs
 		cout << 

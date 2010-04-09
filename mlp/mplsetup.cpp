@@ -40,7 +40,7 @@ int main(int argc, char** argv){
     MlpSetup mlp(tree, higgs_mass); 
 	
 //    mlp.SetMethod(TMultiLayerPerceptron::kBatch);
-    mlp.SetEpochs(100);
+    mlp.SetEpochs(50);
 //    mlp.SetNormaliseInputs(false);
 //    mlp.SetNormaliseOutputs(true);
 //    mlp.SetAltOutputNodes(false);
@@ -51,7 +51,7 @@ int main(int argc, char** argv){
 		mlp.SetTextOutputOff();
 	}
 	
-    vector<Int_t> new_struct(1, 20);
+    vector<Int_t> new_struct(1, 1);
     mlp.SetStructure(new_struct);
     mlp.TrainNet();
 
